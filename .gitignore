@@ -22,3 +22,5 @@ data-raw/es_data-v41/*
 data-raw/swiid9_6/*
 data-raw/swiid9_6.zip
 data-raw/cpi_trend.xlsx
+*.rds
+*.rda
