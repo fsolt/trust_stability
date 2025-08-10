@@ -114,8 +114,8 @@ body(small_multiple)[[19]] <- substitute(
     
     #Set up the model
     ls_iv <- c(
-      "plm::lag(discontent, 1)+plm::lag(interest, 1)",
-      "plm::lag(discontent_dem_trim, 1) + plm::lag(discontent_aut_trim, 1) + plm::lag(interest_dem_trim, 1) + plm::lag(interest_aut_trim, 1)"
+      "plm::lag(discontent, 1)*plm::lag(interest, 1)",
+      "plm::lag(discontent_dem_trim, 1) * plm::lag(interest_dem_trim, 1) + plm::lag(discontent_aut_trim, 1) * plm::lag(interest_aut_trim, 1)"
     ) #use trimmed data
 
     ls_method <- c("plm", "pgmm")
@@ -213,6 +213,7 @@ body(small_multiple)[[19]] <- substitute(
                     "Democracy\n (t-1)",
                     "Democracy\n (t-2)",
                     "Political Discontnet(t-1)",
+                    "Macro Interest(t-1)",
                     "Log GDP\n per capita\n (t-1)",
                     "GDP per\n capita growth\n (t-1)",
                     "Regional\n democracy\n (t-1)",
@@ -236,6 +237,8 @@ body(small_multiple)[[19]] <- substitute(
                     "Democracy\n (t-2)",
                     "Political discontent\n demo only\n (t-1)",
                     "Political discontent\n auto only\n (t-1)",
+                    "Macro Interest\n demo only\n (t-1)",
+                    "Macro Interest\n auto only\n (t-1)",
                     "Log GDP\n per capita\n (t-1)",
                     "GDP per\n capita growth\n (t-1)",
                     "Regional\n democracy\n (t-1)",
@@ -250,13 +253,15 @@ body(small_multiple)[[19]] <- substitute(
             )))
         )
     
-    
     index_coefName <- c(
         `Democracy\n (t-1)` = "Democracy[t-1]",
         `Democracy\n (t-2)` = "Democracy[t-2]",
         `Political Discontnet(t-1)` = "Political~Discontent[t-1]~(all~regimes)",
         `Political discontent\n demo only\n (t-1)` = "Political~Discontent[t-1]~(democracies)",
         `Political discontent\n auto only\n (t-1)` = "Political~Discontent[t-1]~(autocracies)",
+        `Macro Interest(t-1)` = "Macro~Interest[t-1]~(all~regimes)",
+        `Macro Interest\n demo only\n (t-1)` = "Macro~Interest[t-1]~(democracies)",
+        `Macro Interest\n auto only\n (t-1)` = "Macro~Interest[t-1]~(autocracies)",
         `Log GDP\n per capita\n (t-1)` = "Log~GDP~per~capita[t-1]",
         `GDP per\n capita growth\n (t-1)` = "GDP~per~capita~Growth[t-1]",
         `Regional\n democracy\n (t-1)` = "Regional~Democracy[t-1]",
@@ -275,18 +280,8 @@ body(small_multiple)[[19]] <- substitute(
                    linetype = 2) +
         scale_color_grey(
             start = 0, end = 0.4, 
-            name = "Replication",
-            breaks = c(
-                "Point Estimates Only",
-                "With Uncertainty",
-                "Uncertainty & More Data"
-            ),
-            labels = c(
-                "Point Estimates Only",
-                "With Uncertainty",
-                "Uncertainty & More Data"
-            )
-        ) + 
+            name = "Replication"
+            ) + 
         theme(
             axis.text.x  = element_text(angle = 90, hjust = .5),
             strip.text.y.left = element_text(angle = 0),
