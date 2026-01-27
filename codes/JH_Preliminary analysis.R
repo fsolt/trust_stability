@@ -2,6 +2,7 @@
 rm(list=ls())
 
 library(pacman)
+#devtools::install_github("vdeminstitute/ERT")
 
 p_load(
     tidyverse,
@@ -13,7 +14,8 @@ p_load(
     purrr,
     tidyr,
     dotwhisker,
-    glue
+    glue,
+    ERT
 )
 
 source(here("data", "customFunctions.R"))
