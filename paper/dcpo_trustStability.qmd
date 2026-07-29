@@ -155,61 +155,23 @@ conflicted::conflicts_prefer(dplyr::filter,
 Full text in git history (commit 99d3d41 and earlier). -->
 
 # Measuring Regime Instability {.unnumbered}
-
-Testing whether political discontent undermines regime stability requires a cross-national, country-year measure of instability, and here the quantitative literature offers not one standard but several distinct traditions.
-Researchers have operationalized regime instability as discrete regime breakdowns, as the survival and manner of exit of individual leaders, as counts of coups and other contentious events, as composite indices of state fragility, and as change in continuous measures of regime characteristics.
-These operationalizations are not interchangeable: they capture different phenomena, diverge sharply in practice, and can lead the same explanatory variable to opposite conclusions depending on which is chosen [@Hollyer2015].
-Our choice of outcome measure therefore demands explicit justification.
-
-The first tradition treats instability as discrete regime breakdown.
-In this work, a regime is defined by the basic formal and informal rules that determine who may hold power and whose interests constrain the leadership, and a breakdown is coded when those rules change, whether or not the successor regime is any more democratic [@Geddes2014].
-The Geddes, Wright, and Frantz data identify 280 autocratic regimes between 1946 and 2010 and code, for each collapse, its mode---electoral defeat, military coup, popular uprising, insurgency, foreign imposition, or elite-imposed rule change---and its violence [@Geddes2014].
-The Historical Regimes Data extend this rules-based conception from 1789 to 2016 and, applying lower thresholds, identify 925 regimes over the span in which Geddes, Wright, and Frantz count 280---a threefold divergence demonstrating that breakdown counts are highly sensitive to conceptual choices [@Djuve2020].
-Earlier practice instead inferred regime change from threshold crossings on the Polity scale [@Marshall2020], but such proxies overstate autocratic regime survival by fully 100 percent [@Geddes2014].
-Related work built on V-Dem identifies episodes of regime transformation: sustained movements on the electoral democracy index that terminate, or not, in transitions between democracy and autocracy, yielding a discrete country-year transition variable with built-in guards against coding mere measurement noise as regime change [@Maerz2024].
-
-A second tradition locates instability in leaders rather than regimes.
-The Archigos data code the entry and exit of national leaders in 188 states from 1875 to 2004, distinguishing regular transfers from irregular removals---about one exit in five---accomplished in contravention of established rules, typically by coup, revolt, or assassination [@Goemans2009].
-Leader-survival measures power hazard models of autocratic politics [@Svolik2012; @Hollyer2015].
-Yet fewer than half of postwar autocratic leadership changes coincided with regime change, and substituting leader change for regime change understates autocratic stability by roughly 50 percent [@Geddes2014].
-
-A third tradition counts contentious events.
-The most widely used coup data cover all attempts, successful and failed, from 1950 onward [@Powell2011], and more recent work distinguishes coups that merely reshuffle the leadership from those that change the regime, showing that pooled coup counts conflate distinct instability processes [@Chin2021].
-Protest and unrest counts---the Cross-National Time-Series domestic conflict series [@Banks2022] and the Mass Mobilization data [@Clark2021]---capture mass contention short of breakdown.
-Media-sourced event counts, however, suffer systematic reporting bias: fewer than a third of ground-truth violent events appear in the international news sources on which these datasets rely, and because the probability of reporting is correlated with covariates of interest, this bias is capable of producing entirely spurious regression results [@Weidmann2016].
-
-A fourth tradition constructs composite indices.
-The Political Instability Task Force pools civil wars, adverse regime changes, genocides, and politicides into consolidated "instability onsets" [@Goldstone2010], while donor agencies produce state fragility indices that aggregate security, economic, and institutional indicators into single rankings.
-Methodological reviews conclude that these holistic indices build the assumed causes and consequences of instability into the measure itself and so advise against their use as variables in regression analysis [@GutierrezSanin2011; @Ziaja2012].
-
-The final tradition---and the one in which this paper's research design is rooted---measures instability as change in continuous regime characteristics.
-@Claassen2020 models democratic survival as annual change in the V-Dem liberal democracy index, explicitly rejecting categorical alternatives on measurement-error grounds; this approach captures the gradual erosion and backsliding that now outnumber sudden breakdowns, which threshold-based measures are prone to misclassify [@Luhrmann2018].
-Crucially for our purposes, the V-Dem measurement model quantifies the uncertainty of its regime estimates [@Coppedge2024], and nearly a third of countries in recent years occupy regime categories that are ambiguous once that uncertainty is taken into account [@Luhrmann2018].
-@Tai2024 demonstrate what is at stake in ignoring such uncertainty: incorporating the measurement uncertainty of latent public-opinion estimates overturns the conclusion that public support predicts democratic survival.
-
-We accordingly measure regime instability primarily as annual change in the V-Dem democracy indices.
-This choice maximizes temporal overlap with our discontent estimates, whose identifying survey data are concentrated in the past three decades; it retains statistical power that rare breakdown events cannot provide in a survey-limited panel; it captures the regime erosion characteristic of the contemporary period; and it allows us to propagate measurement uncertainty on both sides of the equation, consistent with our method-of-composition estimation strategy.
-To ensure that our conclusions are not artifacts of this choice, we also examine discrete regime transitions from the Episodes of Regime Transformation data [@Maerz2024] as an alternative operationalization.
-
-
-<!-- Measurement-paper section 'Explaining Political Dissatisfaction' (OECD
-determinants model) removed 2026-07-29 -- belongs to the measurement paper. -->
-
+Jeongho will write it
 # Coauthor Guide -- Findings & Framing {.unlisted .unnumbered}
 
 ::: {.callout-important title="READ BEFORE DRAFTING -- what the results are, what we can and cannot claim (JC, 2026-07-29; numbers = final full rerun)"}
 
 **TL;DR.** Across ~170 model cells (four regime-event codings, two estimators,
 all with method-of-composition uncertainty propagation over 900 posterior
-draws), the results form a **mirror asymmetry**:
+draws), one sentence organizes the results:
 
-> **Public discontent destabilizes autocracies; public support stabilizes
-> democracies; neither works the other way around.** Discontent among publics
-> in autocracies precedes both the *onset* of regime-change episodes and
-> *completed democratization* (DD and BMR codings). Support among publics in
-> democracies lowers the hazard that erosion episodes *begin*. Discontent never
-> predicts democratic breakdown under any operationalization, and support never
-> protects autocracies.
+> **Political discontent predicts regime instability only in non-democracies.**
+> Discontent among publics in autocracies precedes both the *onset* of
+> regime-change episodes and *completed democratization* under turnover-based
+> codings (DD, BMR). In democracies it predicts nothing -- not breakdown under
+> any of the four codings, not even the onset of erosion episodes -- contra the
+> "discontent is killing democracy" narrative. (Secondary, support side: the
+> Tai--Hu--Solt pattern extends to events -- diffuse support is protective in
+> democracies at the episode-onset stage, and does nothing for autocracies.)
 
 This is the sentence the theory, introduction, and conclusion should be built
 around. Full results: Tables 1--4 and the battery figure below (Results
