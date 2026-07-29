@@ -1,7 +1,7 @@
 # ############################################################################
 # Political Discontent and Regime (In)stability -- MASTER compendium
 # ----------------------------------------------------------------------------
-# Authors: Ma, Choi, Tai, Hu, Solt   (analysis file maintained by Jeongho Choi)
+# Authors: Choi, Ma, Tai, Hu, Solt
 # TABLE OF CONTENTS
 #   0.  Setup: packages, cores policy (ncores = 4), MOC helpers, N_DRAWS = 900
 #   1.  Data sources & variable inventory (documentation, this header)
