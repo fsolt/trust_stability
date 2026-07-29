@@ -1190,11 +1190,6 @@ Discontent with the political system should be closely tied to evaluations of re
 These relationships are all positive and are moderate to strong.
 The PPD scores perform very well in validation tests.
 
-
-
-
-<!-- NEW SECTION (drafted 2026-07-13, Claude-assisted; JC to review). New references appended to p_dcpo_trustRegime_main.bib; entries flagged "TODO" there need volume/page verification before submission. -->
-
 # Measuring Regime Instability {.unnumbered}
 
 Testing whether political discontent undermines regime stability requires a cross-national, country-year measure of instability, and here the quantitative literature offers not one standard but several distinct traditions.
@@ -1782,10 +1777,10 @@ kable(t1, align = "lllrrrrrr",
 ```
 
 Table 1 reports the dynamic-panel results. Discontent is null in every valid
-cell (MOC $p$ = .36--.93). Support reproduces the pattern documented by
+cell (MOC $p$ = .16--.86). Support reproduces the pattern documented by
 [@TaiHuSolt2024]: naive-significant in pooled OLS ($p$ = .04--.06), attenuating
 to marginal or null once measurement uncertainty is propagated ($p$ =
-.08--.15). Under the full specification, no opinion variable robustly predicts
+.08--.50). Under the full specification, no opinion variable robustly predicts
 year-to-year movement in democracy indices. If public opinion matters for
 regimes, it does not operate through marginal annual changes in democratic
 quality -- motivating the shift to discrete regime events.
@@ -1797,20 +1792,23 @@ kable(t2, align = "lllrrrrrr",
       caption = "Table 2. Public opinion and the onset of V-Dem ERT regime-change episodes (discrete-time hazard, full specification). Log-odds per point of the 0-100 opinion scales.")
 ```
 
-Table 2, Panel A contains the paper's central estimates. Among publics in autocracies, discontent measured at $t-1$ raises the hazard that a regime-change
-episode begins at $t$: the MOC estimate is .046--.048 log-odds per scale point
-($p$ = .011/.023 by Firth and plain logit respectively) -- roughly a **70%
+Table 2, Panel B contains the paper's central estimates. Among publics in autocracies, discontent measured at $t-1$ raises the hazard that a regime-change
+episode begins at $t$: the MOC estimate is .047--.048 log-odds per scale point
+($p$ = .010/.021 by Firth and plain logit respectively) -- roughly a **70%
 increase in the odds of episode onset per standard deviation of discontent**
 (11.6 points). The same quantity for publics in democracies is precisely zero
-($p$ = .59--.66). Support shows the mirror image: protective among publics in democracies (odds ratio per SD $\approx$ 0.62; $p$ = .012/.015), null among publics in autocracies. The formal asymmetry tests confirm the pattern: the support
-asymmetry is significant ($p \approx$ .04), the discontent asymmetry marginal
-($p \approx$ .07), in both estimators.
+($p$ = .61--.64). Support shows the mirror image: protective among publics in democracies (odds ratio per SD $\approx$ 0.67; $p$ = .011/.012), null among publics in autocracies. The formal asymmetry tests confirm the pattern: the support
+asymmetry is significant ($p$ = .046/.049), the discontent asymmetry marginal
+($p$ = .062/.065), in both estimators.
 
-Panels B and C probe direction. The liberalization-onset cell (autocracies
-only, 18 events) is directionally positive but underpowered. The erosion-onset
+Panels C and D re-estimate the any-onset hazard within each regime subsample
+(single pooled slope, own baseline and controls): directionally consistent with
+the split estimates, at conventional significance only where events are
+plentiful. Panels E and F probe direction. The liberalization-onset cell
+(autocracies only, 18 events) is directionally positive but underpowered. The erosion-onset
 cell (democracies, 42 events) is the doom narrative's best chance to appear --
 discontent predicting the *start* of democratic erosion -- and it is null
-($p$ = .21--.25), while support's protective effect persists ($p$ = .011--.022).
+($p$ = .21--.27), while support's protective effect persists ($p$ = .014--.020).
 
 ## Discontent precedes completed democratization -- under turnover-based codings
 
@@ -1821,12 +1819,12 @@ kable(t3, align = "lllrrrrrr",
 
 Table 3 applies the same split design to each coding's own democracy boundary.
 The democratization-side slope -- discontent among publics in autocracies --
-survives MOC under both dichotomous codings: DD ($p$ = .036--.039) and BMR
-($p$ = .011--.012), the latter implying that a standard-deviation increase in
+survives MOC under both dichotomous codings: DD ($p$ = .033--.035) and BMR
+($p$ = .007--.010), the latter implying that a standard-deviation increase in
 discontent roughly **doubles the odds** that an autocracy completes a
 transition to democracy the following year. The breakdown-side slope is null
-in every coding ($p$ = .66--.86), and the within-coding asymmetry test is
-significant in all four BMR cells ($p$ = .011--.038). GWF, with 16 in-sample
+in every coding ($p$ = .44--.83), and the within-coding asymmetry test is
+significant in all four BMR cells ($p$ = .010--.035). GWF, with 16 in-sample
 boundary events and coverage ending in 2010, shows nothing and is treated as
 exploratory.
 
@@ -1872,7 +1870,7 @@ largely *distinct* event populations, not one list counted three ways.
 
 Three null results are load-bearing. (1) **Democratic breakdown**: discontent
 predicts breakdown under none of the four codings, in no specification, by
-either estimator -- and, per Table 2C, does not even predict the onset of
+either estimator -- and, per Table 2F, does not even predict the onset of
 erosion episodes. (2) **Conditional (buffering) effects**: the
 discontent-x-support interaction, estimated across the dynamic panel and the
 hazard battery, is directionally consistent with the critical-citizens

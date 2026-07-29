@@ -21,10 +21,10 @@ pretty_term <- function(t) {
   lag <- grepl("_lag1$", t)
   mid <- sub("_trim$", "", sub("^(disc|supp)_?", "", sub("_lag1$", "", t)))
   scope_map <- c(
-    "dem"     = ", in democracies",       "aut"     = ", in autocracies",
-    "dd_dem"  = ", in democracies (DD)",  "dd_aut"  = ", in autocracies (DD)",
-    "bmr_dem" = ", in democracies (BMR)", "bmr_aut" = ", in autocracies (BMR)",
-    "gwf_dem" = ", in democracies (GWF)", "gwf_aut" = ", in non-democracies (GWF)"
+    "dem"     = " in democracies",        "aut"     = " in autocracies",
+    "dd_dem"  = " in democracies (DD)",   "dd_aut"  = " in autocracies (DD)",
+    "bmr_dem" = " in democracies (BMR)",  "bmr_aut" = " in autocracies (BMR)",
+    "gwf_dem" = " in democracies (GWF)",  "gwf_aut" = " in non-democracies (GWF)"
   )
   scope <- ifelse(mid == "", "", scope_map[mid])
   paste0(v, ifelse(is.na(scope), "", scope), ifelse(lag, " (t-1)", ""))
@@ -36,7 +36,7 @@ tab_block <- function(bl, scale = 1) {
     mutate(model = factor(model, unique(model))) %>%
     arrange(model) %>%
     transmute(
-      Model     = as.character(model),
+      Model     = gsub(" \\+ctrl", "", as.character(model)),  # A3: every cell is +ctrl (see note)
       Variable  = pretty_term(term),
       `Naive b` = fmt(naive_est * scale, naive_p),
       `Naive p` = fmt_p(naive_p),
@@ -65,14 +65,15 @@ ft <- function(d, note) {
 common <- paste("Naive = point-estimate data; MOC = method of composition over 900",
   "posterior draws (estimate = draw mean, se = draw sd). + p<.10, ** p<.05, *** p<.01.")
 nA1 <- paste("Coefficients x1000. DV = annual V-Dem index (0-100); two DV lags, opinion IVs and",
-  "nine controls at t-1. [pooled] = pooled OLS; [gmm] = one-step system GMM, collapsed",
-  "instruments lag 3-5; -regime = opinion slopes split by RoW democracy (zero-filled).",
-  "The gmm-regime cells fail their own Sargan/AR(2) diagnostics in every instrument",
-  "window probed: cautionary only, not evidence.", common)
+  "nine controls at t-1. (all regimes) = single opinion slopes; (regime split) = opinion",
+  "slopes split by RoW democracy (zero-filled). [pooled OLS] = Beck-Katz PCSE;",
+  "[system GMM] = one-step, collapsed instruments lag 3-5. The regime-split GMM cells",
+  "fail their own Sargan/AR(2) diagnostics in every instrument window probed:",
+  "cautionary only, not evidence.", common)
 nA2 <- paste("DV per row block: ERT episode onset, RoW category change, or RoW democracy-boundary",
   "regime transition; discrete-time hazard with duration clock, transition history, and nine",
   "controls (whole RHS at t-1 for onset cells; current-year covariates for lead-coded events).",
-  "(all)/(democracies)/(autocracies) = estimation sample; (split IVs) = pooled sample with",
+  "(all)/(... subsample) = estimation sample; (regime split) = pooled sample with",
   "regime-split opinion slopes. [glm] = logit, country-clustered ses; [firth] = Firth",
   "penalized logit.", common)
 nA3 <- paste("DV per row block: each coding's any-regime-change, direction-specific transition,",

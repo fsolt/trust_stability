@@ -1565,6 +1565,25 @@ haz9 <- bind_rows(
 )
 
 main_results <- bind_rows(dyn9, haz9) %>%
+  # display names (ASCII only -- write.csv under a C locale mangles unicode):
+  # regime-restricted samples say "subsample"; ERT ladder DVs are annotated:
+  # any onset / liberalization onset (up) / erosion onset (down) /
+  # RoW change (4 category) / regime transition (dem vs auto)
+  mutate(
+    model = gsub("\\((democracies|autocracies|non-democracies)\\)", "(\\1 subsample)", model),
+    model = gsub("^onset \\(", "any onset (", model),
+    model = gsub("^liberalization onset ", "liberalization onset (up) ", model),
+    model = gsub("^erosion onset ", "erosion onset (down) ", model),
+    model = gsub("^RoW change ", "RoW change (4 category) ", model),
+    model = gsub("^regime transition ", "regime transition (dem vs auto) ", model),
+    model = gsub("^(DD|GWF|BMR) crossing ", "\\1 regime transition (dem vs auto) ", model),
+    # one grammar everywhere: DV (design) [estimator]
+    model = gsub("\\(split IVs\\)", "(regime split)", model),
+    model = gsub("\\[pooled\\]$", "(all regimes) [pooled OLS]", model),
+    model = gsub("\\[pooled-regime\\]$", "(regime split) [pooled OLS]", model),
+    model = gsub("\\[gmm\\]$", "(all regimes) [system GMM]", model),
+    model = gsub("\\[gmm-regime\\]$", "(regime split) [system GMM, cautionary]", model)
+  ) %>%
   transmute(block, model,
     term = gsub(", 1)", "", gsub("plm::lag(", "", term, fixed = TRUE), fixed = TRUE),
     naive_est = signif(naive_est, 3), naive_p = round(naive_p, 3),

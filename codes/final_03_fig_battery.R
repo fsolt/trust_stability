@@ -15,8 +15,11 @@ m <- m %>% mutate(
   naive_se = abs(naive_est) / pmax(z_naive, 1e-6)
 )
 
+# match on ASCII-normalized names so the direction arrows in the csv model
+# names never break lookups under a non-UTF-8 locale
+norm <- function(x) gsub(" +", " ", gsub("[^ -~]", "", x))
 pick <- function(model_str, term_str, label, track, side, scale = 1) {
-  r <- m %>% filter(model == model_str, term == term_str)
+  r <- m %>% filter(norm(model) == norm(model_str), term == term_str)
   stopifnot(nrow(r) == 1)
   tibble(
     label = label, track = track, side = side,
@@ -28,50 +31,50 @@ pick <- function(model_str, term_str, label, track, side, scale = 1) {
 d <- bind_rows(
   # ---- track 1: democracy levels (pooled OLS, regime-split slopes; x1000) ---
   # (system GMM regime split fails its own diagnostics -> appendix table only)
-  pick("Liberal Democracy [pooled]",          "disc_trim",     "Liberal dem.: all regimes",      "V-Dem democracy levels", "disc", 1000),
-  pick("Liberal Democracy [pooled-regime]",   "disc_aut_trim", "Liberal dem.: in autocracies",   "V-Dem democracy levels", "disc", 1000),
-  pick("Liberal Democracy [pooled-regime]",   "disc_dem_trim", "Liberal dem.: in democracies",   "V-Dem democracy levels", "disc", 1000),
-  pick("Electoral Democracy [pooled]",        "disc_trim",     "Electoral dem.: all regimes",    "V-Dem democracy levels", "disc", 1000),
-  pick("Electoral Democracy [pooled-regime]", "disc_aut_trim", "Electoral dem.: in autocracies", "V-Dem democracy levels", "disc", 1000),
-  pick("Electoral Democracy [pooled-regime]", "disc_dem_trim", "Electoral dem.: in democracies", "V-Dem democracy levels", "disc", 1000),
-  pick("Liberal Democracy [pooled]",          "supp_trim",     "Liberal dem.: all regimes",      "V-Dem democracy levels", "supp", 1000),
-  pick("Liberal Democracy [pooled-regime]",   "supp_aut_trim", "Liberal dem.: in autocracies",   "V-Dem democracy levels", "supp", 1000),
-  pick("Liberal Democracy [pooled-regime]",   "supp_dem_trim", "Liberal dem.: in democracies",   "V-Dem democracy levels", "supp", 1000),
-  pick("Electoral Democracy [pooled]",        "supp_trim",     "Electoral dem.: all regimes",    "V-Dem democracy levels", "supp", 1000),
-  pick("Electoral Democracy [pooled-regime]", "supp_aut_trim", "Electoral dem.: in autocracies", "V-Dem democracy levels", "supp", 1000),
-  pick("Electoral Democracy [pooled-regime]", "supp_dem_trim", "Electoral dem.: in democracies", "V-Dem democracy levels", "supp", 1000),
+  pick("Liberal Democracy (all regimes) [pooled OLS]",          "disc_trim",     "Liberal dem.: all regimes",      "V-Dem democracy levels", "disc", 1000),
+  pick("Liberal Democracy (regime split) [pooled OLS]",   "disc_aut_trim", "Liberal dem.: in autocracies",   "V-Dem democracy levels", "disc", 1000),
+  pick("Liberal Democracy (regime split) [pooled OLS]",   "disc_dem_trim", "Liberal dem.: in democracies",   "V-Dem democracy levels", "disc", 1000),
+  pick("Electoral Democracy (all regimes) [pooled OLS]",        "disc_trim",     "Electoral dem.: all regimes",    "V-Dem democracy levels", "disc", 1000),
+  pick("Electoral Democracy (regime split) [pooled OLS]", "disc_aut_trim", "Electoral dem.: in autocracies", "V-Dem democracy levels", "disc", 1000),
+  pick("Electoral Democracy (regime split) [pooled OLS]", "disc_dem_trim", "Electoral dem.: in democracies", "V-Dem democracy levels", "disc", 1000),
+  pick("Liberal Democracy (all regimes) [pooled OLS]",          "supp_trim",     "Liberal dem.: all regimes",      "V-Dem democracy levels", "supp", 1000),
+  pick("Liberal Democracy (regime split) [pooled OLS]",   "supp_aut_trim", "Liberal dem.: in autocracies",   "V-Dem democracy levels", "supp", 1000),
+  pick("Liberal Democracy (regime split) [pooled OLS]",   "supp_dem_trim", "Liberal dem.: in democracies",   "V-Dem democracy levels", "supp", 1000),
+  pick("Electoral Democracy (all regimes) [pooled OLS]",        "supp_trim",     "Electoral dem.: all regimes",    "V-Dem democracy levels", "supp", 1000),
+  pick("Electoral Democracy (regime split) [pooled OLS]", "supp_aut_trim", "Electoral dem.: in autocracies", "V-Dem democracy levels", "supp", 1000),
+  pick("Electoral Democracy (regime split) [pooled OLS]", "supp_dem_trim", "Electoral dem.: in democracies", "V-Dem democracy levels", "supp", 1000),
 
   # ---- track 2: episode onset (log-odds; Firth) -----------------------------
-  pick("onset (all) [firth]",       "disc_trim_lag1",     "ERT onset: all regimes",    "ERT episode onset (log-odds)", "disc"),
-  pick("onset (split IVs) [firth]", "disc_aut_trim_lag1", "ERT onset: in autocracies", "ERT episode onset (log-odds)", "disc"),
-  pick("onset (split IVs) [firth]", "disc_dem_trim_lag1", "ERT onset: in democracies", "ERT episode onset (log-odds)", "disc"),
-  pick("liberalization onset (autocracies) [firth]", "disc_trim_lag1", "ERT liberalization onset (aut.)", "ERT episode onset (log-odds)", "disc"),
-  pick("erosion onset (democracies) [firth]",        "disc_trim_lag1", "ERT erosion onset (dem.)",        "ERT episode onset (log-odds)", "disc"),
-  pick("onset (all) [firth]",       "supp_trim_lag1",     "ERT onset: all regimes",    "ERT episode onset (log-odds)", "supp"),
-  pick("onset (split IVs) [firth]", "supp_aut_trim_lag1", "ERT onset: in autocracies", "ERT episode onset (log-odds)", "supp"),
-  pick("onset (split IVs) [firth]", "supp_dem_trim_lag1", "ERT onset: in democracies", "ERT episode onset (log-odds)", "supp"),
-  pick("liberalization onset (autocracies) [firth]", "supp_trim_lag1", "ERT liberalization onset (aut.)", "ERT episode onset (log-odds)", "supp"),
-  pick("erosion onset (democracies) [firth]",        "supp_trim_lag1", "ERT erosion onset (dem.)",        "ERT episode onset (log-odds)", "supp"),
+  pick("any onset (all) [firth]",       "disc_trim_lag1",     "ERT any onset: all regimes",    "ERT episode onset (log-odds)", "disc"),
+  pick("any onset (regime split) [firth]", "disc_aut_trim_lag1", "ERT any onset: in autocracies", "ERT episode onset (log-odds)", "disc"),
+  pick("any onset (regime split) [firth]", "disc_dem_trim_lag1", "ERT any onset: in democracies", "ERT episode onset (log-odds)", "disc"),
+  pick("liberalization onset (up) (autocracies subsample) [firth]", "disc_trim_lag1", "ERT liberalization onset \u2191 (aut.)", "ERT episode onset (log-odds)", "disc"),
+  pick("erosion onset (down) (democracies subsample) [firth]",        "disc_trim_lag1", "ERT erosion onset \u2193 (dem.)",        "ERT episode onset (log-odds)", "disc"),
+  pick("any onset (all) [firth]",       "supp_trim_lag1",     "ERT any onset: all regimes",    "ERT episode onset (log-odds)", "supp"),
+  pick("any onset (regime split) [firth]", "supp_aut_trim_lag1", "ERT any onset: in autocracies", "ERT episode onset (log-odds)", "supp"),
+  pick("any onset (regime split) [firth]", "supp_dem_trim_lag1", "ERT any onset: in democracies", "ERT episode onset (log-odds)", "supp"),
+  pick("liberalization onset (up) (autocracies subsample) [firth]", "supp_trim_lag1", "ERT liberalization onset \u2191 (aut.)", "ERT episode onset (log-odds)", "supp"),
+  pick("erosion onset (down) (democracies subsample) [firth]",        "supp_trim_lag1", "ERT erosion onset \u2193 (dem.)",        "ERT episode onset (log-odds)", "supp"),
 
   # ---- track 3: completed transitions (log-odds; Firth) ---------------------
-  pick("DD crossing (all) +ctrl [firth]",        "disc_trim",           "DD: all regimes",           "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("DD crossing (split IVs) +ctrl [firth]",  "disc_dd_aut_trim",  "DD: in autocracies",  "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("DD crossing (split IVs) +ctrl [firth]",  "disc_dd_dem_trim",  "DD: in democracies",        "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("BMR crossing (all) +ctrl [firth]",       "disc_trim",           "BMR: all regimes",          "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("BMR crossing (split IVs) +ctrl [firth]", "disc_bmr_aut_trim", "BMR: in autocracies", "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("BMR crossing (split IVs) +ctrl [firth]", "disc_bmr_dem_trim", "BMR: in democracies",       "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("GWF crossing (all) +ctrl [firth]",       "disc_trim",           "GWF: all regimes*",         "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("GWF crossing (split IVs) +ctrl [firth]", "disc_gwf_aut_trim", "GWF: in non-democracies*","Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("GWF crossing (split IVs) +ctrl [firth]", "disc_gwf_dem_trim", "GWF: in democracies*",      "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
-  pick("DD crossing (all) +ctrl [firth]",        "supp_trim",           "DD: all regimes",           "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("DD crossing (split IVs) +ctrl [firth]",  "supp_dd_aut_trim",  "DD: in autocracies",  "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("DD crossing (split IVs) +ctrl [firth]",  "supp_dd_dem_trim",  "DD: in democracies",        "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("BMR crossing (all) +ctrl [firth]",       "supp_trim",           "BMR: all regimes",          "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("BMR crossing (split IVs) +ctrl [firth]", "supp_bmr_aut_trim", "BMR: in autocracies", "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("BMR crossing (split IVs) +ctrl [firth]", "supp_bmr_dem_trim", "BMR: in democracies",       "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("GWF crossing (all) +ctrl [firth]",       "supp_trim",           "GWF: all regimes*",         "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("GWF crossing (split IVs) +ctrl [firth]", "supp_gwf_aut_trim", "GWF: in non-democracies*","Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
-  pick("GWF crossing (split IVs) +ctrl [firth]", "supp_gwf_dem_trim", "GWF: in democracies*",      "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp")
+  pick("DD regime transition (dem vs auto) (all) +ctrl [firth]",        "disc_trim",           "DD: all regimes",           "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("DD regime transition (dem vs auto) (regime split) +ctrl [firth]",  "disc_dd_aut_trim",  "DD: in autocracies",  "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("DD regime transition (dem vs auto) (regime split) +ctrl [firth]",  "disc_dd_dem_trim",  "DD: in democracies",        "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("BMR regime transition (dem vs auto) (all) +ctrl [firth]",       "disc_trim",           "BMR: all regimes",          "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("BMR regime transition (dem vs auto) (regime split) +ctrl [firth]", "disc_bmr_aut_trim", "BMR: in autocracies", "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("BMR regime transition (dem vs auto) (regime split) +ctrl [firth]", "disc_bmr_dem_trim", "BMR: in democracies",       "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("GWF regime transition (dem vs auto) (all) +ctrl [firth]",       "disc_trim",           "GWF: all regimes*",         "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("GWF regime transition (dem vs auto) (regime split) +ctrl [firth]", "disc_gwf_aut_trim", "GWF: in non-democracies*","Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("GWF regime transition (dem vs auto) (regime split) +ctrl [firth]", "disc_gwf_dem_trim", "GWF: in democracies*",      "Completed transitions:\nDD / BMR / GWF (log-odds)", "disc"),
+  pick("DD regime transition (dem vs auto) (all) +ctrl [firth]",        "supp_trim",           "DD: all regimes",           "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("DD regime transition (dem vs auto) (regime split) +ctrl [firth]",  "supp_dd_aut_trim",  "DD: in autocracies",  "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("DD regime transition (dem vs auto) (regime split) +ctrl [firth]",  "supp_dd_dem_trim",  "DD: in democracies",        "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("BMR regime transition (dem vs auto) (all) +ctrl [firth]",       "supp_trim",           "BMR: all regimes",          "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("BMR regime transition (dem vs auto) (regime split) +ctrl [firth]", "supp_bmr_aut_trim", "BMR: in autocracies", "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("BMR regime transition (dem vs auto) (regime split) +ctrl [firth]", "supp_bmr_dem_trim", "BMR: in democracies",       "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("GWF regime transition (dem vs auto) (all) +ctrl [firth]",       "supp_trim",           "GWF: all regimes*",         "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("GWF regime transition (dem vs auto) (regime split) +ctrl [firth]", "supp_gwf_aut_trim", "GWF: in non-democracies*","Completed transitions:\nDD / BMR / GWF (log-odds)", "supp"),
+  pick("GWF regime transition (dem vs auto) (regime split) +ctrl [firth]", "supp_gwf_dem_trim", "GWF: in democracies*",      "Completed transitions:\nDD / BMR / GWF (log-odds)", "supp")
 )
 
 d_long <- bind_rows(
@@ -101,7 +104,7 @@ p <- ggplot(d_long, aes(x = b, y = label, color = est, shape = est)) +
     title = "Public opinion and regime (in)stability: the full battery",
     subtitle = "Naive (posterior-mean data) vs. method of composition (900 draws); 95% CIs",
     caption = paste("Full control specification throughout; 'in autocracies/democracies' rows split the opinion slopes by regime type (zero-filled",
-                    "regressors).\nFor boundary-crossing rows the in-autocracies slope is the democratization side, the in-democracies slope the",
+                    "regressors).\nFor regime-transition rows the in-autocracies slope is the democratization side, the in-democracies slope the",
                     "breakdown side.\nDemocracy-level rows: pooled OLS, coefficients x1000. Hazard rows: Firth penalized logit.",
                     "* GWF ends in 2010 (5-16 events): exploratory.")
   ) +
