@@ -1,0 +1,27 @@
+"Panel","Variable","Estimator","Naive b","Naive p","MOC b","MOC se","MOC p","Events"
+"A. DD democracy-boundary crossing","Discontent, all regimes","Logit","0.030","(0.119)","0.025","0.019","(0.191)",36
+"A. DD democracy-boundary crossing","Discontent, all regimes","Firth","0.028+","(0.087)","0.023","0.016","(0.140)",36
+"A. DD democracy-boundary crossing","Support, all regimes","Logit","-0.010","(0.562)","-0.009","0.018","(0.624)",36
+"A. DD democracy-boundary crossing","Support, all regimes","Firth","-0.010","(0.452)","-0.009","0.014","(0.529)",36
+"A. DD democracy-boundary crossing","Discontent in autocracies","Logit","0.066**","(0.010)","0.053**","0.025","(0.033)",36
+"A. DD democracy-boundary crossing","Discontent in autocracies","Firth","0.061***","(0.008)","0.048**","0.023","(0.035)",36
+"A. DD democracy-boundary crossing","Discontent in democracies","Logit","-0.006","(0.785)","-0.005","0.024","(0.830)",36
+"A. DD democracy-boundary crossing","Discontent in democracies","Firth","-0.007","(0.727)","-0.007","0.021","(0.754)",36
+"A. DD democracy-boundary crossing","Support in democracies","Logit","-0.019","(0.436)","-0.017","0.025","(0.489)",36
+"A. DD democracy-boundary crossing","Support in democracies","Firth","-0.018","(0.361)","-0.017","0.021","(0.411)",36
+"B. BMR democracy-boundary crossing","Discontent, all regimes","Logit","0.036**","(0.045)","0.030+","0.018","(0.099)",31
+"B. BMR democracy-boundary crossing","Discontent, all regimes","Firth","0.034**","(0.046)","0.029+","0.016","(0.074)",31
+"B. BMR democracy-boundary crossing","Support, all regimes","Logit","-0.011","(0.535)","-0.009","0.016","(0.569)",31
+"B. BMR democracy-boundary crossing","Support, all regimes","Firth","-0.011","(0.459)","-0.009","0.014","(0.513)",31
+"B. BMR democracy-boundary crossing","Discontent in autocracies","Logit","0.080***","(0.002)","0.070***","0.027","(0.010)",31
+"B. BMR democracy-boundary crossing","Discontent in autocracies","Firth","0.075***","(0.002)","0.063***","0.023","(0.007)",31
+"B. BMR democracy-boundary crossing","Discontent in democracies","Logit","-0.010","(0.682)","-0.008","0.024","(0.739)",31
+"B. BMR democracy-boundary crossing","Discontent in democracies","Firth","-0.011","(0.622)","-0.009","0.023","(0.685)",31
+"B. BMR democracy-boundary crossing","Support in democracies","Logit","-0.035","(0.247)","-0.031","0.029","(0.284)",31
+"B. BMR democracy-boundary crossing","Support in democracies","Firth","-0.034","(0.107)","-0.028","0.023","(0.224)",31
+"C. GWF democracy-boundary crossing (exploratory)","Discontent, all regimes","Logit","-0.019","(0.508)","-0.015","0.028","(0.576)",16
+"C. GWF democracy-boundary crossing (exploratory)","Discontent, all regimes","Firth","-0.019","(0.414)","-0.016","0.024","(0.490)",16
+"C. GWF democracy-boundary crossing (exploratory)","Discontent in non-democracies","Logit","-0.013","(0.728)","-0.008","0.036","(0.827)",16
+"C. GWF democracy-boundary crossing (exploratory)","Discontent in non-democracies","Firth","-0.014","(0.604)","-0.012","0.027","(0.664)",16
+"C. GWF democracy-boundary crossing (exploratory)","Discontent in democracies","Logit","-0.034","(0.460)","-0.027","0.047","(0.568)",16
+"C. GWF democracy-boundary crossing (exploratory)","Discontent in democracies","Firth","-0.034","(0.376)","-0.030","0.040","(0.441)",16

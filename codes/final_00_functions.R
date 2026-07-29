@@ -80,24 +80,31 @@ methodComposition1 <- function (data, model, vcov=vcovBK, rsq=TRUE) {
 }
 
 
-## For AJPS GMM model, using plmHC. 
+## For AJPS GMM model, using plmHC.
+## Draw-level tryCatch (2026-07-29): a numerically singular draw returns NA
+## and is DROPPED at the end (with a message) instead of crashing the whole
+## 900-draw run -- needed for the knife-edge regime-split GMM cells. When no
+## draw fails, results are identical to the original function.
 methodComposition2 <- function (data, model, vcov=plmHC, rsq=TRUE) {
     aData <- data[[1]]
     aMod <- eval(parse(text = model))
-    
-    coefdf <- as.data.frame(matrix(nrow=length(data), ncol=length(coef(aMod))))
-    R2 <- data.frame(rsq=rep(NA, length(data)), adjrsq=rep(NA, length(data)))
-    
+    cn <- names(coef(aMod))
+    coefdf <- as.data.frame(matrix(nrow=length(data), ncol=length(cn)))
+
     for (s in seq_along(data)) {
         data_sample <- data[[s]]
-        mod_sample <- update(aMod, data=data_sample)
-        hatB_sample <- coef(mod_sample)
-        hatV_sample <- vcov(mod_sample)
-        coefdf[s, ] <- MASS::mvrnorm(n = 1, mu = hatB_sample, Sigma = hatV_sample)
-        
+        coefdf[s, ] <- tryCatch({
+            mod_sample <- update(aMod, data=data_sample)
+            hatB_sample <- coef(mod_sample)
+            hatV_sample <- vcov(mod_sample)
+            MASS::mvrnorm(n = 1, mu = hatB_sample, Sigma = hatV_sample)[cn]
+        }, error = function(e) setNames(rep(NA_real_, length(cn)), cn))
     }
-    names(coefdf) <- names(coef(aMod))
-    return(coefdf)
+    names(coefdf) <- cn
+    n_fail <- sum(!stats::complete.cases(coefdf))
+    if (n_fail > 0) message(sprintf(
+        "methodComposition2: %d/%d draws failed and were dropped", n_fail, length(data)))
+    coefdf[stats::complete.cases(coefdf), , drop = FALSE]
 }
 
 ## For APSR ECM and First Difference models, using plmhc. 
@@ -273,4 +280,30 @@ glance.pgmm <- function(x, ...) {
         n.inst = dim(x$W[[1]])[2],
         na_types = "iii"
     )
+}
+
+# generic parallel MOC for a discrete-time logit ---------------
+mocParGLM <- function(data_list, formula, method = c("glm","firth"),
+                      subset_expr = NULL, cluster_col = "country",
+                      cores = if (exists("ncores")) ncores else 4L) {
+    method <- match.arg(method); formula <- as.formula(formula); vars <- all.vars(formula)
+    sq <- rlang::enquo(subset_expr); has_sub <- !rlang::quo_is_null(sq) #Check if sub-set exists
+    
+    prep <- function(d) { if (has_sub) d <- dplyr::filter(d, !!sq) #Filter data if subset exists
+    d[stats::complete.cases(d[, vars]), , drop = FALSE] }
+    cn <- names(coef(glm(formula, data = prep(data_list[[1]]), family = binomial()))) #
+    
+    res <- parallel::mclapply(data_list, function(d) { d <- prep(d)
+    tryCatch({
+        #Penalized Logit
+        if (method == "firth") { m <- logistf::logistf(formula, data = d, pl = FALSE,
+                                     control = logistf::logistf.control(maxit = 200)); b0 <- coef(m); V <- vcov(m) }
+        #Discrete-time Logit
+        else { m <- glm(formula, data = d, family = binomial()); b0 <- coef(m); V <- sandwich::vcovCL(m, cluster = d[[cluster_col]]) }
+        #MOC
+        MASS::mvrnorm(1, b0, V)[cn]
+    }, error = function(e) setNames(rep(NA_real_, length(cn)), cn))
+    },  mc.cores = cores, mc.set.seed = TRUE)
+    out <- as.data.frame(do.call(rbind, res)); names(out) <- cn
+    out[stats::complete.cases(out), , drop = FALSE]
 }

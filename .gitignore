@@ -24,3 +24,6 @@ data-raw/swiid9_6.zip
 data-raw/cpi_trend.xlsx
 *.rds
 *.rda
+~$*
+data-raw/swiid9_8/
+data-raw/wb_population/

@@ -1193,6 +1193,45 @@ The PPD scores perform very well in validation tests.
 
 
 
+<!-- NEW SECTION (drafted 2026-07-13, Claude-assisted; JC to review). New references appended to p_dcpo_trustRegime_main.bib; entries flagged "TODO" there need volume/page verification before submission. -->
+
+# Measuring Regime Instability {.unnumbered}
+
+Testing whether political discontent undermines regime stability requires a cross-national, country-year measure of instability, and here the quantitative literature offers not one standard but several distinct traditions.
+Researchers have operationalized regime instability as discrete regime breakdowns, as the survival and manner of exit of individual leaders, as counts of coups and other contentious events, as composite indices of state fragility, and as change in continuous measures of regime characteristics.
+These operationalizations are not interchangeable: they capture different phenomena, diverge sharply in practice, and can lead the same explanatory variable to opposite conclusions depending on which is chosen [@Hollyer2015].
+Our choice of outcome measure therefore demands explicit justification.
+
+The first tradition treats instability as discrete regime breakdown.
+In this work, a regime is defined by the basic formal and informal rules that determine who may hold power and whose interests constrain the leadership, and a breakdown is coded when those rules change, whether or not the successor regime is any more democratic [@Geddes2014].
+The Geddes, Wright, and Frantz data identify 280 autocratic regimes between 1946 and 2010 and code, for each collapse, its mode---electoral defeat, military coup, popular uprising, insurgency, foreign imposition, or elite-imposed rule change---and its violence [@Geddes2014].
+The Historical Regimes Data extend this rules-based conception from 1789 to 2016 and, applying lower thresholds, identify 925 regimes over the span in which Geddes, Wright, and Frantz count 280---a threefold divergence demonstrating that breakdown counts are highly sensitive to conceptual choices [@Djuve2020].
+Earlier practice instead inferred regime change from threshold crossings on the Polity scale [@Marshall2020], but such proxies overstate autocratic regime survival by fully 100 percent [@Geddes2014].
+Related work built on V-Dem identifies episodes of regime transformation: sustained movements on the electoral democracy index that terminate, or not, in transitions between democracy and autocracy, yielding a discrete country-year transition variable with built-in guards against coding mere measurement noise as regime change [@Maerz2024].
+
+A second tradition locates instability in leaders rather than regimes.
+The Archigos data code the entry and exit of national leaders in 188 states from 1875 to 2004, distinguishing regular transfers from irregular removals---about one exit in five---accomplished in contravention of established rules, typically by coup, revolt, or assassination [@Goemans2009].
+Leader-survival measures power hazard models of autocratic politics [@Svolik2012; @Hollyer2015].
+Yet fewer than half of postwar autocratic leadership changes coincided with regime change, and substituting leader change for regime change understates autocratic stability by roughly 50 percent [@Geddes2014].
+
+A third tradition counts contentious events.
+The most widely used coup data cover all attempts, successful and failed, from 1950 onward [@Powell2011], and more recent work distinguishes coups that merely reshuffle the leadership from those that change the regime, showing that pooled coup counts conflate distinct instability processes [@Chin2021].
+Protest and unrest counts---the Cross-National Time-Series domestic conflict series [@Banks2022] and the Mass Mobilization data [@Clark2021]---capture mass contention short of breakdown.
+Media-sourced event counts, however, suffer systematic reporting bias: fewer than a third of ground-truth violent events appear in the international news sources on which these datasets rely, and because the probability of reporting is correlated with covariates of interest, this bias is capable of producing entirely spurious regression results [@Weidmann2016].
+
+A fourth tradition constructs composite indices.
+The Political Instability Task Force pools civil wars, adverse regime changes, genocides, and politicides into consolidated "instability onsets" [@Goldstone2010], while donor agencies produce state fragility indices that aggregate security, economic, and institutional indicators into single rankings.
+Methodological reviews conclude that these holistic indices build the assumed causes and consequences of instability into the measure itself and so advise against their use as variables in regression analysis [@GutierrezSanin2011; @Ziaja2012].
+
+The final tradition---and the one in which this paper's research design is rooted---measures instability as change in continuous regime characteristics.
+@Claassen2020 models democratic survival as annual change in the V-Dem liberal democracy index, explicitly rejecting categorical alternatives on measurement-error grounds; this approach captures the gradual erosion and backsliding that now outnumber sudden breakdowns, which threshold-based measures are prone to misclassify [@Luhrmann2018].
+Crucially for our purposes, the V-Dem measurement model quantifies the uncertainty of its regime estimates [@Coppedge2024], and nearly a third of countries in recent years occupy regime categories that are ambiguous once that uncertainty is taken into account [@Luhrmann2018].
+@Tai2024 demonstrate what is at stake in ignoring such uncertainty: incorporating the measurement uncertainty of latent public-opinion estimates overturns the conclusion that public support predicts democratic survival.
+
+We accordingly measure regime instability primarily as annual change in the V-Dem democracy indices.
+This choice maximizes temporal overlap with our discontent estimates, whose identifying survey data are concentrated in the past three decades; it retains statistical power that rare breakdown events cannot provide in a survey-limited panel; it captures the regime erosion characteristic of the contemporary period; and it allows us to propagate measurement uncertainty on both sides of the equation, consistent with our method-of-composition estimation strategy.
+To ensure that our conclusions are not artifacts of this choice, we also examine discrete regime transitions from the Episodes of Regime Transformation data [@Maerz2024] as an alternative operationalization.
+
 # Explaining Political Dissatisfaction {.unlisted .unnumbered}
 
 Data to test these hypotheses are drawn from several sources.
@@ -1582,18 +1621,275 @@ A test of citation [@Claassen2019;@HuEtAl2022a].
 
 # Theory {.unlisted .unnumbered}
 
-# Research Design and Results {.unlisted .unnumbered}
+# Political Discontent and Regime (In)stability {.unlisted .unnumbered}
 
-```{r data}
-# load(here("data", "correct_cls_ajps.rda")) # https://osf.io/52u7n/download
-# load(here("data", "expcor_cls_ajps.rda"))  # https://osf.io/cgxjd/download
+<!-- Merged from JH_methods_results_draft.qmd (2026-07-29, JC). Replaces the
+2026-07-14 results section (old text preserved in git history and in
+archive_drafts_20260729/results_draft.qmd; its rds inputs now live in
+output/archive_stale_20260729/).
+RENDER NOTES:
+- Citation keys are placeholders until aligned with p_dcpo_trustRegime_main.bib:
+  MaEtAl-measurement, Solt2020dcpo, Claassen2019measure, TaiHuSolt2024,
+  Maerz2021ert, BjornskovRode2020, BMR2013, GWF2014, Claassen2020, GLV2013,
+  Solt2020swiid, Treier2008, Firth1993.
+- [N]/[K] survey-item and country counts: fill from the measurement paper.
+- Appendix [X] (GMM diagnostics) and the robustness appendix are not yet
+  assembled; see the appendix inventory comment at the end of Results.
+- Tables read output/table{1-4}*.csv, figure reads output/fig_battery.png:
+  re-render after any rerun of codes/final_01_master.R (then final_02/03/04).
+-->
 
+```{r instab-setup, include=FALSE}
+t1 <- read.csv(here::here("output", "table1_dynamic.csv"),       check.names = FALSE)
+t2 <- read.csv(here::here("output", "table2_onset.csv"),         check.names = FALSE)
+t3 <- read.csv(here::here("output", "table3_canonical.csv"),     check.names = FALSE)
+t4 <- read.csv(here::here("output", "table4_event_overlap.csv"), check.names = FALSE)
 ```
 
+# Data and Measurement {.unlisted .unnumbered}
 
-See the descriptive statistics in @sec-app-descriptive.
+## Public political discontent and democratic support
 
-See the full, numeric results in @sec-app-numeric.
+Our focal predictor is public political discontent (PPD), the latent
+country-year estimate introduced in [@MaEtAl-measurement]: a Bayesian
+latent-variable model (DCPO; [@Solt2020dcpo]) that pools [N] survey items on
+political dissatisfaction across [K] countries. Because the estimates carry
+measurement uncertainty, we retain 900 draws from the posterior rather than
+point estimates. Democratic support is measured analogously with the
+Claassen-style support mood [@Claassen2019measure; @TaiHuSolt2024], also as 900
+paired posterior draws. Both scales run 0--100. Country-years before a
+country's first actual survey are dropped (the published trim rule), removing
+backward extrapolation from the estimation sample. The analysis window is
+effectively 1988--2019, bounded by the survey base and the control series.
+
+## Regime-change outcomes
+
+Our theory concerns regime change, not movements in democratic quality. We
+therefore measure outcomes as discrete regime events, and -- because event
+codings embody consequential definitional choices -- we use four canonical
+datasets rather than one:
+
+1. **V-Dem ERT / Regimes of the World** [@Maerz2021ert]: (a) *episode onset*,
+   the first year of a democratization or autocratization episode (a sustained,
+   substantial movement of the electoral-democracy index), with the risk set
+   excluding ongoing-episode years; and (b) *category change*, any move among
+   the four Regimes-of-the-World classes, including the
+   democracy--autocracy boundary crossing.
+2. **DD/ACLP** in the Bjornskov--Rode update [@BjornskovRode2020], which extends
+   Cheibub--Gandhi--Vreeland coverage to the mid-2020s: democratization and
+   democratic breakdown on the contestation-plus-alternation dichotomy.
+3. **Boix--Miller--Rosato** [@BMR2013]: the same two events on the
+   Boix-lineage dichotomy (1800--2020).
+4. **Geddes--Wright--Frantz** [@GWF2014] regime cases (supplementary: coverage
+   ends 2010, leaving 16 in-sample boundary events).
+
+All events follow one convention: the event year is the **final year of the
+outgoing regime** (lead-coded where the source codes the new regime's first
+year), so that covariates measured in the event year precede the transition
+itself. Each coding contributes its own duration clock (its native regime-spell
+age) and its own transition-history control (the count of prior transitions
+under its own definition, which by construction never includes the event being
+modeled). As we document in the Results (Table 4), the codings capture
+substantially different event populations, which motivates the multi-coding
+design and disciplines interpretation.
+
+## Controls
+
+The full specification carries nine controls: the five from Claassen's [-@Claassen2020]
+design (log GDP per capita, GDP growth, regional democracy levels,
+percent Muslim, resource dependence; the first two and the last are multiply
+imputed in the source, and the imputation draws are paired with the opinion
+draws), the two robust determinants from the extreme-bounds analysis of
+Gassebner, Lamla, and Vreeland [-@GLV2013] that the Claassen set lacks (prior
+transitions and OECD membership), plus income inequality (SWIID 9.8;
+[@Solt2020swiid]) and log population (World Bank).
+
+# Empirical Strategy {.unlisted .unnumbered}
+
+## Propagating measurement uncertainty
+
+Every model is estimated twice. The *naive* version uses posterior-mean data,
+as is standard practice. The *method-of-composition* (MOC) version re-estimates
+the model on each of the 900 draw-datasets, samples one coefficient vector from
+each fitted model's sampling distribution, and summarizes the resulting 900
+draws: the point estimate is the draw mean and the standard error the draw
+standard deviation, so reported uncertainty combines sampling and measurement
+components [@Treier2008; @TaiHuSolt2024]. Interaction and derived quantities
+(marginal effects, slope differences) are computed draw-wise, preserving the
+coefficient covariance. Products for the naive data are rebuilt from averaged
+components, since the mean of products is not the product of means.
+
+## Dynamic panel
+
+To anchor the analysis in the existing literature we first estimate Claassen's
+[-@Claassen2020] specification with the democracy *level* as outcome:
+
+$$D_{it} = \alpha + \sum_{k=1}^{2}\phi_k D_{i,t-k} + \beta\,\theta_{i,t-1} + \gamma\,S_{i,t-1} + \mathbf{X}_{i,t-1}\delta + \varepsilon_{it}$$
+
+for V-Dem liberal and electoral democracy, by pooled OLS (panel-corrected
+standard errors) and system GMM (one-step, levels-and-differences), using
+Claassen's instrument lag window (3--5) with collapsed instrument columns --
+our panel is more complete than the original, so the uncollapsed set
+over-instruments (Sargan pinned at 1.000). A regime-split variant enters discontent and support
+as zero-filled interactions with a Regimes-of-the-World democracy dummy. The
+regime-split GMM variant is estimated for completeness but treated as
+cautionary only: its overidentification and serial-correlation tests reject
+in every instrument window probed, its lagged-DV coefficients imply explosive
+dynamics, and its coefficients flip sign across specifications -- the
+signature of a misspecified mean equation rather than of any estimable
+effect (Appendix [X]).
+
+## Discrete-time hazards
+
+Events are rare and binary, so persistence is handled by a duration baseline
+rather than lagged outcomes: we estimate discrete-time hazard logits with the
+coding's native regime age and its square, the coding's transition-history
+count, and the nine controls. Every cell is estimated by both plain
+maximum likelihood with country-clustered standard errors and Firth penalized
+likelihood [@Firth1993]; divergence between the two flags small-sample
+fragility, and we report both throughout. Timing follows a uniform one-year
+opinion-precedes-outcome rule: boundary-crossing events are lead-coded, so
+current-year covariates precede the transition; episode-onset events occur
+within the year, so the entire right-hand side is lagged one year.
+
+Our central specification splits the opinion slopes by regime type within one
+pooled hazard. With $R_{i,t-1}$ an indicator for democracy (each coding's own
+classification for its own cells),
+
+$$\Pr(Y_{it}=1) = \Lambda\big(\beta_a \theta_{i,t-1}(1-R) + \beta_d \theta_{i,t-1}R + \gamma_a S_{i,t-1}(1-R) + \gamma_d S_{i,t-1}R + \lambda R + f(\text{age}_{it}) + \mathbf{X}\delta\big)$$
+
+This is the zero-filled full-interaction parameterization of the dynamic-panel
+literature transplanted to the hazard setting: regime-specific opinion slopes
+share one baseline hazard and one control block, which preserves events-per-
+variable in the rare-events cells, and -- because both slopes sit in one model
+-- permits a formal test of regime asymmetry as the draw-wise distribution of
+$\hat\beta_a - \hat\beta_d$.
+
+# Results {.unlisted .unnumbered}
+
+```{r}
+#| label: fig-battery
+#| fig-cap: "The full battery at a glance: focal coefficients with 95% confidence intervals, naive (posterior-mean data, open grey) vs. method of composition (900 draws, solid blue). Top: pooled-OLS democracy-level models with regime-split opinion slopes (x1000). Middle: ERT episode-onset hazards (split IVs, Firth). Bottom: completed democracy-boundary crossings under DD/BMR/GWF (split IVs, Firth; GWF exploratory, coverage ends 2010)."
+#| out-width: "100%"
+knitr::include_graphics(here::here("output", "fig_battery.png"))
+```
+
+## Public opinion does not move annual democracy levels
+
+```{r}
+kable(t1, align = "lllrrrrrr",
+      caption = "Table 1. Public opinion and annual democracy-index change (dynamic panel, full specification). Coefficients x1000.")
+```
+
+Table 1 reports the dynamic-panel results. Discontent is null in every valid
+cell (MOC $p$ = .36--.93). Support reproduces the pattern documented by
+[@TaiHuSolt2024]: naive-significant in pooled OLS ($p$ = .04--.06), attenuating
+to marginal or null once measurement uncertainty is propagated ($p$ =
+.08--.15). Under the full specification, no opinion variable robustly predicts
+year-to-year movement in democracy indices. If public opinion matters for
+regimes, it does not operate through marginal annual changes in democratic
+quality -- motivating the shift to discrete regime events.
+
+## Discontent starts regime-change episodes -- in autocracies
+
+```{r}
+kable(t2, align = "lllrrrrrr",
+      caption = "Table 2. Public opinion and the onset of V-Dem ERT regime-change episodes (discrete-time hazard, full specification). Log-odds per point of the 0-100 opinion scales.")
+```
+
+Table 2, Panel A contains the paper's central estimates. Among publics in autocracies, discontent measured at $t-1$ raises the hazard that a regime-change
+episode begins at $t$: the MOC estimate is .046--.048 log-odds per scale point
+($p$ = .011/.023 by Firth and plain logit respectively) -- roughly a **70%
+increase in the odds of episode onset per standard deviation of discontent**
+(11.6 points). The same quantity for publics in democracies is precisely zero
+($p$ = .59--.66). Support shows the mirror image: protective among publics in democracies (odds ratio per SD $\approx$ 0.62; $p$ = .012/.015), null among publics in autocracies. The formal asymmetry tests confirm the pattern: the support
+asymmetry is significant ($p \approx$ .04), the discontent asymmetry marginal
+($p \approx$ .07), in both estimators.
+
+Panels B and C probe direction. The liberalization-onset cell (autocracies
+only, 18 events) is directionally positive but underpowered. The erosion-onset
+cell (democracies, 42 events) is the doom narrative's best chance to appear --
+discontent predicting the *start* of democratic erosion -- and it is null
+($p$ = .21--.25), while support's protective effect persists ($p$ = .011--.022).
+
+## Discontent precedes completed democratization -- under turnover-based codings
+
+```{r}
+kable(t3, align = "lllrrrrrr",
+      caption = "Table 3. Public opinion and completed regime transitions across canonical codings (discrete-time hazard, split IVs, full specification). Log-odds.")
+```
+
+Table 3 applies the same split design to each coding's own democracy boundary.
+The democratization-side slope -- discontent among publics in autocracies --
+survives MOC under both dichotomous codings: DD ($p$ = .036--.039) and BMR
+($p$ = .011--.012), the latter implying that a standard-deviation increase in
+discontent roughly **doubles the odds** that an autocracy completes a
+transition to democracy the following year. The breakdown-side slope is null
+in every coding ($p$ = .66--.86), and the within-coding asymmetry test is
+significant in all four BMR cells ($p$ = .011--.038). GWF, with 16 in-sample
+boundary events and coverage ending in 2010, shows nothing and is treated as
+exploratory.
+
+Two qualifications discipline this result. First, it is coding-conditional:
+ERT's own boundary-crossing cells are null. The next subsection shows why this
+is not a contradiction. Second, the ERT severity gradient -- onset significant,
+completion null -- indicates that discontent's reliable footprint is at the
+*initiation* of regime change; whether initiated episodes complete depends on
+downstream forces our design does not model.
+
+## Different codings count different democratizations
+
+```{r}
+kable(t4, align = "llrrrrr",
+      caption = "Table 4. Event overlap across codings, survey-covered sample. Cell entries: captured/eligible (%) -- row-coding events with a counterpart in the column coding (same country, event years within +/-2). Eligible excludes row events outside the column coding's coverage window; only GWF binds (ends 2010, so its column counts row events through 2012).")
+```
+
+Why does discontent predict completed democratization under DD and BMR but not
+under ERT's boundary crossing? Because, to a degree rarely acknowledged, the
+four series are not alternative measurements of one event list -- they are
+substantially different event lists. Table 4 makes this concrete: within the
+survey-covered sample, pairwise capture rates among the three democratization
+series run from 17% to 36%, and the breakdown side looks no better (17--56%).
+Even allowing a two-year dating window, roughly two of every three events in
+any one series have no counterpart in another.
+
+The mismatches are systematic, not noise. Democratizations that only ERT
+records are predominantly index-threshold reclassifications within
+already-electoral regimes -- countries crossing the electoral-autocracy /
+electoral-democracy line without a government turnover (e.g., Ukraine 2005,
+Kenya 2012, Mexico 1995, North Macedonia 2016). Democratizations that only the
+dichotomies record are turnover-type transitions -- founding or alternation
+elections -- where V-Dem's regime classification either had already moved or
+did not move within the window (e.g., Kyrgyzstan 2005, Thailand 2007, Taiwan
+1999, Tunisia 2014). Read against Table 3, the pattern is informative rather
+than embarrassing: **public discontent precedes the turnover-type transitions
+that dichotomous codings are built to capture, not the incremental
+reclassifications that index thresholds register.** It also strengthens the
+breakdown null: discontent fails to predict democratic breakdown across three
+largely *distinct* event populations, not one list counted three ways.
+
+## What does not appear
+
+Three null results are load-bearing. (1) **Democratic breakdown**: discontent
+predicts breakdown under none of the four codings, in no specification, by
+either estimator -- and, per Table 2C, does not even predict the onset of
+erosion episodes. (2) **Conditional (buffering) effects**: the
+discontent-x-support interaction, estimated across the dynamic panel and the
+hazard battery, is directionally consistent with the critical-citizens
+hypothesis but never significant under MOC; support's protection should be read
+as additive, not conditional. (3) **Naive certainty**: across the battery,
+naive estimation produces significance that MOC extinguishes; every claim
+above survives uncertainty propagation, and several claims a naive analysis
+would have made do not.
+
+<!-- Appendix inventory (to assemble):
+- Full main-battery table (output/results_main_combined.csv).
+- Base-specification and interaction generations; marginal-effects tables.
+- Event lists behind Table 4 (country-year mismatches by coding, both sides).
+- System-GMM diagnostics; the singular regime-split GMM note.
+- Severity-ladder cells (RoW change, regime transition) and subsample variants.
+- GWF construction notes and caveats.
+-->
 
 # Summary and Discussion {.unlisted .unnumbered}
 

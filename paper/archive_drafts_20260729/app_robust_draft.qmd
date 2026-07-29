@@ -1,0 +1,107 @@
+---
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{=html}
+<!-- ==========================================================================
+DRAFT robustness appendix (rev. 2026-07-15, Claude-assisted; JC to review).
+Referenced from the Results section as @sec-app-robust. Shows the naive->null
+significance loss is systematic across DV operationalizations and estimators,
+and that the null survives period controls and duration re-parameterization.
+Reads: results_hazard_pointest.rds, results_regime_hazard_full.rds (main RoW),
+results_robust_naive.rds, results_ert_interaction.rds (ERT reg_trans),
+results_regime_survival.rds (Cox), results_gwf_robust.rds (GWF),
+results_coup_robust.rds (Powell-Thyne), results_hazard_spec_robust.rds (period/cubic).
+========================================================================== -->
+```
+
+# Robustness: the naive--uncertainty contrast across estimators {#sec-app-robust}
+
+The main text estimates regime instability as a discrete-time hazard of a change in the Regimes of the World classification, and reports that the apparently significant effects of public opinion under point-estimate estimation dissolve once measurement uncertainty is propagated.
+Here we show that this contrast is not an artifact of that particular operationalization.
+@tbl-robust reproduces the two focal quantities---the discontent-by-support interaction and the discontent main effect---estimated both ways, under five operationalizations of regime instability: the main Regimes-of-the-World discrete-time hazard; the narrower discrete-time hazard defined by V-Dem's Episodes of Regime Transformation transition variable [@Maerz2024]; a Cox proportional-hazards survival model in which regime spells are the unit of risk and the baseline hazard is left unparameterized; the Geddes-Wright-Frantz binary indicator of autocratic regime breakdown [@Geddes2014]; and Powell and Thyne's coup events [@Powell2011].
+
+The pattern in the three transition-based specifications is identical.
+Among autocracies, the discontent-by-support interaction is positive and statistically significant under point estimates in every one (coefficients of 0.25 to 0.27, all $p < 0.05$), and in every one it loses significance once the uncertainty of the latent measures is propagated by the method of composition ($p$ between 0.15 and 0.23).
+The two remaining measures are supplementary, because their risk sets shrink drastically in the survey era: only 11 Geddes-Wright-Frantz breakdowns and 20 coup attempts fall within the estimation sample, reflecting the fact that breakdown- and coup-prone countries are precisely those least covered by cross-national surveys.
+Within that limit they tell the same story: the discontent coefficient in the breakdown model is marginally significant under point estimates ($p = 0.096$) and attenuates to insignificance under the method of composition ($p = 0.15$), and no opinion term approaches significance in any coup model under either estimator.
+That five operationalizations built on different outcome definitions and different treatments of duration all reproduce the same naive-to-null reversal---or show no effect to begin with---indicates that the finding is a general property of taking measurement uncertainty seriously, not a feature of any single modeling choice.
+
+The conclusion is equally insensitive to specification of the hazard itself.
+Adding period dummies to the main model---motivated by the temporal clustering of regime change, and warranted: the post-2010 period raises the hazard of democratic deterioration substantially (log-odds $1.95$, $p = 0.005$), the backsliding wave---leaves every focal estimate essentially unchanged, and in fact weakens even the naive autocratic interaction (from $p = 0.050$ to $p = 0.064$).
+Replacing the logged regime-tenure term with a cubic polynomial in regime age likewise changes nothing of substance.
+Neither period effects nor the parameterization of duration dependence, then, accounts for the results.
+
+```{r}
+#| label: tbl-robust
+#| tbl-cap: "Focal coefficients under point-estimate vs. uncertainty-propagated estimation, across five operationalizations of regime instability"
+
+p_load(kableExtra)
+source(here::here("data", "customFunctions.R"))
+hz  <- readRDS(here::here("results_regime_hazard_full.rds"))
+pt  <- readRDS(here::here("results_hazard_pointest.rds"))
+er  <- readRDS(here::here("results_ert_interaction.rds"))
+cx  <- readRDS(here::here("results_regime_survival.rds"))
+rn  <- readRDS(here::here("results_robust_naive.rds"))
+gwf <- readRDS(here::here("results_gwf_robust.rds"))
+cp  <- readRDS(here::here("results_coup_robust.rds"))
+
+stars <- function(p) ifelse(p < .01, "***", ifelse(p < .05, "**", ifelse(p < .1, "*", "")))
+cell  <- function(e, s, p) sprintf("%.3f%s (%.3f)", e, stars(p), s)
+moc_get <- function(m, tm) {   # m = data.frame of MOC draws
+  s <- suppressWarnings(MOCsumm(m)) |>
+    dplyr::mutate(e = as.numeric(estimate), se = as.numeric(std.error), p = 2*(1-pnorm(abs(e/se)))) |>
+    dplyr::filter(term == tm); cell(s$e, s$se, s$p)
+}
+nv_get <- function(d, tm) {
+  d <- tibble::as_tibble(d)
+  s <- dplyr::mutate(d, p = if ("p" %in% names(d)) p else 2*(1-pnorm(abs(est/se)))) |> dplyr::filter(term == tm)
+  cell(s$est, s$se, s$p)
+}
+
+rows <- tibble::tribble(
+  ~spec, ~regime, ~events, ~naive, ~moc,
+  "RoW change (discrete-time)", "Democracies", hz[["DETERIORATION [dem] (Firth)"]]$n_ev,
+      pt[["DETERIOR [dem] Firth"]], hz[["DETERIORATION [dem] (Firth)"]]$coef,
+  "RoW change (discrete-time)", "Autocracies", hz[["IMPROVEMENT [aut] (Firth)"]]$n_ev,
+      pt[["IMPROVE [aut] Firth"]],  hz[["IMPROVEMENT [aut] (Firth)"]]$coef,
+  "ERT reg\\_trans (discrete-time)", "Democracies", er[["break_dem"]]$n_ev,
+      rn[["regtrans breakdown [dem]"]],  er[["break_dem"]]$coef,
+  "ERT reg\\_trans (discrete-time)", "Autocracies", er[["trans_aut"]]$n_ev,
+      rn[["regtrans transition [aut]"]], er[["trans_aut"]]$coef,
+  "Cox proportional hazards", "Democracies", cx[["democracies"]]$n_fail,
+      rn[["cox breakdown [dem]"]],       cx[["democracies"]]$coef,
+  "Cox proportional hazards", "Autocracies", cx[["autocracies"]]$n_fail,
+      rn[["cox democratization [aut]"]], cx[["autocracies"]]$coef,
+  "GWF autocratic breakdown", "Autocracies", gwf$n_ev,
+      gwf$naive, gwf$moc,
+  "Powell--Thyne coup attempts", "All regimes", cp[["attempt [all] moc"]]$n_ev,
+      cp[["attempt [all] naive"]], cp[["attempt [all] moc"]]$coef,
+  "Powell--Thyne coup attempts", "Autocracies", cp[["attempt [aut] moc"]]$n_ev,
+      cp[["attempt [aut] naive"]], cp[["attempt [aut] moc"]]$coef
+)
+out <- rows |> dplyr::rowwise() |>
+  dplyr::mutate(int_n = nv_get(naive, "disc_supp"), int_m = moc_get(moc, "disc_supp"),
+                dis_n = nv_get(naive, "disc_c"),     dis_m = moc_get(moc, "disc_c")) |>
+  dplyr::ungroup()
+
+tab <- out |> dplyr::select(regime, events, int_n, int_m, dis_n, dis_m)
+colnames(tab) <- c(" ", "Events", "Point est.", "Uncertainty", "Point est.", "Uncertainty")
+
+kbl(tab, booktabs = TRUE, escape = FALSE, align = c("l", "c", rep("c", 4)), linesep = "") |>
+  add_header_above(c(" " = 2, "Discontent $\\\\times$ Support" = 2, "Political discontent" = 2), escape = FALSE) |>
+  pack_rows(index = table(factor(out$spec, levels = unique(out$spec)))) |>
+  kable_styling(font_size = 9, latex_options = c("hold_position", "scale_down")) |>
+  footnote(general_title = "", threeparttable = TRUE, escape = FALSE,
+    general = paste0("Log-odds (discrete-time hazard) or log-hazard (Cox) coefficients with ",
+      "standard errors in parentheses. `Point est.' plugs in posterior means of the latent ",
+      "measures; `Uncertainty' propagates their measurement uncertainty across 900 draws by the ",
+      "method of composition. Discrete-time democracy/autocracy and GWF/coup models use Firth ",
+      "penalized likelihood with model-based standard errors (the pooled coup model uses ",
+      "country-clustered logit); Cox and non-penalized logit models use country-clustered ",
+      "standard errors and yield the same pattern. GWF coverage ends in 2010; the GWF and coup ",
+      "rows are supplementary given their small event counts in the survey era. ",
+      "*** p<0.01, ** p<0.05, * p<0.1."))
+```

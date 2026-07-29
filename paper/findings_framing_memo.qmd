@@ -1,0 +1,174 @@
+---
+title: "Findings & Framing Memo: Political Discontent and Regime (In)stability"
+subtitle: "For coauthors drafting the theory, introduction, literature, and conclusion sections"
+author: "Jeongho Choi"
+date: today
+format:
+  html:
+    toc: true
+    embed-resources: true
+  docx: default
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(dplyr); library(knitr); library(here)
+t1 <- read.csv(here("output", "table1_dynamic.csv"),   check.names = FALSE)
+t2 <- read.csv(here("output", "table2_onset.csv"),     check.names = FALSE)
+t3 <- read.csv(here("output", "table3_canonical.csv"), check.names = FALSE)
+```
+
+# TL;DR
+
+Across ~100 model cells (four regime-event codings x three control generations x
+two estimators, all with method-of-composition uncertainty propagation over 900
+posterior draws), the results form a **mirror asymmetry**:
+
+> **Public discontent destabilizes autocracies; public support stabilizes
+> democracies; neither works the other way around.** Discontent among
+> autocratic publics precedes both the *onset* of regime-change episodes and
+> *completed democratization* (DD and BMR codings). Support among democratic
+> publics lowers the hazard that erosion episodes *begin*. Discontent never
+> predicts democratic breakdown under any operationalization, and support never
+> protects autocracies.
+
+This is the sentence the theory, introduction, and conclusion should be built
+around.
+
+# Design in one paragraph
+
+IV = DCPO latent political discontent (PPD; 900 posterior draws) and Claassen-style
+democratic support, both on 0--100 scales. Every model is estimated twice: once
+on posterior-mean data ("naive") and once by the method of composition over the
+900 draws (Tai--Hu--Solt), so every table displays how naive significance
+attenuates once measurement uncertainty is honored. Timing is a uniform
+one-year opinion-precedes-outcome gap throughout (lagged IVs in the dynamic
+panel; lead-coded events with current-year covariates for boundary cells;
+episode-onset cells lag the full RHS). Event DVs come from four codings --
+V-Dem ERT episodes/Regimes-of-the-World boundaries, DD (Bjornskov--Rode update),
+Boix--Miller--Rosato, and Geddes--Wright--Frantz (supplementary; ends 2010) --
+each with its own duration clock and transition-history control. Hazards are
+discrete-time logits estimated by both plain (clustered) and Firth penalized
+likelihood; the dynamic panel follows Claassen 2020 (pooled OLS + system GMM).
+
+# Main results
+
+## Table 1 -- opinion does not move annual democracy levels
+
+```{r}
+kable(t1, align = "llrrrrrr")
+```
+
+Everything is null under the full specification once MOC is applied (support's
+naive significance attenuates away -- the Tai-pattern replication). This is the
+set-up result: the Claassen-style *level-change* design finds nothing, which
+motivates moving to discrete regime events.
+
+## Table 2 -- the 2x2: onset of regime-change episodes
+
+```{r}
+kable(t2, align = "lllrrrrrr")
+```
+
+Panel A is the paper's core. Within one pooled hazard (shared baseline and
+controls, opinion slopes split by regime type at t-1):
+
+- **Discontent, autocratic public: positive, MOC p = .011/.023** -- discontent
+  precedes episode onset in autocracies.
+- **Support, democratic public: negative (protective), MOC p = .012/.015.**
+- Both cross-terms are null (.50--.66).
+- Formal asymmetry tests (draw-wise slope differences): support asymmetry
+  significant (~.04), discontent asymmetry marginal (~.07).
+
+Panels B--C are direction-specific onsets: liberalization onset in autocracies is
+directionally positive but underpowered (18 events); erosion onset in
+democracies shows *no* discontent effect (the doom narrative fails even at the
+process-start stage) while support remains protective.
+
+## Table 3 -- completed transitions across canonical codings
+
+```{r}
+kable(t3, align = "lllrrrrrr")
+```
+
+The same split-IV design on each coding's own democracy boundary: the
+autocratic-public discontent slope (= democratization side) survives MOC in
+**DD (.036/.039)** and **BMR (.011/.012)**; the democratic-public slope
+(= breakdown side) is null everywhere. The within-coding asymmetry test is
+significant in all four BMR cells (p = .011--.038) and marginal in DD. GWF (16
+events, coverage ends 2010) is null and flagged exploratory.
+
+# What we CAN claim
+
+1. **Discontent precedes the start of regime-change processes**, and this is
+   concentrated among autocratic publics (Table 2A).
+2. **Discontent precedes completed democratization** under turnover-based
+   dichotomous codings (DD, BMR), with the democratization-vs-breakdown
+   asymmetry formally significant in BMR.
+3. **Support protects democracies at the episode-onset stage** (additive main
+   effect).
+4. **Discontent does not predict democratic breakdown under any of the four
+   codings**, nor erosion-episode onset -- a strong, multiply-operationalized
+   null that speaks directly against the "discontent kills democracy"
+   narrative.
+5. **Naive analysis overstates certainty**: many naive-significant cells die
+   under MOC; the paper's surviving claims are exactly those robust to
+   measurement uncertainty.
+
+# What we must NOT claim (framing guardrails)
+
+- **No buffering / "critical citizens" conditional claims.** Support's
+  protection is an *additive* main effect. The discontent-x-support interaction
+  was tested throughout (dynamic panel and hazards): directionally consistent,
+  uniformly null under MOC. Do not write "support protects democracies *even
+  when discontent is high*" or "support conditions the effect of discontent."
+- **"Precedes democratization," not "causes democratization."** Observational,
+  1-year-lead evidence; elite bargaining, international factors, etc. intervene
+  between onset and completion (the ERT completion cells are null -- discontent
+  knocks on the door; other forces open it).
+- **The completion result is coding-conditional.** It appears in the
+  turnover-based dichotomies (DD, BMR), not in ERT's index-threshold crossings
+  or GWF's regime cases. This is not a contradiction: an event-overlap audit
+  shows the three "democratization" DVs share only ~25--35% of their events
+  (appendix table). State which definitions carry the result.
+- **Do not cite the pooled onset(all) cell as the headline.** It sits in a
+  borderline band (MOC p .04--.05 across reruns) because it pools the strong
+  autocratic signal with the null democratic one; the split-IV cell (Table 2A)
+  is the main evidence.
+- **GWF cells and the liberalization-onset cell are exploratory** (5--18
+  events). Regime-split GMM does not exist (singular under the full
+  specification) -- mention only in the appendix.
+- Small-event caveats and multiple-comparisons language should stay in the
+  results section; the surviving claims cluster coherently (onset + completion,
+  same direction, multiple codings), which is the honest defense.
+
+# Pointers for each section
+
+- **Theory/framing**: the organizing idea is that mass opinion erodes the
+  *status-quo regime*, with regime-type-asymmetric consequences: Welzel-style
+  aspirations push autocracies toward democracy; Easton/Claassen-style diffuse
+  support keeps democracies from starting to erode. The two null cells are
+  theoretically load-bearing: discontent does not kill democracies (contra
+  Foa/Mounk), and popular support does not save autocracies.
+- **Literature**: `paper/lit_review_regime_stability.md` is complete and
+  web-verified: no opinion-IV study uses event DVs; none of the 18 canonical
+  stability-DV studies includes mass opinion. The gap paragraph writes itself
+  from its Part 1/Part 3 tables.
+- **Introduction**: lead with the doom narrative (discontent as threat to
+  democracy), report that the threat is real but points the other way -- at
+  autocracies.
+- **Conclusion**: measurement matters twice -- (i) uncertainty propagation
+  (naive vs MOC), (ii) event definitions (the overlap audit). Both are
+  portable lessons beyond this paper.
+- **Data/Methods and Results**: JC is drafting; all numbers in this memo come
+  from `output/results_main_combined.csv` and the table generator
+  `codes/final_02_tables_main.R` (rerun-safe, reads saved results only).
+
+# Significance markers
+
+`+` p < .10, `**` p < .05, `***` p < .01 (two-sided). MOC estimates are means of
+900 draw-level coefficient draws; MOC standard errors are the draw standard
+deviations (total uncertainty: sampling + measurement).

@@ -1,0 +1,162 @@
+---
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+```{=html}
+<!-- ==========================================================================
+DRAFT Results section (rev. 2026-07-14, Claude-assisted; JC to review).
+CENTERED ON the naive (point-estimate) vs. method-of-composition (uncertainty-
+propagated) contrast: apparent significance under point estimates dissolves once
+the measurement uncertainty of the latent measures is propagated -- a direct,
+own-data demonstration of the @Tai2024 critique.
+Insert into dcpo_trustStability.qmd after the theory/measurement material.
+New bib entries needed: Easton1965, Norris1999, Klingemann1999, Gasiorowski1995,
+Firth1993. @Claassen2020 and @Tai2024 already exist.
+Reads results_hazard_pointest.rds (naive) + results_regime_hazard_full.rds (MOC).
+========================================================================== -->
+```
+
+# Political Discontent and Regime Survival {#sec-results}
+
+Does political discontent shorten the life of a political regime, and does the reservoir of diffuse democratic support condition that effect?
+We operationalize regime instability as the hazard of a regime transition---a change in a country's Regimes of the World classification [@Luhrmann2018]---and estimate discrete-time (grouped-duration) hazard models in which the risk of transition in a given country-year is a function of the previous year's political discontent, democratic support, their interaction, and a standard battery of regime-survival controls.
+We fit the pooled hazard of any regime change and, separately, the hazard of democratic deterioration among democracies and of democratic improvement among autocracies, because the theorized role of discontent differs by regime type: following critical-citizens theory [@Norris1999; @Klingemann1999], discontent should erode a democracy only where support for democracy is thin, and press an autocracy toward liberalization only where such support is deep.
+
+The analytical crux, however, is not the choice of hazard model but how the latent measures enter it.
+Political discontent, democratic support, and the V-Dem regime classification are all estimated with uncertainty.
+The conventional practice---followed by most of the public-opinion-and-regimes literature---is to plug in the point estimates (here, the posterior means) and fit a single ordinary model.
+The alternative, which we adopt, is to propagate that uncertainty on every side of the equation by re-estimating each model across 900 paired posterior draws and combining the results by the method of composition [@Tai2024].
+Because the two approaches answer the same substantive question with the same data and specification, differing only in whether measurement error is acknowledged, contrasting them is the most direct possible test of whether the field's findings are robust to measurement uncertainty.
+Regime transitions are rare, so the regime-specific models use Firth's penalized likelihood [@Firth1993]; standard errors are clustered by country.
+
+Estimated naively, the results appear to support the theory.
+As the "point estimate" columns of @tbl-naive-moc show, political discontent significantly raises the hazard of democratization among autocracies (odds ratio 1.04, $p = 0.046$), and that effect is amplified where democratic support is higher (the interaction is positive and significant, $p = 0.050$).
+Diffuse democratic support, in turn, significantly protects democracies from deterioration (odds ratio 0.04, $p = 0.037$), echoing @Claassen2020.
+A researcher who stopped here would conclude that mass political attitudes shape regime trajectories much as legitimacy theory anticipates---discontent unsettling autocracies, and democratic commitment shielding democracies.
+
+Propagating the measurement uncertainty dissolves these findings.
+In the method-of-composition columns of @tbl-naive-moc, estimated on exactly the same data and specification, the autocratic discontent effect falls to $p = 0.13$, its interaction with support to $p = 0.18$, and the protective effect of support in democracies to $p = 0.09$.
+Not one of the three---each of which was, in any case, only marginally significant to begin with---survives at conventional levels.
+@fig-naive-moc displays the contrast directly, and its mechanism is worth stating precisely.
+Contrary to the common intuition that acknowledging measurement error simply widens confidence intervals, the intervals here are scarcely any wider; what changes is the point estimates, which shrink toward zero---by roughly a quarter to a half---once the latent measures are no longer treated as observed without error, until the intervals come to include it.
+The apparent effects are, in other words, attenuated rather than merely rendered less certain: propagating the measurement uncertainty of the latent opinion estimates pulls their coefficients back toward zero, and the borderline significance of the naive analysis does not survive.
+
+```{r}
+#| label: fig-naive-moc
+#| fig-cap: "Focal coefficients under point-estimate vs. uncertainty-propagated estimation, with 95% confidence intervals. Point estimates that exclude zero (e.g., discontent and its interaction with support among autocracies; democratic support among democracies) cross zero once measurement uncertainty is propagated."
+#| fig-height: 6.2
+#| fig-width: 6.8
+
+source(here::here("data", "customFunctions.R"))
+moc_res <- readRDS(here::here("results_regime_hazard_full.rds"))
+pt_res  <- readRDS(here::here("results_hazard_pointest.rds"))
+moc_nm  <- c("ANY change [all] (glm)", "DETERIORATION [dem] (Firth)", "IMPROVEMENT [aut] (Firth)")
+pt_nm   <- c("ANY [all] glm", "DETERIOR [dem] Firth", "IMPROVE [aut] Firth")
+models  <- c("All regimes", "Democracies", "Autocracies")
+focal   <- c(disc_c = "Political discontent",
+             disc_supp = "Discontent × Support (interaction)",
+             supp_c = "Democratic support")
+
+d <- purrr::map_dfr(1:3, function(i) {
+  mo <- suppressWarnings(MOCsumm(moc_res[[moc_nm[i]]]$coef)) |>
+    dplyr::transmute(term, est = as.numeric(estimate), se = as.numeric(std.error),
+                     method = "Uncertainty-propagated")
+  pt <- tibble::as_tibble(pt_res[[pt_nm[i]]]) |>
+    dplyr::transmute(term, est, se, method = "Point estimates")
+  dplyr::bind_rows(mo, pt) |> dplyr::filter(term %in% names(focal)) |>
+    dplyr::mutate(model = models[i])
+}) |>
+  dplyr::mutate(lo = est - 1.96*se, hi = est + 1.96*se,
+                term = factor(focal[term], levels = focal),
+                model = factor(model, levels = rev(models)),
+                method = factor(method, levels = c("Point estimates", "Uncertainty-propagated")))
+
+ggplot(d, aes(x = est, y = model, color = method, shape = method)) +
+  geom_vline(xintercept = 0, linetype = 2, color = "grey55") +
+  geom_pointrange(aes(xmin = lo, xmax = hi), position = position_dodge(width = .55),
+                  linewidth = .6, size = .45) +
+  facet_wrap(~ term, ncol = 1, scales = "free_x") +
+  scale_color_manual(values = c("Point estimates" = "#C0392B",
+                                "Uncertainty-propagated" = "#2C3E50")) +
+  scale_shape_manual(values = c(17, 16)) +
+  labs(x = "Coefficient (log-odds of regime transition), 95% CI",
+       y = NULL, color = NULL, shape = NULL) +
+  theme_bw(base_size = 11) +
+  theme(legend.position = "top", panel.grid.minor = element_blank(),
+        strip.text = element_text(face = "bold", size = 9.5),
+        strip.background = element_rect(fill = "grey92"))
+```
+
+```{r}
+#| label: tbl-naive-moc
+#| tbl-cap: "The hazard of regime transition: point-estimate vs. uncertainty-propagated estimation"
+
+p_load(kableExtra)
+source(here::here("data", "customFunctions.R"))
+moc_res <- readRDS(here::here("results_regime_hazard_full.rds"))
+pt_res  <- readRDS(here::here("results_hazard_pointest.rds"))
+moc_nm  <- c("ANY change [all] (glm)", "DETERIORATION [dem] (Firth)", "IMPROVEMENT [aut] (Firth)")
+pt_nm   <- c("ANY [all] glm", "DETERIOR [dem] Firth", "IMPROVE [aut] Firth")
+
+var_order <- c(
+  disc_c = "Political discontent$_{t-1}$", supp_c = "Democratic support$_{t-1}$",
+  disc_supp = "Discontent $\\times$ Support", lnGDP_l = "Log GDP per capita",
+  grth_l = "GDP growth", regUN_l = "Regional democracy", musl = "\\% Muslim",
+  res_l = "Resource dependence", tenure = "Regime tenure (log)",
+  prior_trans = "Prior transitions", gini_l = "Income inequality", lnpop_l = "Log population")
+stars <- function(p) ifelse(p < .01, "***", ifelse(p < .05, "**", ifelse(p < .1, "*", "")))
+cell  <- function(est, se, p) sprintf("%.3f%s (%.3f)", est, stars(p), se)
+moc_col <- function(x) {
+  s <- suppressWarnings(MOCsumm(x$coef)) |>
+    dplyr::mutate(est = as.numeric(estimate), se = as.numeric(std.error), p = 2*(1-pnorm(abs(est/se)))) |>
+    dplyr::filter(term %in% names(var_order)); tibble(term = s$term, v = cell(s$est, s$se, s$p))
+}
+pt_col <- function(d) { s <- dplyr::filter(d, term %in% names(var_order)); tibble(term = s$term, v = cell(s$est, s$se, s$p)) }
+
+tab <- tibble(term = names(var_order))
+for (i in 1:3) {
+  g <- c("All", "Dem", "Aut")[i]
+  tab <- tab |>
+    dplyr::left_join(dplyr::rename(pt_col(pt_res[[pt_nm[i]]]),  !!paste0(g, ".1") := v), by = "term") |>
+    dplyr::left_join(dplyr::rename(moc_col(moc_res[[moc_nm[i]]]), !!paste0(g, ".2") := v), by = "term")
+}
+tab <- tab |> dplyr::mutate(term = var_order[term])
+nev <- purrr::map_dbl(moc_res, "n_ev")
+colnames(tab) <- c(" ", rep(c("Point est.", "Uncertainty"), 3))
+
+kbl(tab, booktabs = TRUE, escape = FALSE, align = c("l", rep("c", 6)), linesep = "") |>
+  add_header_above(c(" " = 1, "All regimes" = 2, "Democracies" = 2, "Autocracies" = 2)) |>
+  add_header_above(c(" " = 1, "(any change)" = 2, "(deterioration)" = 2, "(improvement)" = 2)) |>
+  column_spec(1, width = "9em") |>
+  kable_styling(font_size = 8, latex_options = c("hold_position", "scale_down")) |>
+  footnote(general_title = "", threeparttable = TRUE, escape = FALSE,
+    general = paste0(
+      "Transition events: ", paste(sprintf("%d", nev), collapse = " / "),
+      " (all / democracies / autocracies). Discrete-time hazard logit; democracy and ",
+      "autocracy models use Firth penalized likelihood. Each pair of columns reports the ",
+      "same model estimated from posterior means (`Point est.') vs. propagating the ",
+      "measurement uncertainty of discontent, support, and the V-Dem regime measure across ",
+      "900 draws by the method of composition (`Uncertainty'). Log-odds coefficients with ",
+      "standard errors in parentheses; the pooled model uses country-clustered standard errors, ",
+      "while the Firth models use model-based standard errors (clustered non-penalized ",
+      "estimates yield the same pattern; see the robustness appendix). ",
+      "*** p<0.01, ** p<0.05, * p<0.1."))
+```
+
+That the null is not an artifact of a misspecified model is clear from the controls, which are stable across the two estimators and behave exactly as the regime-survival literature predicts.
+Regime tenure is the strongest predictor in every model---longer-lived regimes are markedly less likely to change (odds ratios 0.56--0.69; $p<0.05$), the negative duration dependence characteristic of regime survival---and it is significant, and near-identical, whether or not uncertainty is propagated.
+Wealthier regimes are more stable (log GDP per capita) and resource-dependent democracies deteriorate faster (odds ratio 3.75), again under both estimators.
+It is specifically and only the public-opinion terms whose significance depends on ignoring measurement error: the structural correlates of regime survival are recovered cleanly either way.
+
+The fragility is systematic rather than particular to this specification.
+The same pattern---apparent significance under point estimates, nullity once uncertainty is propagated---recurs when regime instability is defined by the narrower V-Dem Episodes of Regime Transformation transition variable, when the discrete-time hazard is replaced by a Cox proportional-hazards survival model, and when Firth penalization is exchanged for ordinary logistic regression; nor do the field's other standard instability measures dissent, as neither Geddes-Wright-Frantz autocratic breakdowns nor Powell-Thyne coup attempts---both thinly covered in the survey era---show any significant effect of discontent once uncertainty is propagated (@sec-app-robust).
+The conclusion likewise survives controls for the temporal clustering of regime change (period indicators that confirm a strong post-2010 wave of democratic deterioration) and alternative parameterizations of duration dependence (@sec-app-robust).
+It is also foreshadowed by the number of draws: coefficients that reach significance when only twenty-five or thirty posterior draws are used routinely dissolve as the full 900 draws propagate the measurement uncertainty, a mechanical illustration of why acknowledging that uncertainty is not optional.
+
+Two conclusions follow.
+First, and substantively, once the measurement uncertainty of latent public opinion is taken seriously we find no robust evidence that political discontent shortens regime survival, nor that democratic support reliably conditions its effect; the directional patterns are consistent with critical-citizens theory, but they cannot be distinguished from zero.
+Second, and methodologically, the strong prior expectation of a discontent-instability link---prominent in classical legitimacy theory and in recent empirical work alike---is, at least in these data, substantially an artifact of treating error-laden opinion estimates as if they were measured precisely.
+This mirrors @Tai2024's reassessment of the effect of democratic support on democratic survival; we reach the same conclusion on the discontent side of the relationship, using independent data.
+The broader implication is methodological: estimated associations between mass political attitudes and regime outcomes are sensitive to whether the measurement uncertainty of the underlying opinion estimates is carried through the analysis, and should be interpreted with that sensitivity in mind.
