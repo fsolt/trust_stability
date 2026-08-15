@@ -286,7 +286,14 @@ gwf_cy <- democracyData::gwf_all %>%
     gwf_any_pre_change = gwf_spell - 1L,
 
     # demo track: gwf_nonautocracy labels non-autocratic spells directly (democracy/provisional/warlord/occupied; NA = autocratic)
-    gwf_democracy = replace_na(as.integer(gwf_nonautocracy == "democracy"), 0L), # NA rows (autocracies) -> 0
+    # democracy = 1; typed autocracy (gwf_nonautocracy NA) = 0; non-democratic
+    # interregna (provisional / warlord / foreign-occupied) = NA -> excluded from
+    # all GWF cells (JC 2026-08-06; previously lumped into the 0 side)
+    gwf_democracy = dplyr::case_when(
+      gwf_nonautocracy == "democracy" ~ 1L,
+      is.na(gwf_nonautocracy)         ~ 0L,
+      TRUE                            ~ NA_integer_
+    ),
     gwf_democratization = replace_na(as.integer(gwf_any_change == 1 & gwf_democracy == 0 &
       gwf_next == "democracy"), 0L),
     gwf_demo_break = replace_na(as.integer(gwf_any_change == 1 & gwf_democracy == 1 &
@@ -1286,8 +1293,8 @@ ls_canon <- list(
   ),
 
   # ---- GWF (16 boundary events -> exploratory only) --------------------
-  `GWF any regime change (all) base` = list(f = as.formula(glue("gwf_any_change ~ {RHS_BASE_C} + gwf_regime_age + I(gwf_regime_age^2)")), sub = quote(!is.na(gwf_any_change))),
-  `GWF any regime change (all) +ctrl` = list(f = as.formula(glue("gwf_any_change ~ {RHS_CTRL_GWF} + gwf_regime_age + I(gwf_regime_age^2)")), sub = quote(!is.na(gwf_any_change))),
+  `GWF any regime change (all) base` = list(f = as.formula(glue("gwf_any_change ~ {RHS_BASE_C} + gwf_regime_age + I(gwf_regime_age^2)")), sub = quote(!is.na(gwf_democracy))),
+  `GWF any regime change (all) +ctrl` = list(f = as.formula(glue("gwf_any_change ~ {RHS_CTRL_GWF} + gwf_regime_age + I(gwf_regime_age^2)")), sub = quote(!is.na(gwf_democracy))),
   `GWF any regime change (split IVs) base` = list(
     f = as.formula(glue("gwf_any_change ~ disc_gwf_dem_trim + disc_gwf_aut_trim + supp_gwf_dem_trim + supp_gwf_aut_trim + gwf_democracy + gwf_regime_age + I(gwf_regime_age^2)")),
     sub = quote(!is.na(gwf_any_change))

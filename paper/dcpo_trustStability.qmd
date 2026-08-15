@@ -8,36 +8,6 @@ format:
 crossref:
 #  sec-prefix: OSM
   sec-labels: alpha A
-# author:
-#   - name: Yuehong 'Cassandra' Tai
-#     email: yhcasstai@psu.edu
-#     orcid: 0000-0001-7303-7443
-#     affiliations:
-#       - ref: psu
-#   - name: Yue Hu
-#     corresponding: true
-#     affiliations:
-#       - ref: tsu
-#     orcid: 0000-0002-2829-3971
-#     email: yuehu@tsinghua.edu.cn
-#     url: https://sammo3182.github.io
-#   - name: Haofeng Ma
-#     orcid: https://orcid.org/0000-0003-4379-8449
-#     email: haofeng-ma@uiowa.edu
-#     affiliations:
-#       - ref: ui
-#   - name: Frederick Solt
-#     orcid: 0000-0002-3154-6132
-#     email: frederick-solt@uiowa.edu
-#     affiliations:
-#       - ref: ui
-# affiliations:
-#   - id: tsu
-#     name: Department of Political Science, Tsinghua University, Beijing, China
-#   - id: psu
-#     name: Center for Social Data Analytics, Penn State University, PA, U.S.
-#   - id: ui
-#     name: Department of Political Science, University of Iowa, IA, U.S.
 citeproc: false # to make multibib and wordcount work
 filters:
   - at: pre-render
@@ -83,8 +53,8 @@ keywords:
 
 -   Jeongho Choi, ORCID: <https://orcid.org/0000-0002-8060-7907>, Assistant Professor, Department of Political Science and International Relations, Kyung Hee University, [jeongho-choi\@uiowa.edu](mailto:jeonghochoi@khu.ac.kr){.email}
 -   Haofeng Ma, ORCID: <https://orcid.org/0000-0003-4379-8449>, Postdoctoral Fellow, School of Humanities and Social Science, The Chinese University of Hong Kong, Shenzhen, [haofeng-ma\@uiowa.edu](mailto:mahaofeng@cuhk.edu.cn){.email}
--   Yuehong Cassandra Tai, ORCID: <https://orcid.org/0000-0001-7303-7443>, Postdoctoral Fellow, Center for Social Data Analytics, Pennsylvania State University, [yhcasstai\@psu.edu](mailto:yhcasstai@psu.edu){.email}
 -   Yue Hu, ORCID: <https://orcid.org/0000-0002-2829-3971>, Associate Professor, Department of Political Science, Tsinghua University, [yuehu\@tsinghua.edu.cn](mailto:yuehu@tsinghua.edu.cn){.email}
+-   Yuehong Cassandra Tai, ORCID: <https://orcid.org/0000-0001-7303-7443>, Research Assistant Professor, Center for Social Data Analytics, Pennsylvania State University, [yhcasstai\@psu.edu](mailto:yhcasstai@psu.edu){.email}
 -   Frederick Solt, ORCID: <https://orcid.org/0000-0002-3154-6132>, Professor, Department of Political Science, University of Iowa, [frederick-solt\@uiowa.edu](mailto:frederick-solt@uiowa.edu){.email}
 
 # Data Availability Statement {.unlisted .unnumbered}
@@ -175,6 +145,42 @@ ktab <- function(d, cap) {
 # Theory {.unlisted .unnumbered}
 
 # Data and Measurement {.unlisted .unnumbered}
+While measures tapping political discontent are abound in existing studies, there is no single measure of political discontent that won universal acceptance in the discipline.
+The lack of the universal measure of political discontent can be partly attributed to the fact that scholars themselves have been defined political discontent in various ways.
+For example, some scholars, notably Easton, conceptualize political discontent as a lack of the diffuse support for a political system, while others define it as low external efficacy, democratic deficits, political distrust or dissatisfaction with incumbent leaders [@easton1975re; @jennings2016dimensions; @muller1983discontent; @norris2011democratic].
+Different definitions of discontent have fragmented its measures, each of which has limited availability across time and countries.
+The extent of fragmentation in the discontent measure is at the level that scholars are even debated on whether political discontent is on the rise or not worldwide [@jennings2017decline].
+
+Following Easton [-@Easton1965], we define political discontent as a lack of diffuse support for a political system.
+Diffuse support concerns a perception of system legitimacy and serves as a 'reservoir of favorable attitudes or goodwill' toward a system.
+What distinguish diffuse support from specific support are its systematic pattern and its threat to regime stability.
+As implied its name, specific support concerns support for the specific incumbent government, its leaders or its policies.
+And, it often fluctuates over time without systematic pattern, and researchers have argued that it does not necessarily translate into rejection of the regime itself [@miller1974political; @citrin1974comment; @craig1981political], not only because its fluctuation but also, in democracy, elections allow citizens to express dissatisfaction and change political leadership they are dissatisfied with [@muller1983discontent].
+However, the erosion of diffuse support reflects systematic lower support for the basic political arrangements of politics and can thus provide the public with willingness to seek radical change to the political regime [@jennings2017decline].
+As this paper examines how political discontent affect regime stability, the concept of diffuse support has a better fit.
+
+We rely on the public political discontent (PPD), the latent country-year estimates of political discontent estimated by the Dynamic Comparative Public Opinion (DCPO) model [-@ TBD]. 
+The DCPO model is a Bayesian hierarchical Item Response Theory model that estimates latent public opinion of interest from multiple cross-national survey data [@Solt2020c].
+The latent variable model approach to public opinion estimates was recently introduced to the field as a mean to address fragmentation of public opinion data across time, country, and disparate survey items, and its application has extended to public support for democracy, policy ideology or preference for redistribution [@berwick2025modgirt; @Claassen2020; @Caughey2019].
+These models estimate the latent concept by gleaning information from multiple survey items with accounting for differences in cross-national survey through parameters for question difficulty and dispersion, adjusts for country-specific item bias, and incorporates responses from both dichotomous and ordinal questions, and smooth estimates in years with sparse data while preserving comparability across countries using dynamic priors.
+Drawing on the DCPO, the PPD dataset collect 388 survey datasets with a total of 111 distinct survey items tapping political discontent, covering 136 different countries over the 56 years from 1968 to 2023.
+
+We decide to use the PPD for the following reasons.
+First, the dataset conceptualizes political discontent as a lack of diffuse support, clearly alingning with our focus,
+Second, it provides the most comprehensive country-year esimtate of political discontent to our knowledge, which can offer the explicit methodological benefit that our result can avoid changing depending on differenc choice of cross-natioanal survey data [@Claassen2020].
+Third, the estimate of PPD shows a good level of validation scores, including internal and external covergent validation and construct validation [@Adcock2001].
+
+2. Discussion of the DVs (why are different DVs needed)
+
+The choice of the dependent variable, regime stability, also deserves attention.
+As implied by its name, the measure of regime stability hevaily depends on the definition of the regime, and there are multiple measures of regime stability that builds on different definitions.
+Widely-used measures of regime stability are built on the dichotomy of democracy versus non-democracy or authoritarian regimes.
+The 
+
+
+3. Estimation Models
+4. Controls
+
 
 ## Public political discontent and democratic support {.unnumbered}
 
