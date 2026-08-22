@@ -1,25 +1,25 @@
 "Model","Variable","Estimator","Naive b","Naive p","MOC b","MOC se","MOC p","Events"
-"A. Liberal democracy (all regimes)","Discontent (t-1)","Pooled OLS","-0.042","(0.305)","-0.040","0.043","(0.355)",NA
-"A. Liberal democracy (all regimes)","Support (t-1)","Pooled OLS","0.102**","(0.038)","0.078+","0.045","(0.083)",NA
-"A. Liberal democracy (all regimes)","Discontent (t-1)","System GMM","-0.034","(0.395)","-0.030","0.043","(0.488)",NA
-"A. Liberal democracy (all regimes)","Support (t-1)","System GMM","0.093","(0.122)","0.058","0.062","(0.348)",NA
-"B. Liberal democracy (regime split)","Discontent in autocracies (t-1)","Pooled OLS","0.066","(0.290)","0.057","0.064","(0.375)",NA
-"B. Liberal democracy (regime split)","Discontent in democracies (t-1)","Pooled OLS","-0.066","(0.163)","-0.069","0.049","(0.156)",NA
-"B. Liberal democracy (regime split)","Support in autocracies (t-1)","Pooled OLS","0.062","(0.394)","0.049","0.073","(0.501)",NA
-"B. Liberal democracy (regime split)","Support in democracies (t-1)","Pooled OLS","0.097+","(0.062)","0.074","0.051","(0.143)",NA
-"B. Liberal democracy (regime split)","Discontent in autocracies (t-1)","System GMM (cautionary)","0.386+","(0.054)","0.391**","0.195","(0.045)",NA
-"B. Liberal democracy (regime split)","Discontent in democracies (t-1)","System GMM (cautionary)","-0.117","(0.461)","-0.122","0.160","(0.445)",NA
-"B. Liberal democracy (regime split)","Support in autocracies (t-1)","System GMM (cautionary)","0.051","(0.811)","0.090","0.200","(0.653)",NA
-"B. Liberal democracy (regime split)","Support in democracies (t-1)","System GMM (cautionary)","-0.735***","(0.006)","-0.612***","0.232","(0.008)",NA
-"C. Electoral democracy (all regimes)","Discontent (t-1)","Pooled OLS","-0.000","(0.998)","-0.009","0.051","(0.856)",NA
-"C. Electoral democracy (all regimes)","Support (t-1)","Pooled OLS","0.102+","(0.061)","0.078","0.054","(0.149)",NA
-"C. Electoral democracy (all regimes)","Discontent (t-1)","System GMM","-0.007","(0.872)","-0.022","0.055","(0.688)",NA
-"C. Electoral democracy (all regimes)","Support (t-1)","System GMM","0.090","(0.130)","0.052","0.066","(0.430)",NA
-"D. Electoral democracy (regime split)","Discontent in autocracies (t-1)","Pooled OLS","0.060","(0.437)","0.050","0.078","(0.518)",NA
-"D. Electoral democracy (regime split)","Discontent in democracies (t-1)","Pooled OLS","-0.022","(0.672)","-0.029","0.051","(0.570)",NA
-"D. Electoral democracy (regime split)","Support in autocracies (t-1)","Pooled OLS","0.084","(0.345)","0.068","0.082","(0.412)",NA
-"D. Electoral democracy (regime split)","Support in democracies (t-1)","Pooled OLS","0.094+","(0.072)","0.069","0.052","(0.185)",NA
-"D. Electoral democracy (regime split)","Discontent in autocracies (t-1)","System GMM (cautionary)","0.077","(0.697)","0.149","0.199","(0.452)",NA
-"D. Electoral democracy (regime split)","Discontent in democracies (t-1)","System GMM (cautionary)","-0.441**","(0.027)","-0.399**","0.193","(0.038)",NA
-"D. Electoral democracy (regime split)","Support in autocracies (t-1)","System GMM (cautionary)","0.080","(0.728)","0.116","0.240","(0.629)",NA
-"D. Electoral democracy (regime split)","Support in democracies (t-1)","System GMM (cautionary)","-0.889***","(0.005)","-0.730**","0.286","(0.011)",NA
+"A. Liberal democracy (all regimes)","Discontent (t-1)","Pooled OLS","-0.043","(0.299)","-0.043","0.042","(0.310)",NA
+"A. Liberal democracy (all regimes)","Support (t-1)","Pooled OLS","0.102**","(0.038)","0.079+","0.045","(0.079)",NA
+"A. Liberal democracy (all regimes)","Discontent (t-1)","System GMM","-0.035","(0.395)","-0.030","0.043","(0.483)",NA
+"A. Liberal democracy (all regimes)","Support (t-1)","System GMM","0.094","(0.118)","0.057","0.058","(0.325)",NA
+"B. Liberal democracy (regime split)","Discontent in autocracies (t-1)","Pooled OLS","0.055","(0.379)","0.044","0.065","(0.501)",NA
+"B. Liberal democracy (regime split)","Discontent in democracies (t-1)","Pooled OLS","-0.066","(0.164)","-0.069","0.048","(0.150)",NA
+"B. Liberal democracy (regime split)","Support in autocracies (t-1)","Pooled OLS","0.056","(0.444)","0.044","0.071","(0.534)",NA
+"B. Liberal democracy (regime split)","Support in democracies (t-1)","Pooled OLS","0.106**","(0.042)","0.084","0.051","(0.101)",NA
+"B. Liberal democracy (regime split)","Discontent in autocracies (t-1)","System GMM (cautionary)","0.380+","(0.056)","0.369+","0.192","(0.055)",NA
+"B. Liberal democracy (regime split)","Discontent in democracies (t-1)","System GMM (cautionary)","-0.120","(0.451)","-0.129","0.159","(0.417)",NA
+"B. Liberal democracy (regime split)","Support in autocracies (t-1)","System GMM (cautionary)","0.024","(0.910)","0.081","0.202","(0.688)",NA
+"B. Liberal democracy (regime split)","Support in democracies (t-1)","System GMM (cautionary)","-0.752***","(0.005)","-0.623***","0.230","(0.007)",NA
+"C. Electoral democracy (all regimes)","Discontent (t-1)","Pooled OLS","-0.001","(0.987)","-0.009","0.051","(0.862)",NA
+"C. Electoral democracy (all regimes)","Support (t-1)","Pooled OLS","0.102+","(0.061)","0.078","0.053","(0.142)",NA
+"C. Electoral democracy (all regimes)","Discontent (t-1)","System GMM","-0.007","(0.873)","-0.020","0.055","(0.718)",NA
+"C. Electoral democracy (all regimes)","Support (t-1)","System GMM","0.091","(0.126)","0.056","0.061","(0.363)",NA
+"D. Electoral democracy (regime split)","Discontent in autocracies (t-1)","Pooled OLS","0.047","(0.541)","0.039","0.078","(0.622)",NA
+"D. Electoral democracy (regime split)","Discontent in democracies (t-1)","Pooled OLS","-0.018","(0.730)","-0.023","0.052","(0.660)",NA
+"D. Electoral democracy (regime split)","Support in autocracies (t-1)","Pooled OLS","0.075","(0.404)","0.059","0.086","(0.496)",NA
+"D. Electoral democracy (regime split)","Support in democracies (t-1)","Pooled OLS","0.107**","(0.041)","0.083","0.054","(0.122)",NA
+"D. Electoral democracy (regime split)","Discontent in autocracies (t-1)","System GMM (cautionary)","0.070","(0.709)","0.126","0.182","(0.489)",NA
+"D. Electoral democracy (regime split)","Discontent in democracies (t-1)","System GMM (cautionary)","-0.426**","(0.030)","-0.385**","0.191","(0.043)",NA
+"D. Electoral democracy (regime split)","Support in autocracies (t-1)","System GMM (cautionary)","0.043","(0.840)","0.089","0.230","(0.698)",NA
+"D. Electoral democracy (regime split)","Support in democracies (t-1)","System GMM (cautionary)","-0.864***","(0.006)","-0.700**","0.277","(0.012)",NA

@@ -1,37 +1,9 @@
 "Model","Variable","Estimator","Naive b","Naive p","MOC b","MOC se","MOC p","Events"
-"A. DD regime transition (dem vs auto) (all regimes)","Discontent","Logit","0.030","(0.119)","0.025","0.019","(0.191)",36
-"A. DD regime transition (dem vs auto) (all regimes)","Discontent","Firth","0.028+","(0.087)","0.023","0.016","(0.140)",36
-"A. DD regime transition (dem vs auto) (all regimes)","Support","Logit","-0.010","(0.562)","-0.009","0.018","(0.624)",36
-"A. DD regime transition (dem vs auto) (all regimes)","Support","Firth","-0.010","(0.452)","-0.009","0.014","(0.529)",36
-"B. DD regime transition (dem vs auto) (regime split)","Discontent in autocracies","Logit","0.066**","(0.010)","0.053**","0.025","(0.033)",36
-"B. DD regime transition (dem vs auto) (regime split)","Discontent in autocracies","Firth","0.061***","(0.008)","0.048**","0.023","(0.035)",36
-"B. DD regime transition (dem vs auto) (regime split)","Discontent in democracies","Logit","-0.006","(0.785)","-0.005","0.024","(0.830)",36
-"B. DD regime transition (dem vs auto) (regime split)","Discontent in democracies","Firth","-0.007","(0.727)","-0.007","0.021","(0.754)",36
-"B. DD regime transition (dem vs auto) (regime split)","Support in autocracies","Logit","-0.006","(0.779)","-0.006","0.021","(0.762)",36
-"B. DD regime transition (dem vs auto) (regime split)","Support in autocracies","Firth","-0.007","(0.707)","-0.006","0.020","(0.753)",36
-"B. DD regime transition (dem vs auto) (regime split)","Support in democracies","Logit","-0.019","(0.436)","-0.017","0.025","(0.489)",36
-"B. DD regime transition (dem vs auto) (regime split)","Support in democracies","Firth","-0.018","(0.361)","-0.017","0.021","(0.411)",36
-"C. BMR regime transition (dem vs auto) (all regimes)","Discontent","Logit","0.036**","(0.045)","0.030+","0.018","(0.099)",31
-"C. BMR regime transition (dem vs auto) (all regimes)","Discontent","Firth","0.034**","(0.046)","0.029+","0.016","(0.074)",31
-"C. BMR regime transition (dem vs auto) (all regimes)","Support","Logit","-0.011","(0.535)","-0.009","0.016","(0.569)",31
-"C. BMR regime transition (dem vs auto) (all regimes)","Support","Firth","-0.011","(0.459)","-0.009","0.014","(0.513)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Discontent in autocracies","Logit","0.080***","(0.002)","0.070***","0.027","(0.010)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Discontent in autocracies","Firth","0.075***","(0.002)","0.063***","0.023","(0.007)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Discontent in democracies","Logit","-0.010","(0.682)","-0.008","0.024","(0.739)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Discontent in democracies","Firth","-0.011","(0.622)","-0.009","0.023","(0.685)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Support in autocracies","Logit","0.013","(0.561)","0.009","0.024","(0.713)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Support in autocracies","Firth","0.012","(0.566)","0.008","0.023","(0.722)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Support in democracies","Logit","-0.035","(0.247)","-0.031","0.029","(0.284)",31
-"D. BMR regime transition (dem vs auto) (regime split)","Support in democracies","Firth","-0.034","(0.107)","-0.028","0.023","(0.224)",31
-"E. GWF regime transition (dem vs auto) (all regimes; exploratory)","Discontent","Logit","0.005","(0.865)","0.002","0.031","(0.960)",12
-"E. GWF regime transition (dem vs auto) (all regimes; exploratory)","Discontent","Firth","0.005","(0.847)","0.002","0.027","(0.940)",12
-"E. GWF regime transition (dem vs auto) (all regimes; exploratory)","Support","Logit","0.030","(0.433)","0.021","0.037","(0.578)",12
-"E. GWF regime transition (dem vs auto) (all regimes; exploratory)","Support","Firth","0.025","(0.295)","0.018","0.027","(0.502)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Discontent in non-democracies","Logit","0.021","(0.589)","0.016","0.041","(0.703)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Discontent in non-democracies","Firth","0.017","(0.588)","0.012","0.032","(0.709)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Discontent in democracies","Logit","-0.030","(0.563)","-0.024","0.051","(0.634)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Discontent in democracies","Firth","-0.026","(0.522)","-0.021","0.042","(0.624)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Support in non-democracies","Logit","0.033","(0.288)","0.025","0.037","(0.508)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Support in non-democracies","Firth","0.027","(0.331)","0.021","0.032","(0.509)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Support in democracies","Logit","0.013","(0.868)","0.010","0.067","(0.877)",12
-"F. GWF regime transition (dem vs auto) (regime split; exploratory)","Support in democracies","Firth","0.011","(0.787)","0.009","0.041","(0.825)",12
+"DD regime transition (dem vs auto) (regime split)","Discontent in autocracies","Firth","0.058***","(0.010)","0.046**","0.023","(0.043)",36
+"DD regime transition (dem vs auto) (regime split)","Discontent in democracies","Firth","-0.010","(0.629)","-0.010","0.022","(0.655)",36
+"DD regime transition (dem vs auto) (regime split)","Support in autocracies","Firth","-0.002","(0.907)","-0.002","0.020","(0.920)",36
+"DD regime transition (dem vs auto) (regime split)","Support in democracies","Firth","-0.015","(0.471)","-0.013","0.022","(0.545)",36
+"BMR regime transition (dem vs auto) (regime split)","Discontent in autocracies","Firth","0.075***","(0.002)","0.064**","0.025","(0.011)",31
+"BMR regime transition (dem vs auto) (regime split)","Discontent in democracies","Firth","-0.011","(0.621)","-0.010","0.023","(0.651)",31
+"BMR regime transition (dem vs auto) (regime split)","Support in autocracies","Firth","0.012","(0.563)","0.009","0.023","(0.706)",31
+"BMR regime transition (dem vs auto) (regime split)","Support in democracies","Firth","-0.034","(0.109)","-0.027","0.024","(0.250)",31

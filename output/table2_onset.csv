@@ -1,29 +1,13 @@
 "Model","Variable","Estimator","Naive b","Naive p","MOC b","MOC se","MOC p","Events"
-"A. ERT any onset (all regimes)","Discontent (t-1)","Logit","0.027**","(0.040)","0.024+","0.013","(0.060)",90
-"A. ERT any onset (all regimes)","Discontent (t-1)","Firth","0.027**","(0.019)","0.024**","0.011","(0.035)",90
-"A. ERT any onset (all regimes)","Support (t-1)","Logit","-0.021**","(0.039)","-0.016+","0.010","(0.097)",90
-"A. ERT any onset (all regimes)","Support (t-1)","Firth","-0.021**","(0.039)","-0.016","0.010","(0.102)",90
-"B. ERT any onset (regime split)","Discontent in autocracies (t-1)","Logit","0.059***","(0.005)","0.048**","0.021","(0.021)",90
-"B. ERT any onset (regime split)","Discontent in autocracies (t-1)","Firth","0.057***","(0.002)","0.047**","0.018","(0.010)",90
-"B. ERT any onset (regime split)","Discontent in democracies (t-1)","Logit","0.007","(0.644)","0.007","0.014","(0.614)",90
-"B. ERT any onset (regime split)","Discontent in democracies (t-1)","Firth","0.006","(0.655)","0.006","0.014","(0.640)",90
-"B. ERT any onset (regime split)","Support in autocracies (t-1)","Logit","0.017","(0.318)","0.012","0.018","(0.504)",90
-"B. ERT any onset (regime split)","Support in autocracies (t-1)","Firth","0.017","(0.320)","0.012","0.018","(0.510)",90
-"B. ERT any onset (regime split)","Support in democracies (t-1)","Logit","-0.045***","(0.002)","-0.036**","0.014","(0.012)",90
-"B. ERT any onset (regime split)","Support in democracies (t-1)","Firth","-0.044***","(0.001)","-0.034**","0.013","(0.011)",90
-"C. ERT any onset (autocracies subsample)","Discontent (t-1)","Logit","0.041**","(0.040)","0.033+","0.020","(0.092)",32
-"C. ERT any onset (autocracies subsample)","Discontent (t-1)","Firth","0.038**","(0.047)","0.031","0.019","(0.108)",32
-"C. ERT any onset (autocracies subsample)","Support (t-1)","Logit","0.003","(0.889)","0.001","0.019","(0.959)",32
-"C. ERT any onset (autocracies subsample)","Support (t-1)","Firth","0.002","(0.900)","0.001","0.017","(0.939)",32
-"D. ERT any onset (democracies subsample)","Discontent (t-1)","Logit","0.018","(0.348)","0.016","0.019","(0.394)",58
-"D. ERT any onset (democracies subsample)","Discontent (t-1)","Firth","0.017","(0.227)","0.016","0.014","(0.268)",58
-"D. ERT any onset (democracies subsample)","Support (t-1)","Logit","-0.048***","(0.004)","-0.037**","0.015","(0.017)",58
-"D. ERT any onset (democracies subsample)","Support (t-1)","Firth","-0.046***","(0.001)","-0.036**","0.014","(0.010)",58
-"E. ERT liberalization onset (up) (autocracies subsample)","Discontent (t-1)","Logit","0.040+","(0.056)","0.033","0.025","(0.172)",18
-"E. ERT liberalization onset (up) (autocracies subsample)","Discontent (t-1)","Firth","0.035","(0.128)","0.031","0.023","(0.182)",18
-"E. ERT liberalization onset (up) (autocracies subsample)","Support (t-1)","Logit","0.025","(0.248)","0.018","0.021","(0.381)",18
-"E. ERT liberalization onset (up) (autocracies subsample)","Support (t-1)","Firth","0.023","(0.218)","0.017","0.019","(0.364)",18
-"F. ERT erosion onset (down) (democracies subsample)","Discontent (t-1)","Logit","0.025","(0.208)","0.021","0.019","(0.268)",42
-"F. ERT erosion onset (down) (democracies subsample)","Discontent (t-1)","Firth","0.024","(0.154)","0.021","0.017","(0.206)",42
-"F. ERT erosion onset (down) (democracies subsample)","Support (t-1)","Logit","-0.050***","(0.006)","-0.039**","0.017","(0.020)",42
-"F. ERT erosion onset (down) (democracies subsample)","Support (t-1)","Firth","-0.049***","(0.002)","-0.038**","0.015","(0.014)",42
+"ERT any onset (regime split)","Discontent in autocracies (t-1)","Firth","0.059***","(0.001)","0.049***","0.019","(0.009)",90
+"ERT any onset (regime split)","Discontent in democracies (t-1)","Firth","0.012","(0.402)","0.012","0.015","(0.414)",90
+"ERT any onset (regime split)","Support in autocracies (t-1)","Firth","0.018","(0.320)","0.012","0.019","(0.523)",90
+"ERT any onset (regime split)","Support in democracies (t-1)","Firth","-0.046***","(0.001)","-0.037**","0.015","(0.014)",90
+"ERT democratization-episode onset (regime split)","Discontent in autocracies (t-1)","Firth","0.036+","(0.078)","0.030","0.022","(0.166)",34
+"ERT democratization-episode onset (regime split)","Discontent in democracies (t-1)","Firth","0.020","(0.482)","0.019","0.028","(0.491)",34
+"ERT democratization-episode onset (regime split)","Support in autocracies (t-1)","Firth","0.013","(0.471)","0.010","0.019","(0.587)",34
+"ERT democratization-episode onset (regime split)","Support in democracies (t-1)","Firth","-0.009","(0.714)","-0.009","0.024","(0.695)",34
+"ERT autocratization-episode onset (regime split)","Discontent in autocracies (t-1)","Firth","0.052**","(0.049)","0.041","0.027","(0.125)",57
+"ERT autocratization-episode onset (regime split)","Discontent in democracies (t-1)","Firth","0.020","(0.208)","0.017","0.016","(0.264)",57
+"ERT autocratization-episode onset (regime split)","Support in autocracies (t-1)","Firth","0.002","(0.943)","0.001","0.025","(0.958)",57
+"ERT autocratization-episode onset (regime split)","Support in democracies (t-1)","Firth","-0.053***","(0.001)","-0.041***","0.016","(0.008)",57

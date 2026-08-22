@@ -148,7 +148,7 @@ For example, some scholars, notably Easton, conceptualize political discontent a
 Different definitions of discontent have fragmented its measures, and each resulting measure has limited coverage across countries and over time.
 The fragmentation is such that scholars still debate whether political discontent is even rising worldwide [@jennings2017decline].
 
-Following Easton [-@Easton1965], we define political discontent as a lack of diffuse support for the political system.
+Following Easton [-@easton1975re], we define political discontent as a lack of diffuse support for the political system.
 Diffuse support concerns perceptions of system legitimacy and serves as a 'reservoir of favorable attitudes or goodwill' toward a system.
 What distinguish diffuse support from specific support is its more enduring character and its consequences beyond any single government.
 As its name implies, specific support concerns support for the specific incumbent government, its leaders or its policies.
@@ -190,64 +190,167 @@ Third, the two approaches have difficulty incorporating democratization and auto
 In this paper, we adopt a procedural conception of political regimes. 
 Because this is the dominant approach in the existing empirical literature, doing so allows our findings to engage directly with a broad literature on democratization, autocratization, and regime stability. 
 At the same time, to address the limitations of both the transitologist and incrementalist approaches, we rely on the Episodes of Regime Transformation (ERT) dataset [@maerz2024episodes]. 
-Rather than identifying regime change solely from discrete transitions or annual changes in democracy scores, the ERT dataset identifies sustained episodes of substantial changes in scores along the democracy–autocracy continuum. 
-With the data, we first examine whether higher levels of political discontent are associated with the onset of episodes. 
-We then distinguish the direction of these episodes and examine whether political discontent is associated with the onset of episode resulting in specific outcomes, such as democratization or autocratization.
-This approach allows us to examine whether political discontent contributes to the initiation of regime transformation while avoiding the assumption that all transformations necessarily culminate in a change of regime type.
+Rather than identifying regime change solely from discrete transitions or annual changes in democracy scores, the ERT dataset identifies sustained episodes of substantial change along the democracy–autocracy continuum.
+Using these data, we first examine whether higher levels of political discontent are associated with the onset of regime-transformation episodes. 
+However, rather than assuming that the effect of political discontent on regime stability is the same across regime types, we allow its effect to vary between democracies and autocracies[@Claassen2020; @Tai2024]. 
+Specifically, we use the regime-type classification provided by the ERT dataset to construct two regime-specific measures of political discontent: political discontent in democracies and political discontent in autocracies. 
+Each measure varies with the underlying level of political discontent only when a country belongs to the corresponding regime type and is coded zero otherwise. 
+We include both measures, together with the regime-type indicator, in the same model, to estimate separately the association between political discontent and the onset of regime transformation in democracies and autocracies.
+We further distinguish the direction of these episodes and examine whether political discontent is associated with the onset of episode resulting in specific outcomes, such as democratization or autocratization.
+This approach can examine whether political discontent contributes to the initiation of regime transformation while avoiding the assumption that all transformations lead to the same outcome.
 
 To examine these relationships, we employ discrete-time logistic regression, which models how covariates affect the probability that an episode begins within discrete time intervals. 
-This approach is appropriate because our dependent variable, the onset of episode, is measured in country-years. 
-We consequently do not employ continuous-time hazard models such as the Cox proportional hazards model. 
+This approach is appropriate because our dependent variable, the onset of episode, is measured in country-years. We consequently do not employ continuous-time hazard models such as the Cox proportional hazards model.
+For each specification, we estimate both conventional logistic regression using a generalized linear model (GLM) and Firth's penalized-likelihood logistic regression [@puhr2017firth; @muchlinski2016comparing]. 
+The latter provides a robustness check against small-sample bias and separation that may arise when regime-transformation onsets are relatively rare events.
+
 To account for measurement uncertainty in political discontent, we use the method of composition (MOC). 
 The MOC repeatedly draws 900 simulated values of political discontent from its estimated distribution, re-estimates each model using each draw, and combines the resulting estimates into a final distribution of coefficients [@Tai2024]. 
-This procedure propagates uncertainty from the measurement of political discontent into the uncertainty surrounding our regression estimates.
-
-The models also include a standard set of covariates associated with regime transformation: logged GDP per capita, GDP growth, regional democracy, the percentage of the population that is Muslim, resource dependence, OECD membership, income inequality measured using SWIID 9.8, and logged population. We additionally account for temporal dependence by including the regime-age clock, its squared term, and a count of previous transitions. 
+This procedure propagates uncertainty from the measurement of political discontent into the uncertainty surrounding our regression estimates. The models also include a standard set of covariates associated with regime transformation: logged GDP per capita, GDP growth, regional democracy, the percentage of the population that is Muslim, resource dependence, OECD membership, income inequality measured using SWIID 9.8, and logged population. We additionally account for temporal dependence by including the regime-age clock, its squared term, and a count of previous transitions. 
+We also include public support for democracy as a control [@Claassen2020; @choi2026public].
 
 # Results {.unlisted .unnumbered}
 
+```{r onset-effects, include=FALSE}
+# Substantive-effect quantities for the main onset model, computed per MOC draw
+moc_onset <- readRDS(here::here("output", "results_ctrlglv_hazard.rds"))[["onset (split IVs) [firth]"]]
+stats_onset <- readRDS(here::here("output", "onset_sample_stats.rds"))
+base_aut <- stats_onset$base_aut
+sd_disc_aut <- stats_onset$sd_disc_aut
+or_to_p <- function(p0, or) {o <- p0 / (1 - p0) * or; o / (1 + o)}
+dpp_draws <- 100 * (or_to_p(base_aut, exp(moc_onset[["disc_aut_trim_lag1"]] * sd_disc_aut)) - base_aut)
+dpp_est <- mean(dpp_draws)
+dpp_ci  <- quantile(dpp_draws, c(.025, .975))
+regvar_est <- mean(moc_onset[["reg_democracy_lag1"]])
+regvar_ci  <- quantile(moc_onset[["reg_democracy_lag1"]], c(.025, .975))
+supp_draws <- 100 * (or_to_p(stats_onset$base_dem,
+                             exp(moc_onset[["supp_dem_trim_lag1"]] * stats_onset$sd_supp_dem)) -
+                     stats_onset$base_dem)
+supp_est <- mean(supp_draws)
+supp_ci  <- quantile(supp_draws, c(.025, .975))
+```
+Figure 1 presents the estimated association between political discontent and the onset of regime-transformation episodes separately for democracies and autocracies.
+The results reveal a clear difference across regime types. 
+In autocracies, higher political discontent is positively and significantly associated with the onset of regime transformation episode. 
+A one-standard-deviation increase in political discontent is associated with an average increase of `r sprintf("%.1f", dpp_est)` percentage points in the probability of episode onset (95% credible interval: `r sprintf("%.1f", dpp_ci[1])` to `r sprintf("%.1f", dpp_ci[2])`), net of the other variables included in the model. 
+This substantive association is particularly notable because it represents the largest estimated change in the probability of episode onset among the variables included in the model.
+By contrast, political discontent is not significantly associated with episode onset in democracies, although its point estimate is also positive.
+
+Taken together, these results are consistent with the expectation that political discontent is associated with greater regime instability, but suggest that this relationship is concentrated in autocratic regimes. 
+One possible explanation for this regime-specific pattern is that democratic elections provide an institutional mechanism through which political discontent can be channeled without necessarily threatening the regime itself [@Ma_Choi_Tai_Hu_Solt_2026]. 
+In democracies, dissatisfied citizens can replace incumbent leaders through elections rather than translating dissatisfaction with political authorities into rejection of the political regime [@muller1983discontent; @rooduijn2016expressing]. 
+Autocracies generally provide fewer institutionalized opportunities for such electoral replacement, making accumulated political discontent more likely to coincide with broader pressures for regime transformation.
+
 ```{r}
 #| label: fig-battery
-#| fig-cap: "Focal coefficients with 95% confidence intervals, naive (posterior-mean data, open grey) vs. method of composition (900 draws, solid blue). Top: pooled-OLS democracy-level models (x1000). Middle: ERT episode-onset hazards (Firth). Bottom: completed regime transitions over the DD and BMR democracy boundaries (Firth). Regime-labeled rows split the opinion slopes by regime type; exact estimates for every cell, and all subsample, plain-logit, and exploratory GWF variants, are reported in the appendix tables."
+#| fig-cap: "Coefficients from the discrete-time hazard model of episode onset."
 #| out-width: "100%"
 knitr::include_graphics(here::here("output", "fig_battery.png"))
 ```
 
-**Political discontent**
+Public support for democracy exhibits a different regime-specific pattern. 
+In autocracies, democratic support is not significantly associated with the onset of regime-transformation episodes. 
+In democracies, however, higher support for democracy is negatively and significantly associated with episode onset. 
+A one-standard-deviation increase in support is associated with an average reduction of `r sprintf("%.1f", abs(supp_est))` percentage points in the probability of episode onset (95% credible interval: `r sprintf("%.1f", abs(supp_ci[2]))` to `r sprintf("%.1f", abs(supp_ci[1]))`). 
+It should not, however, be interpreted as direct evidence that democratic support reduces the probability of democratic breakdown. 
+The dependent variable captures the onset of substantial and sustained transformation in either direction along the democracy–autocracy continuum. 
+Among democracies, therefore, a lower probability of episode onset could reflect a lower likelihood of democratic regression, democratic deepening, or both. We examine the direction and eventual outcomes of these transformation episodes separately below.
+Among the control variables, regional democracy and regime age are negatively associated with episode onset, whereas population size is positively associated with it.
+GDP growth also shows a negative, although only marginally significant, association with episode onset, consistent with previous evidence linking stronger economic performance to greater regime stability [@gassebner2013extreme].
+The remaining covariates are not statistically distinguishable from zero at conventional levels after accounting for measurement uncertainty.
 
-- *Destabilizes non-democracies.* Discontent among publics in autocracies
-  raises the hazard that a regime-change episode begins the following year;
-  the effect survives uncertainty propagation.
-- *Predicts completed democratization -- under turnover-based codings.* The
-  democratization-side effect holds in DD and BMR, the dichotomies built
-  around government turnover; it does not appear in ERT's index-threshold
-  transitions. The event-overlap audit above shows why this is
-  coding-conditional rather than contradictory: the codings record largely
-  distinct "democratization" events, and discontent precedes the turnover
-  type.
-- *Does nothing in democracies.* No effect on democratic breakdown under any
-  of the four codings, none on erosion-episode onset, none on annual democracy
-  levels. The "discontent kills democracy" narrative finds no support at any
-  severity level -- a null replicated across four independent event schemes,
-  not one.
+```{r}
+#| label: fig-direction-outcome
+#| fig-cap: "Coefficients from discrete-time hazard models of direction-specific and outcome-specific episode onset."
+#| out-width: "100%"
+knitr::include_graphics(here::here("output", "fig_direction_outcome.png"))
+```
+```{r fig2-effects, include=FALSE}
+haz_moc <- readRDS(here::here("output", "results_ctrlglv_hazard.rds"))
+haz_nv  <- readRDS(here::here("output", "results_ctrlglv_hazard_naive.rds"))
+cf <- function(cell, term) {
+  d <- haz_moc[[cell]][[term]]
+  list(b = mean(d), lo = quantile(d, .025), hi = quantile(d, .975),
+       p = 2 * (1 - pnorm(abs(mean(d) / sd(d)))))
+}
+np <- function(cell, term) {
+  r <- haz_nv[[cell]]; r <- r[r$term == term, ]
+  2 * (1 - pnorm(abs(r$naive_est / r$naive_se)))
+}
+f2_dem  <- cf("onset for democratization (split IVs) [firth]", "disc_aut_trim_lag1")
+f2_aut  <- cf("onset for autocratization (split IVs) [firth]", "disc_aut_trim_lag1")
+f2_deep <- cf("onset for auto deepen [firth]", "disc_trim_lag1")
+f2_aut_np  <- np("onset for autocratization (split IVs) [firth]", "disc_aut_trim_lag1")
+f2_deep_np <- np("onset for auto deepen [firth]", "disc_trim_lag1")
+fb <- function(x) sprintf("%.3f", x)
+```
 
-**Democratic support**
+Figure 2 further examines whether the destabilizing association of political discontent in autocracies takes a particular direction—upward (democratization episodes) or downward (autocratization episodes) along the democracy–autocracy continuum. 
+It should be noted that democratization and autocratization here do not necessarily denote transitions across regime types.
+Instead, they represent sustained movement up or down the continuum, following Maerz et al.[-@maerz2024episodes]. 
+The upper panel distinguishes between these two directions. 
+In autocracies, the estimated association of political discontent is positive for the onset of both democratization episodes (95% credible interval: `r fb(f2_dem$lo)` to `r fb(f2_dem$hi)`) and autocratization episodes (95% credible interval: `r fb(f2_aut$lo)` to `r fb(f2_aut$hi)`), but neither estimate is statistically distinguishable from zero after accounting for measurement uncertainty. 
+A similar absence of significant associations appears among democracies. 
+These results suggest that, although political discontent increases the overall likelihood that an autocratic regime enters a period of transformation, it does not systematically push that transformation in either a democratic or an autocratic direction.
 
-- *Protects democracies at the process-start stage.*
-- *Does nothing for autocracies.* The autocracy-side support slope is null in
-  every cell; popular support does not shield non-democratic regimes.
-- *Level effects do not survive.* Support's naive-significant associations
-  with annual democracy indices attenuate to marginal or null once measurement
-  uncertainty is propagated, replicating the published pattern.
+The lower panel examines this possibility more closely by distinguishing the eventual outcomes of transformation episodes, drawing on the ERT dataset's outcome classifications. 
+Consistent with the results above, political discontent is not significantly associated with whether liberalization in an autocracy ultimately produces a democratic transition or stalls short of one; nor does it significantly predict democratic deepening, democratic breakdown, or episodes that stall short of breakdown among democracies. 
+The largest outcome-specific estimate appears for autocratic deepening (95% credible interval: `r fb(f2_deep$lo)` to `r fb(f2_deep$hi)`). 
+Notably, both this association and the association with autocratization-episode onset in autocracies are statistically significant in the naïve estimates, which do not account for measurement uncertainty in political discontent (p = `r sprintf("%.3f", f2_deep_np)` and p = `r sprintf("%.3f", f2_aut_np)`, respectively). 
+However, both lose statistical significance once this measurement uncertainty is incorporated. 
+Taken together, these findings indicate that political discontent operates primarily as a destabilizing force in autocratic regimes: it is associated with whether an autocracy enters a sustained period of regime transformation, but not with the direction that transformation takes or the outcome it ultimately produces. 
+Political discontent therefore predicts the initiation of regime instability more clearly than its political destination.
 
-<!-- Appendix inventory (to assemble):
-- Full main-battery table (output/results_main_combined.csv).
-- Base-specification and interaction generations; marginal-effects tables.
-- Event lists behind Table 1 (country-year mismatches by coding, both sides).
-- System-GMM diagnostics; the singular regime-split GMM note.
-- Severity-ladder cells (RoW change, regime transition) and subsample variants.
-- GWF construction notes and caveats.
--->
+```{r canon-effects, include=FALSE}
+# Completed-transition models under the DD / BMR / GWF codings (Firth MOC):
+# per-draw quantities for the in-autocracies (democratization-side) slopes.
+can_moc <- readRDS(here::here("output", "results_canonicalglv_hazard.rds"))
+cfc <- function(cell, term) {
+  d <- can_moc[[cell]][[term]]
+  list(b = mean(d), lo = quantile(d, .025), hi = quantile(d, .975),
+       p = 2 * (1 - pnorm(abs(mean(d) / sd(d)))))
+}
+bmr_aut <- cfc("BMR transition (split IVs) [firth]", "disc_bmr_aut_trim")
+dd_aut  <- cfc("DD transition (split IVs) [firth]",  "disc_dd_aut_trim")
+gwf_aut <- cfc("GWF transition (split IVs) [firth]", "disc_gwf_aut_trim")
+bmr_dem <- cfc("BMR transition (split IVs) [firth]", "disc_bmr_dem_trim")
+dd_dem  <- cfc("DD transition (split IVs) [firth]",  "disc_dd_dem_trim")
+gwf_dem <- cfc("GWF transition (split IVs) [firth]", "disc_gwf_dem_trim")
+```
+```{r}
+#| label: fig-codings
+#| fig-cap: "Coefficients from discrete-time hazard models of completed regime transitions under canonical regime codings."
+#| out-width: "100%"
+knitr::include_graphics(here::here("output", "fig_codings.png"))
+```
+
+To assess whether our conclusions depend on the ERT coding of regime transformation, we re-estimate the transition models using three widely used dichotomous regime classifications: the DD classification of Cheibub, Gandhi, and Vreeland, as updated by Bjørnskov and Rode [-@bjornskov2020regime], the Boix–Miller–Rosato (BMR) measure [@boix2013complete], and the Geddes–Wright–Frantz (GWF) classification [@geddes2014autocratic]. 
+The results are presented in Figure 3. 
+Under both DD and BMR, political discontent in autocracies is positively associated with a transition to democracy (DD: 95% credible interval: `r fb(dd_aut$lo)` to `r fb(dd_aut$hi)`; BMR: 95% credible interval: `r fb(bmr_aut$lo)` to `r fb(bmr_aut$hi)`). 
+By contrast, political discontent is not associated with regime transitions originating in democracies under either coding. 
+The GWF estimates follow a similar directional pattern, with a positive association in autocracies and a negative association in democracies, but neither estimate is statistically distinguishable from zero. 
+We argue that this null effect results from GWF's shorter temporal coverage, which ends in 2010, leaving considerably fewer transition events.
+
+At first glance, the DD and BMR findings appear somewhat inconsistent with the ERT results reported above. 
+Under the ERT framework, political discontent predicts the onset of transformation episodes in autocracies but not whether those episodes ultimately result in a democratic transition. 
+Under DD and BMR, by contrast, political discontent is associated with transitions from autocracy to democracy. 
+An event-level comparison, however, shows that these codings identify substantially different sets of completed regime changes, as shown in @tbl-overlap. 
+Among the 46 ERT democratization episodes ending in democratic transition, only 5 (11%) contain a democratization event identified by DD, and the same number contain one identified by BMR. 
+Conversely, only 20% of DD democratizations and 28% of BMR democratizations occur within an ERT episode that ultimately ends in democratic transition.
+The correspondence is somewhat greater for democratic breakdown: DD and BMR each identify transitions within 35% of ERT breakdown-ending episodes, while approximately one-third of the breakdowns identified by each dichotomous measure occur within the corresponding ERT episodes. 
+Even DD and BMR themselves identify substantially different sets of transition events, indicating that disagreement over completed regime transitions is not unique to the ERT framework.
+
+```{r}
+#| label: tbl-overlap
+#| tbl-cap: "Event Correspondence across Regime-Transition Codings."
+ktab(t4, NULL)
+```
+
+Taken together, these results reinforce our broader conclusion that political discontent is associated with regime instability in autocracies, while providing less consistent evidence about the political destination of that instability.
+The ERT framework shows most clearly that political discontent increases the likelihood that an autocracy enters a sustained process of regime transformation, without systematically predicting its direction or eventual outcome.
+The DD and BMR results indicate that some of this instability is classified as completed democratization under alternative regime definitions.
+However, the limited correspondence between these democratization events and ERT transition episodes, as well as between DD and BMR themselves, suggests that this conclusion is sensitive to how regime change is conceptualized and coded.
+Thus, we argue that political discontent is more consistently associated with the destabilization of autocratic regimes than with whether that destabilization ultimately culminates in democracy.
 
 # Summary and Discussion {.unlisted .unnumbered}
 

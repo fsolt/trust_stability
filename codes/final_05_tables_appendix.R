@@ -1,12 +1,10 @@
-# ============================================================================
-# final_05_tables_appendix.R -- appendix docx with EVERY model in the battery:
-# all focal opinion coefficients from output/results_main_combined.csv
-# (built by sec. 9 of final_01_master.R), one table per block.
-#   A1: dynamic panel (sec. 7b)      -- coefficients displayed x1000
-#   A2: ERT hazard ladder (sec. 8b)  -- log-odds
-#   A3: canonical codings (sec. 8c)  -- log-odds
+##############################################################################
+# Political Discontent and Regime (In)stability
+# Authors: Choi, Ma, Tai, Hu, Solt
+# Input:  output/results_main_combined.csv
 # Output: output/tables_appendix_all_models.docx (+ csv)
-# ============================================================================
+#         A1 dynamic panel (x1000) / A2 ERT hazard / A3 DD-GWF-BMR (log-odds)
+##############################################################################
 
 library(dplyr); library(flextable); library(officer); library(here)
 
@@ -47,9 +45,9 @@ tab_block <- function(bl, scale = 1) {
     )
 }
 
-a1 <- tab_block("7b dynamic (+ctrl)", scale = 1000)
-a2 <- tab_block("8b ERT ladder (+ctrl)")
-a3 <- tab_block("8c canonical (+ctrl)")
+a1 <- tab_block("8 dynamic panel", scale = 1000)
+a2 <- tab_block("6 ERT hazard")
+a3 <- tab_block("7 various DV")
 
 write.csv(bind_rows(
   mutate(a1, Block = "A1 dynamic panel"),
@@ -82,11 +80,11 @@ nA3 <- paste("DV per row block: each coding's any-regime-change, direction-speci
   "exploratory.", common)
 
 doc <- read_docx() %>%
-  body_add_par("Appendix Table A1. Dynamic panel: all estimated models (sec. 7b)", style = "heading 2") %>%
+  body_add_par("Appendix Table A1. Dynamic panel: all estimated models", style = "heading 2") %>%
   body_add_flextable(ft(a1, nA1)) %>% body_add_par("") %>%
-  body_add_par("Appendix Table A2. V-Dem ERT hazard ladder: all estimated models (sec. 8b)", style = "heading 2") %>%
+  body_add_par("Appendix Table A2. V-Dem ERT hazard battery: all estimated models", style = "heading 2") %>%
   body_add_flextable(ft(a2, nA2)) %>% body_add_par("") %>%
-  body_add_par("Appendix Table A3. Canonical regime codings: all estimated models (sec. 8c)", style = "heading 2") %>%
+  body_add_par("Appendix Table A3. DD / GWF / BMR regime codings: all estimated models", style = "heading 2") %>%
   body_add_flextable(ft(a3, nA3))
 print(doc, target = here("output", "tables_appendix_all_models.docx"))
 cat("written: output/tables_appendix_all_models.docx + .csv;",

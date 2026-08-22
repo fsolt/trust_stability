@@ -1,3 +1,10 @@
+##############################################################################
+# Political Discontent and Regime (In)stability
+# Authors: Choi, Ma, Tai, Hu, Solt
+# Input:  none (helper functions: method-of-composition estimators, robust vcov)
+# Output: none (sourced by final_01_master.R)
+##############################################################################
+
 # Variance Calculation ------------------------------------------------------------------
 
 ## Beck-Katz panel-corrected standard errors
