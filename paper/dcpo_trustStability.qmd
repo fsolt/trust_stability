@@ -123,9 +123,6 @@ conflicted::conflicts_prefer(dplyr::filter,
 
 ```{r instab-setup, include=FALSE}
 library(knitr); library(kableExtra); library(dplyr)
-t1 <- read.csv(here::here("output", "table1_dynamic.csv"),       check.names = FALSE)
-t2 <- read.csv(here::here("output", "table2_onset.csv"),         check.names = FALSE)
-t3 <- read.csv(here::here("output", "table3_canonical.csv"),     check.names = FALSE)
 t4 <- read.csv(here::here("output", "table4_event_overlap.csv"), check.names = FALSE)
 
 # one styled-table helper: booktabs, tight rows, shrink-to-textwidth, small font
@@ -145,109 +142,73 @@ ktab <- function(d, cap) {
 # Theory {.unlisted .unnumbered}
 
 # Data and Measurement {.unlisted .unnumbered}
-While measures tapping political discontent are abound in existing studies, there is no single measure of political discontent that won universal acceptance in the discipline.
-The lack of the universal measure of political discontent can be partly attributed to the fact that scholars themselves have been defined political discontent in various ways.
-For example, some scholars, notably Easton, conceptualize political discontent as a lack of the diffuse support for a political system, while others define it as low external efficacy, democratic deficits, political distrust or dissatisfaction with incumbent leaders [@easton1975re; @jennings2016dimensions; @muller1983discontent; @norris2011democratic].
-Different definitions of discontent have fragmented its measures, each of which has limited availability across time and countries.
-The extent of fragmentation in the discontent measure is at the level that scholars are even debated on whether political discontent is on the rise or not worldwide [@jennings2017decline].
+While measures tapping political discontent abound in existing studies, no single measure of political discontent has won universal acceptance in the discipline.
+The lack of the universal measure can be partly attributed to the fact that scholars have defined political discontent in various ways.
+For example, some scholars, notably Easton, conceptualize political discontent as a lack of diffuse support for the political system, while others define it as low external efficacy, perceived democratic deficits, political distrust or dissatisfaction with incumbent leaders [@easton1975re; @jennings2016dimensions; @muller1983discontent; @norris2011democratic].
+Different definitions of discontent have fragmented its measures, and each resulting measure has limited coverage across countries and over time.
+The fragmentation is such that scholars still debate whether political discontent is even rising worldwide [@jennings2017decline].
 
-Following Easton [-@Easton1965], we define political discontent as a lack of diffuse support for a political system.
-Diffuse support concerns a perception of system legitimacy and serves as a 'reservoir of favorable attitudes or goodwill' toward a system.
-What distinguish diffuse support from specific support are its systematic pattern and its threat to regime stability.
-As implied its name, specific support concerns support for the specific incumbent government, its leaders or its policies.
-And, it often fluctuates over time without systematic pattern, and researchers have argued that it does not necessarily translate into rejection of the regime itself [@miller1974political; @citrin1974comment; @craig1981political], not only because its fluctuation but also, in democracy, elections allow citizens to express dissatisfaction and change political leadership they are dissatisfied with [@muller1983discontent].
-However, the erosion of diffuse support reflects systematic lower support for the basic political arrangements of politics and can thus provide the public with willingness to seek radical change to the political regime [@jennings2017decline].
-As this paper examines how political discontent affect regime stability, the concept of diffuse support has a better fit.
+Following Easton [-@Easton1965], we define political discontent as a lack of diffuse support for the political system.
+Diffuse support concerns perceptions of system legitimacy and serves as a 'reservoir of favorable attitudes or goodwill' toward a system.
+What distinguish diffuse support from specific support is its more enduring character and its consequences beyond any single government.
+As its name implies, specific support concerns support for the specific incumbent government, its leaders or its policies.
+It often fluctuates without a systematic pattern, and researchers have argued that it does not necessarily translate into rejection of the regime itself [@miller1974political; @citrin1974comment; @craig1981political] - not only because of its fluctuation but also because, in democracy, elections allow citizens to express dissatisfaction and replace leaders they are dissatisfied with [@muller1983discontent].
+The erosion of diffuse support, by contrast, reflects systematically lower support for the basic political arrangements and can thus increase public willingness to seek radical change to the political regime [@jennings2017decline].
+As this paper examines how political discontent affects regime stability, the concept of diffuse support is better suited to our theoretical focus.
 
-We rely on the public political discontent (PPD), the latent country-year estimates of political discontent estimated by the Dynamic Comparative Public Opinion (DCPO) model [-@ TBD]. 
-The DCPO model is a Bayesian hierarchical Item Response Theory model that estimates latent public opinion of interest from multiple cross-national survey data [@Solt2020c].
-The latent variable model approach to public opinion estimates was recently introduced to the field as a mean to address fragmentation of public opinion data across time, country, and disparate survey items, and its application has extended to public support for democracy, policy ideology or preference for redistribution [@berwick2025modgirt; @Claassen2020; @Caughey2019].
-These models estimate the latent concept by gleaning information from multiple survey items with accounting for differences in cross-national survey through parameters for question difficulty and dispersion, adjusts for country-specific item bias, and incorporates responses from both dichotomous and ordinal questions, and smooth estimates in years with sparse data while preserving comparability across countries using dynamic priors.
-Drawing on the DCPO, the PPD dataset collect 388 survey datasets with a total of 111 distinct survey items tapping political discontent, covering 136 different countries over the 56 years from 1968 to 2023.
+We rely on Public Political Discontent (PPD), a set of latent country-year estimates of political discontent generated by the Dynamic Comparative Public Opinion (DCPO) model [-@Ma_Choi_Tai_Hu_Solt_2026]. 
+The DCPO model is a Bayesian hierarchical item response theory model that estimates latent public opinion constructs of interest from multiple cross-national survey datasets [@Solt2020c].
+The latent variable model approach to public opinion estimation was introduced to the field as a means of addressing the fragmentation of public opinion data across time, countries, and disparate survey items, and its applications have now extended to public support for democracy, policy ideology, and preference for redistribution [@berwick2025modgirt; @Claassen2020; @Caughey2019].
+These models estimate the latent concept by gleaning information from multiple survey items while accounting for differences across surveys through parameters for question difficulty and dispersion, adjusting for country-specific item bias, incorporating responses from both dichotomous and ordinal questions, and smoothing estimates in years with sparse data while preserving cross-national comparability through dynamic priors.
+Drawing on the DCPO method, the PPD dataset assembles 388 survey datasets containing 111 distinct survey items tapping political discontent, covering 136 different countries over the 56 years from 1968 to 2023.
 
-We decide to use the PPD for the following reasons.
-First, the dataset conceptualizes political discontent as a lack of diffuse support, clearly alingning with our focus,
-Second, it provides the most comprehensive country-year esimtate of political discontent to our knowledge, which can offer the explicit methodological benefit that our result can avoid changing depending on differenc choice of cross-natioanal survey data [@Claassen2020].
-Third, the estimate of PPD shows a good level of validation scores, including internal and external covergent validation and construct validation [@Adcock2001].
+We use the PPD for three reasons.
+First, the dataset conceptualizes political discontent as a lack of diffuse support, aligning directly with our theoretical focus.
+Second, it provides, to our knowledge, the most comprehensive country-year estimates of political discontent, which offers an important methodological benefit: our results do not depend on the choice of any particular cross-national survey dataset [@Claassen2020].
+Third, the PPD estimates show strong validation results, including internal and external convergent validity and construct validity [@Adcock2001].
 
-2. Discussion of the DVs (why are different DVs needed)
+The choice of dependent variable deserves equal attention.
+As implied by the term itself, any measure of regime stability depends on how a political regime is defined, and the literature offers several distinct traditions [@cianetti2025regime].
+The procedural approach, which is the most common approach identified in Cianetti et al's[-@cianetti2025regime] review of regime studies, defines political regimes as the set of formal or informal rules governing how political power is acquired and exercised [@bjornskov2020regime; @boix2013complete; @munck1996disaggregating; @schmitter1991democracy; @cianetti2025regime].
+This approach generally produces distinctions between democracy or non-democracy or autocracy, although the specific institutional criteria used to distinguish regime types vary across measures such as Polity, V-Dem and Freedom House.
 
-The choice of the dependent variable, regime stability, also deserves attention.
-As implied by its name, the measure of regime stability hevaily depends on the definition of the regime, and there are multiple measures of regime stability that builds on different definitions.
-Widely-used measures of regime stability are built on the dichotomy of democracy versus non-democracy or authoritarian regimes.
-The 
+Another influential tradition adopts actor-centered definition of political regimes, focusing instead on the composition of ruling coalition [@cianetti2025regime].
+Scholars in this tradition argue that similar formal institution can coexist with substantially different ruling coalitions, with important consequences for the behavior of political leaders and for whose interests are represented by politics [@geddes2014autocratic].
+From this definition, procedural measures may overlook politically consequential changes in ruling coalitions that occur without a corresponding change in formal institutional rules, or may misclassify institutional changes, either improving or worsening the quality of democracy, by the same autucrat as regime change. [@wright2016measuring].
+For example, the Polity score fail to identify regime collapse such as the 1958 coup in Iraq when the regimes before and after the coup receive similar Polity scores and misclassify institutional liberalization in Gabon from 1991 to 1992 as regime change.
 
+Beyond disagreement over what constitutes a regime, scholars also disagree over what constitutes regime change [@maerz2024episodes].
+Maerz et al.[-@maerz2024episodes] distinguish between two dominant approaches. 
+The transitologist approach focuses on transitions between regime categories and typically treats democratic transition and democratic breakdown as discrete events. 
+The incrementalist approach, by contrast, conceptualizes democracy and autocracy as points along a continuum and examines gradual changes in the level of democracy.
+Further,they identify three major limitations of these approaches. 
+First, each relies on restrictive assumptions about the comparability of observations. 
+The transitologist approach assumes unit homogeneity by treating observations within the same regime category as comparable, while the incrementalist approach avoids this assumption but instead assumes constant and symmetric effects of factors for both improving or decreasing quality of democracy.
+Second, both approaches tend to operationalize regime change through annual observations, potentially amplifying short-term fluctuations even though regime transformation often unfolds gradually over multiple years. 
+Third, the two approaches have difficulty incorporating democratization and autocratization within a common framework. Transitologist studies generally treat democratic transition and democratic breakdown as separate processes, whereas incrementalist studies often treat equivalent movements toward and away from democracy as empirically comparable changes. Maerz et al. therefore conceptualize regime change as a sustained and substantial process that may or may not ultimately result in a discrete regime transition.
 
-3. Estimation Models
-4. Controls
+In this paper, we adopt a procedural conception of political regimes. 
+Because this is the dominant approach in the existing empirical literature, doing so allows our findings to engage directly with a broad literature on democratization, autocratization, and regime stability. 
+At the same time, to address the limitations of both the transitologist and incrementalist approaches, we rely on the Episodes of Regime Transformation (ERT) dataset [@maerz2024episodes]. 
+Rather than identifying regime change solely from discrete transitions or annual changes in democracy scores, the ERT dataset identifies sustained episodes of substantial changes in scores along the democracy–autocracy continuum. 
+With the data, we first examine whether higher levels of political discontent are associated with the onset of episodes. 
+We then distinguish the direction of these episodes and examine whether political discontent is associated with the onset of episode resulting in specific outcomes, such as democratization or autocratization.
+This approach allows us to examine whether political discontent contributes to the initiation of regime transformation while avoiding the assumption that all transformations necessarily culminate in a change of regime type.
 
+To examine these relationships, we employ discrete-time logistic regression, which models how covariates affect the probability that an episode begins within discrete time intervals. 
+This approach is appropriate because our dependent variable, the onset of episode, is measured in country-years. 
+We consequently do not employ continuous-time hazard models such as the Cox proportional hazards model. 
+To account for measurement uncertainty in political discontent, we use the method of composition (MOC). 
+The MOC repeatedly draws 900 simulated values of political discontent from its estimated distribution, re-estimates each model using each draw, and combines the resulting estimates into a final distribution of coefficients [@Tai2024]. 
+This procedure propagates uncertainty from the measurement of political discontent into the uncertainty surrounding our regression estimates.
 
-## Public political discontent and democratic support {.unnumbered}
-
-- **Political discontent (PPD)**: latent country-year estimate from the
-  measurement paper [@MaEtAl-measurement] (DCPO model; [@Solt2020dcpo]);
-  900 posterior draws retained, 0--100 scale.
-- **Democratic support**: estimated with the same DCPO model
-  [@TaiHuSolt2024]; 900 paired posterior draws, 0--100.
-- Country-years before a country's first actual survey are dropped (the
-  published trim rule); effective window 1988--2019.
-
-## Regime-change outcomes {.unnumbered}
-
-Event codings embody consequential definitional choices, so results can be
-coding-dependent -- we therefore use four canonical datasets rather than one:
-
-1. **V-Dem ERT / Regimes of the World** [@Maerz2021ert]: (a) *episode onset*,
-   the first year of a democratization or autocratization episode (a sustained,
-   substantial movement of the electoral-democracy index), with the risk set
-   excluding ongoing-episode years; and (b) *category change*, any move among
-   the four Regimes-of-the-World classes, including the democracy--autocracy boundary crossing.
-2. **DD/ACLP** in the Bjornskov--Rode update [@BjornskovRode2020], which extends
-   Cheibub--Gandhi--Vreeland coverage to the mid-2020s: democratization and
-   democratic breakdown on the contestation-plus-alternation dichotomy.
-3. **Boix--Miller--Rosato** [@BMR2013]: the same two events on the
-   Boix-lineage dichotomy (1800--2020).
-4. **Geddes--Wright--Frantz** [@GWF2014] regime cases (supplementary: coverage
-   ends 2010, leaving 16 in-sample boundary events).
-
-```{r}
-ktab(t4, cap = "Event overlap across codings, survey-covered sample. Cell entries: captured/eligible share -- row-coding events with a counterpart in the column coding (same country, event years within +/-2). Eligible excludes row events outside the column coding's coverage window; only GWF binds (ends 2010, so its column counts row events through 2012).")
-```
-
-## Controls {.unnumbered}
-
-- Log GDP per capita
-- GDP growth
-- Regional democracy
-- Percent Muslim
-- Resource dependence
-- Prior transitions
-- OECD membership
-- Income inequality (SWIID 9.8)
-- Log population
-- Each coding's own regime-age clock (with its square) and transition-history
-  count
-
-
-# Empirical Strategy {.unlisted .unnumbered}
-
-1. **Dynamic panel**: to anchor the analysis in the existing literature, we
-   first estimate Claassen's [-@Claassen2020] specification with the democracy
-   *level* as outcome -- pooled OLS (panel-corrected SEs) and one-step system
-   GMM.
-2. **Discrete-time hazards**: for the regime-event outcomes -- plain logit
-   (country-clustered SEs) and Firth penalized likelihood; opinion slopes
-   split by regime type within one pooled hazard (all-regimes and
-   regime-subsample variants alongside); uniform one-year
-   opinion-precedes-outcome timing.
-3. **Measurement uncertainty**: method of composition over the 900 posterior
-   draws (estimate = draw mean, SE = draw SD) [@Treier2008; @TaiHuSolt2024].
+The models also include a standard set of covariates associated with regime transformation: logged GDP per capita, GDP growth, regional democracy, the percentage of the population that is Muslim, resource dependence, OECD membership, income inequality measured using SWIID 9.8, and logged population. We additionally account for temporal dependence by including the regime-age clock, its squared term, and a count of previous transitions. 
 
 # Results {.unlisted .unnumbered}
 
 ```{r}
 #| label: fig-battery
-#| fig-cap: "The full battery at a glance: focal coefficients with 95% confidence intervals, naive (posterior-mean data, open grey) vs. method of composition (900 draws, solid blue). Top: pooled-OLS democracy-level models (x1000). Middle: ERT episode-onset hazards (Firth). Bottom: completed regime transitions over each coding's democracy boundary, DD/BMR/GWF (Firth; GWF exploratory, coverage ends 2010). Regime-labeled rows split the opinion slopes by regime type."
+#| fig-cap: "Focal coefficients with 95% confidence intervals, naive (posterior-mean data, open grey) vs. method of composition (900 draws, solid blue). Top: pooled-OLS democracy-level models (x1000). Middle: ERT episode-onset hazards (Firth). Bottom: completed regime transitions over the DD and BMR democracy boundaries (Firth). Regime-labeled rows split the opinion slopes by regime type; exact estimates for every cell, and all subsample, plain-logit, and exploratory GWF variants, are reported in the appendix tables."
 #| out-width: "100%"
 knitr::include_graphics(here::here("output", "fig_battery.png"))
 ```
@@ -278,29 +239,6 @@ knitr::include_graphics(here::here("output", "fig_battery.png"))
 - *Level effects do not survive.* Support's naive-significant associations
   with annual democracy indices attenuate to marginal or null once measurement
   uncertainty is propagated, replicating the published pattern.
-
-## Public opinion does not move annual democracy levels {.unnumbered}
-
-```{r}
-ktab(dplyr::filter(t1, Estimator != "System GMM (cautionary)"),
-     cap = "Public opinion and annual democracy-index change (dynamic panel, full specification). Coefficients x1000. Regime-split system GMM (diagnostics-rejected) and the full battery: appendix.")
-```
-
-Discontent is null in every valid cell (MOC $p$ = .16--.86).
-Under the full specification, no opinion variable robustly predicts year-to-year movement in democracy indices. 
-If public opinion matters for regimes, it does not operate through marginal annual changes in democratic quality -- motivating the shift to discrete regime events.
-
-## Episode onset and completed transitions {.unnumbered}
-
-```{r}
-ktab(dplyr::filter(t2, grepl("regime split", Model)),
-     cap = "Public opinion and the onset of V-Dem ERT regime-change episodes (discrete-time hazard, regime-split slopes, full specification). Log-odds per point of the 0-100 opinion scales. Pooled, subsample, and direction-specific variants: appendix.")
-```
-
-```{r}
-ktab(dplyr::filter(t3, grepl("regime split", Model)),
-     cap = "Public opinion and completed regime transitions across canonical codings (discrete-time hazard, regime-split slopes, full specification). Log-odds. Pooled variants: appendix.")
-```
 
 <!-- Appendix inventory (to assemble):
 - Full main-battery table (output/results_main_combined.csv).
