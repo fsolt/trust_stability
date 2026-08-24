@@ -135,6 +135,43 @@ ktab <- function(d, cap) {
 ```
 
 # Introduction {.unlisted .unnumbered}
+Political discontent is often seen as a threat to regime stability. 
+When citizens lose diffuse support for the political system, they may become more willing to challenge existing political arrangements [@easton1975re; @gurr1970why; @muller1983discontent; @craig1981political].
+Yet we know less about whether political discontent increases regime stability.
+Does political discontent initiate substantial regime transformation? 
+Does this relationship, if exists, differ between democracies and autocracies? 
+And when transformation begins, does discontent predict whether political change moves toward democracy or autocracy?
+
+Two measurement problems have made these questions difficult to answer comparatively.
+First, political discontent has been measured through distrust, perceived democratic deficits, dissatisfaction, political efficacy, and other related attitudes, and available surveys provide uneven coverage across countries and time [@jennings2016dimensions; @muller1983discontent; @norris2011democratic].
+Second, scholars disagree about what constitutes regime change.
+Some datasets identify transitions between regime categories, while others measure changes in democratic quality or sustained episodes of regime transformation [@geddes2014autocratic; @boix2013complete; @maerz2024episodes].
+Different measures therefore may identify different political events.
+Studying the relationship between discontent and regime stability requires attention to how both concepts are measured.
+These limitations have made it difficult to establish whether political discontent has different consequences across regime types and whether it contributes to the onset of regime instability without necessarily determining the direction of subsequent political change.
+
+We distinguish between the conditions that make a regime vulnerable to transformation and those that determine where that transformation leads.
+We argue that political discontent is more strongly associated with the onset of regime transformation in autocracies than in democracies, and predicts the initiation of instability more clearly than its political destination.
+Democratic elections allow dissatisfied citizens to replace incumbents without rejecting the regime itself [@muller1983discontent; @rooduijn2016expressing].
+Autocracies provide fewer institutionalized opportunities for such political replacement. Discontent may therefore be more likely to contribute to challenges to the existing political order. 
+Once instability begins, however, its outcome can depend on elite behavior, opposition organization, coercive institutions, and other political conditions[@odonnell1986transitions; @przeworski1991democracy; @treisman2020democracy]. 
+
+We examine these expectations using Public Political Discontent (PPD), which provides country-year estimates of diffuse political discontent for 136 countries from 1968 to 2023 [@Ma_Choi_Tai_Hu_Solt_2026; @Solt2020c].
+Our main outcome comes from the Episodes of Regime Transformation dataset [@maerz2024episodes], which identifies sustained episodes along the democracy–autocracy continuum.
+We estimate discrete-time models of episode onset separately for democracies and autocracies, then examine the direction and eventual outcomes of these episodes. 
+We use the method of composition to incorporate measurement uncertainty in political discontent [@Tai2024] and compare the ERT results with the DD, BMR, and GWF regime classifications.
+
+The results show a clear regime difference. 
+In autocracies, increased political discontent is more likely to lead regime-transformation episode. 
+We do not find evidence for episode onset in democracies. 
+Among autocracies, however, discontent does not clearly predict whether transformation proceeds toward greater democracy or greater autocracy. 
+Alternative transition datasets also show that conclusions about destination are more sensitive to how regime change is coded.
+
+Our findings make two main contributions.
+First, we distinguish the initiation of regime instability from its political destination. 
+In autocracies, discontent predicts whether transformation begins more consistently than whether it leads toward democracy or autocracy. 
+Second, the comparison across regime datasets shows that conclusions about regime change depend on how scholars define and measure the outcome they seek to explain.
+Together, these contributions suggest that research on regime stability should distinguish the mechanisms that initiate instability from those that shape its trajectory, while treating the conceptualization and measurement of regime change as part of theory building rather than a purely technical choice.
 
 # Literature Review {.unlisted .unnumbered}
 
