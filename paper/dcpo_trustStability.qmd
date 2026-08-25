@@ -457,6 +457,30 @@ Thus, we argue that political discontent is more consistently associated with th
 
 # Summary and Discussion {.unlisted .unnumbered}
 
+This study examines the relationship between political discontent and regime instability. 
+In autocracies, countries with higher political discontent are more likely to enter a sustained episode of regime transformation. 
+Yet discontent does not consistently predict whether that transformation moves toward democracy or autocracy, or how it ultimately ends.
+In democracies, we do not find evidence of an association between discontent and episode onset.
+Political discontent therefore appears to be an initiator of instability in autocracies rather than a reliable predictor of its destination. 
+
+The autocratic findings suggest a possible division between the roles of masses and elites in regime transformation.
+Public discontent may make an authoritarian regime more vulnerable without determining what follows.
+This perspective may help explain why similar pressures from below can lead to very different outcomes.
+Recent crises in Belarus (2020) and Kazakhstan (2022) provide illustrative examples.
+In both cases, widespread public discontent generated serious challenges to authoritarian rule, but the subsequent trajectory depended heavily on elite cohesion, coercive institutions, and external support or intervention.
+These cases illustrate why the forces that initiate regime instability may differ from those that determine its political destination.
+
+The comparison across regime datasets provides a second implication.
+ERT, DD, BMR, and GWF are not interchangeable measures of the same regime changes; they identify substantially different sets of events.
+Accordingly, ERT shows a clear relationship between discontent and the onset of transformation in autocracies without a consistent relationship with eventual democratic transition, whereas under the DD and BMR codings, political discontent in autocracies is positively associated with transitions to democracy.
+Researchers should therefore choose measures of regime change based on the theoretical construct they seek to explain rather than treat dataset choice as a purely technical decision.
+
+The different findings for democracies and autocracies point to two directions for future research.
+For autocracies, future work should examine the institutional and elite conditions that connect public discontent to particular regime outcomes.
+If discontent helps initiate instability but does not determine its destination, the next question is what conditions turn such instability into democratization, further autocratization, or stalled transformation.
+For democracies, future research should directly test our proposed electoral mechanism by examining whether the relationship between discontent and regime instability varies with electoral competitiveness, executive constraints, or other forms of political accountability.
+Discontent may also have slower consequences that are not captured by the onset of a regime-transformation episode, including support for populist or personalistic political actors and gradual institutional erosion [@Li2026].
+
 # Reference {.unlisted .unnumbered}
 
 ::: {#refs-main}
