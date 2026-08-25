@@ -138,70 +138,117 @@ ktab <- function(d, cap) {
 
 # Literature Review {.unlisted .unnumbered}
 
+The relationship between mass politics and regime stability is a long-standing question, and the literature on it is uneven in a specific way.
+Three points organize what we know: the first is well established, the second is contested, and the third has barely been examined.
+First, mass mobilization moves regimes.
+It raises the probability of democratic transition and strengthens the democracies that follow [@Teorell2010; @ChenowethStephan2011; @CelestinoGleditsch2013; @Brancati2016], and @Kadivar2018 pushes the point further by showing that sustained mobilization leaves new democracies longer-lived rather than more brittle.
+This body of work settles a question about behavior.
+Whether mass attitudes carry the same force is a separate question, and the direction these studies report holds only for the campaigns they examine.
+
+Second, whether mass attitudes move regimes at all is contested.
+Scholars have long expected mass attitudes to aggregate upward and shape democratic institutions [@Welzel2007; @InglehartWelzel2005; @QiShin2011; @Claassen2020a].
+@Claassen2020a supplied the strongest evidence to date, a large-scale cross-national time-series analysis in which support for democracy predicts subsequent democratic change in both pooled and split samples.
+That finding has proved fragile.
+When @TaiEtAl2024 carry the uncertainty in the latent opinion estimates into the model, the association vanishes, and adding survey data does not restore it.
+The attitude at issue in this exchange is also a narrow one.
+Support for democracy measures attachment to a set of regime principles rather than discontent with the system citizens actually inhabit, and the next section develops that distinction.
+Even where mass attitudes do move regimes, the literature disagrees about which way.
+
+That disagreement is stark.
+One body of work finds that mass mobilization hardens incumbents rather than dislodging them [@Ulfelder2005; @HellmeierBernhard2023; @ChinEtAl2023], while the studies behind the first point find the opposite.
+@Davenport2007 explains why the question stays open, since the effect of repression on dissent has been reported with every possible sign.
+The two camps also work with different cases, outcomes, and periods.
+No defensible prior about the direction of mass mobilization follows from this record.
+
+Third, mass attitudes have barely entered the study of regime survival itself.
+The canonical work on regime survival rests on coded regime events, the discrete transitions and breakdowns recorded in standard datasets, and mass attitudes have rarely appeared in those models [see @PrzeworskiLimongi1997; @Gasiorowski1995; @BoixStokes2003; @Svolik2008; @Houle2009; @GassebnerEtAl2013; @GeddesEtAl2014 among others].
+@BelkinSchofer2003 come closest, building a measure of legitimacy into a model of coup risk.
+Their legitimacy, however, is constructed from the competitiveness and regulation of the political system, with regime age as an alternative indicator, so it captures institutional structure rather than what publics actually believe about their rulers.
+
+The evidence that does exist, moreover, comes from a narrow slice of the world's regimes.
+The big three literatures on declining support---critical citizens, satisfaction with democracy, deconsolidation---draw most of their evidence from consolidated democracies [see @Norris2011; @Dalton2004; @FoaMounk2016; @FoaMounk2017 among others], and even the scholars who attacked those findings did not go outside that evidence base [@AlexanderWelzel2017; @Voeten2017].
+@ValgardssonEtAl2025 assembled a comprehensive record of institutional trust yet confined the regional and global trend analyses to countries counted democratic for most of the period.
+Autocracies sit almost entirely outside that record.
+
+Whether that omission matters depends on why regimes survive at all, and theory gives two answers.
+One holds that regimes endure because citizens grant them rightfulness, and in the classic statements @Lipset1959 and @Easton1965 make a public's belief in the rightfulness of its institutions a precondition of stability.
+The other holds that regimes endure because institutions make compliance rational [@Przeworski1991].
+If compliance rather than belief does the work, discontent should be inert exactly where institutions offer an alternative government, and consequential where they do not.
+Two attempts to catch discontent destabilizing a regime came up empty.
+@BoothSeligson2009 set out to detect exactly this effect and found instead that disaffected citizens neither withdrew from politics nor turned to destabilizing protest.
+@Norris2011 reports that a democratic deficit yields critical engagement rather than breakdown.
+That support for democratic government is eroding at all is contested in any case, since it has held steady where it has been tracked longest [@WuttkeEtAl2022].
+Both studies, however, drew their evidence from democracies, where citizens do have an alternative government to elect.
+
+Closing these gaps calls for a wide view and data to match.
+Regime change is rare, so only a broad and long panel turns up enough cases to model.
+The comparison at issue also requires democracies and non-democracies inside a single model, a range neither one country nor one region can supply.
+This study therefore develops an analytical framework linking political discontent to regime stability and assembles a large-scale, harmonized dataset on which to test that framework.
+
 # Theory and Hypotheses {.unlisted .unnumbered}
 
 Why should the distribution of attitudes across a population bear on the survival of a political regime?
 The claim that durable rule requires more than force is among the oldest in the study of politics.
-Lipset [-@lipset1959some] argued that regimes endure when their citizens regard existing political institutions as the most appropriate ones for their society, and Easton [-@easton1965systems] supplied the account of how such beliefs operate.
-Diffuse support constitutes a reservoir of goodwill that allows a political system to absorb the failures and crises that any government eventually produces [@easton1975re].
+@Lipset1959 argued that regimes endure when their citizens regard existing political institutions as the most appropriate ones for their society, and @Easton1965 supplied the account of how such beliefs operate.
+Diffuse support constitutes a reservoir of goodwill that allows a political system to absorb the failures and crises that any government eventually produces [@Easton1975].
 Where the reservoir is deep, citizens comply because they regard authority as rightful, and governing is comparatively cheap.
-Where it has drained, compliance must instead be purchased with performance or extracted through coercion, and both instruments are costly and prone to fail at precisely the moments they are needed most [@Dahl1971; @booth2009legitimacy].
+Where it has drained, compliance must instead be purchased with performance or extracted through coercion, and both instruments are costly and prone to fail at precisely the moments they are needed most [@Dahl1973; @BoothSeligson2009].
 Political discontent, understood as the absence of diffuse support, is therefore more than an expression of unhappiness with the government of the day.
-It signals that the arrangements by which power is acquired and exercised have lost their hold on citizens' allegiance, leaving the regime exposed when hard times arrive [@jennings2017decline].
+It signals that the arrangements by which power is acquired and exercised have lost their hold on citizens' allegiance, leaving the regime exposed when hard times arrive [@JenningsEtAl2017].
 
 Two mechanisms connect this erosion of support to observable instability.
 The first runs through mass behavior.
-Discontent lowers the threshold at which individuals are willing to tolerate, support, or join challenges to the existing order [@gurr1970why; @muller1983discontent; @craig1981political].
-As it spreads, the pool of potential participants in anti-regime action expands, and each act of defiance lowers the risk of the next, allowing local sparks to cascade into mass mobilization [@kuran1991now; @lohmann1994dynamics].
+Discontent lowers the threshold at which individuals are willing to tolerate, support, or join challenges to the existing order [@Gurr1970; @MullerJukam1983; @CraigMaggiotto1981].
+As it spreads, the pool of potential participants in anti-regime action expands, and each act of defiance lowers the risk of the next, allowing local sparks to cascade into mass mobilization [@Kuran1991; @Lohmann1994].
 
 The second mechanism runs through elites.
 No regime rests on mass acquiescence alone.
 Each depends on a coalition of ministers, officers, party cadres, and business allies whose loyalty is conditional on expectations about the regime's future [@Svolik2012].
-These insiders read public sentiment when weighing whether to stand by the incumbent order or to abandon it, and rising discontent tells them that the costs of defection are falling while the prospects of any challenge are improving [@odonnell1986transitions; @casper2014popular].
-Regimes are brought down in many ways, by coups, by uprisings, and by defections that hollow out the ruling coalition from within [@geddes2014autocratic; @Djuve2020], and each of these paths becomes both more likely to be attempted and more likely to succeed once the public has visibly withdrawn its support.
+These insiders read public sentiment when weighing whether to stand by the incumbent order or to abandon it, and rising discontent tells them that the costs of defection are falling while the prospects of any challenge are improving [@ODonnellSchmitter1986a; @CasperTyson2014].
+Regimes are brought down in many ways, by coups, by uprisings, and by defections that hollow out the ruling coalition from within [@GeddesEtAl2014; @DjuveEtAl2020], and each of these paths becomes both more likely to be attempted and more likely to succeed once the public has visibly withdrawn its support.
 Popular attitudes can thus destabilize a regime even where ordinary citizens wield no formal power, because those attitudes enter the strategic calculations of the few who do.
 
 Together these mechanisms yield a baseline expectation.
-Where political discontent runs high, regimes should more often enter sustained periods of substantial change in how political power is acquired and exercised, what Maerz et al. [-@maerz2024episodes] term episodes of regime transformation.
+Where political discontent runs high, regimes should more often enter sustained periods of substantial change in how political power is acquired and exercised, what @MaerzEtAl2024 term episodes of regime transformation.
 
 > **Hypothesis 1.** *The higher a public's political discontent, the greater the probability that its regime experiences the onset of an episode of regime transformation.*
 
 The destabilizing potential of discontent, however, should depend on the type of regime in which it arises.
 Institutions shape both what citizens can do with their discontent and what that discontent comes to mean.
 In democracies, regular elections give the dissatisfied a routine and low-cost way to punish those in power.
-Because incumbents can be replaced without disturbing the rules of the game, dissatisfaction tends to fasten on the government of the day rather than on the constitutional order itself [@easton1975re; @miller1974political; @citrin1974comment].
-Przeworski [-@przeworski1991democracy] describes democracy as a system in which parties lose elections, and it is exactly this perpetual availability of an alternative government within the rules that gives even deeply dissatisfied citizens reason to pursue change through the system rather than against it.
-Defeat at the polls, moreover, tends to reproduce consent among the losers rather than drive them from the arena [@anderson2005losers].
-Discontented democratic publics accordingly enjoy outlets short of regime change, in turning incumbents out, in protesting policies rather than institutions, and in supporting anti-establishment parties that seek office through elections rather than around them [@muller1983discontent; @rooduijn2016expressing].
+Because incumbents can be replaced without disturbing the rules of the game, dissatisfaction tends to fasten on the government of the day rather than on the constitutional order itself [@Easton1975; @Miller1974; @Citrin1974].
+@Przeworski1991 describes democracy as a system in which parties lose elections, and it is exactly this perpetual availability of an alternative government within the rules that gives even deeply dissatisfied citizens reason to pursue change through the system rather than against it.
+Defeat at the polls, moreover, tends to reproduce consent among the losers rather than drive them from the arena [@AndersonEtAl2005].
+Discontented democratic publics accordingly enjoy outlets short of regime change, in turning incumbents out, in protesting policies rather than institutions, and in supporting anti-establishment parties that seek office through elections rather than around them [@MullerJukam1983; @RooduijnEtAl2016].
 None of this renders democracies invulnerable.
-Sustained discontent may corrode democratic norms from within or reward politicians who test institutional constraints [@norris2011democratic; @svolik2019polarization].
+Sustained discontent may corrode democratic norms from within or reward politicians who test institutional constraints [@Norris2011; @Svolik2019].
 Yet such erosion is typically gradual, and it need not register as the onset of wholesale regime transformation.
 The channeling capacity of democratic institutions should mute, even if it does not erase, the association between discontent and regime instability.
 
 Autocracies offer no comparable valve.
 Where rulers cannot be removed through routine and rule-bound contestation, dissatisfaction with those in power and dissatisfaction with the rules that keep them there collapse into a single grievance, and citizens seeking redress have few options that do not implicate the regime itself.
-Many autocracies do hold elections, but contests engineered so that the opposition cannot win perform little of the legitimating work of genuine alternation, and they sometimes serve instead as focal moments at which accumulated anger erupts [@tucker2007enough; @knutsen2017autocratic].
-Rulers can attempt to manage discontent with co-optation or with repression [@gandhi2007authoritarian], yet both instruments grow more expensive as discontent widens, and repression risks provoking the backlash it is meant to forestall [@davenport2007state].
+Many autocracies do hold elections, but contests engineered so that the opposition cannot win perform little of the legitimating work of genuine alternation, and they sometimes serve instead as focal moments at which accumulated anger erupts [@Tucker2007; @KnutsenEtAl2017a].
+Rulers can attempt to manage discontent with co-optation or with repression [@GandhiPrzeworski2007], yet both instruments grow more expensive as discontent widens, and repression risks provoking the backlash it is meant to forestall [@Davenport2007].
 An informational pathology deepens the danger.
-Because the subjects of dictatorships have strong incentives to conceal what they think of their rulers, neither the regime nor its opponents can easily gauge how widespread discontent has become, and moments that suddenly reveal it can trigger coordination on a scale no one anticipated [@kuran1991now; @wintrobe1998political; @Hollyer2015].
+Because the subjects of dictatorships have strong incentives to conceal what they think of their rulers, neither the regime nor its opponents can easily gauge how widespread discontent has become, and moments that suddenly reveal it can trigger coordination on a scale no one anticipated [@Kuran1991; @Wintrobe1998; @HollyerEtAl2015].
 The discontent that democracies vent should therefore, in autocracies, accumulate, attach itself to the regime, and raise the probability that the regime enters a period of transformation.
 
 > **Hypothesis 2.** *The positive association between political discontent and the onset of regime transformation episodes is stronger in autocracies than in democracies.*
 
 Whether discontent also determines where such transformations lead is a different question, and here existing scholarship offers less guidance than one might expect.
-One tradition treats popular pressure as an engine of liberalization, and there is considerable evidence that mass mobilization raises the odds of democratic transition and strengthens the democracies that emerge from it [@teorell2010determinants; @chenoweth2011why; @kadivar2018mass].
-Another observes that threatened incumbents often respond to unrest by purging rivals, narrowing the ruling coalition, and escalating repression, so that popular challenges end in harsher rather than softer authoritarian rule [@davenport2007state].
-The transitions literature has long insisted that the outcome of these contests is contingent, turning on elite cohesion, the organization of the opposition, the loyalty of the coercive apparatus, and no small amount of miscalculation [@odonnell1986transitions; @przeworski1991democracy; @treisman2020democracy].
+One tradition treats popular pressure as an engine of liberalization, and there is considerable evidence that mass mobilization raises the odds of democratic transition and strengthens the democracies that emerge from it [@Teorell2010; @ChenowethStephan2011; @Kadivar2018].
+Another observes that threatened incumbents often respond to unrest by purging rivals, narrowing the ruling coalition, and escalating repression, so that popular challenges end in harsher rather than softer authoritarian rule [@Davenport2007].
+The transitions literature has long insisted that the outcome of these contests is contingent, turning on elite cohesion, the organization of the opposition, the loyalty of the coercive apparatus, and no small amount of miscalculation [@ODonnellSchmitter1986a; @Przeworski1991; @Treisman2020].
 On this view, discontent supplies the pressure that forces open a moment of contingency, but what happens within that moment is settled by struggles whose outcomes mass sentiment alone does not decide.
 We therefore expect political discontent to predict the initiation of regime transformation more reliably than its direction or its ultimate result.
 
 > **Hypothesis 3.** *Political discontent is associated with the onset of regime transformation episodes rather than with the direction those episodes take or the outcomes in which they end.*
 
 Political discontent, finally, is not the inverse of support for democracy.
-Discontent concerns citizens' evaluations of the political system they actually live under, whatever its character, while support for democracy concerns attachment to a particular set of regime principles [@easton1975re; @norris2011democratic].
+Discontent concerns citizens' evaluations of the political system they actually live under, whatever its character, while support for democracy concerns attachment to a particular set of regime principles [@Easton1975; @Norris2011].
 The two attitudes can and do diverge.
 Citizens of an autocracy may harbor deep discontent with their regime while caring little for democracy, just as citizens of a democracy may cherish democratic ideals while despairing of their institutions' performance.
-Claassen [-@Claassen2020] shows that public support for democracy helps democratic regimes survive, a protective effect that operates where the regime embodies the very principles citizens endorse.
+@Claassen2020a shows that public support for democracy helps democratic regimes survive, a protective effect that operates where the regime embodies the very principles citizens endorse.
 Our argument concerns a different attitude and a different mechanism, the withdrawal of legitimacy from the system citizens inhabit, and the logic developed above locates its destabilizing consequences chiefly in autocracies.
 Modeling the two attitudes together therefore permits a sharper test of each.
 Discontent should destabilize autocracies in particular, while support for democracy should stabilize democracies in particular.
@@ -210,41 +257,41 @@ Discontent should destabilize autocracies in particular, while support for democ
 # Data and Measurement {.unlisted .unnumbered}
 While measures tapping political discontent abound in existing studies, no single measure of political discontent has won universal acceptance in the discipline.
 The lack of the universal measure can be partly attributed to the fact that scholars have defined political discontent in various ways.
-For example, some scholars, notably Easton, conceptualize political discontent as a lack of diffuse support for the political system, while others define it as low external efficacy, perceived democratic deficits, political distrust or dissatisfaction with incumbent leaders [@easton1975re; @jennings2016dimensions; @muller1983discontent; @norris2011democratic].
+For example, some scholars, notably Easton, conceptualize political discontent as a lack of diffuse support for the political system, while others define it as low external efficacy, perceived democratic deficits, political distrust or dissatisfaction with incumbent leaders [@Easton1975; @JenningsEtAl2016; @MullerJukam1983; @Norris2011].
 Different definitions of discontent have fragmented its measures, and each resulting measure has limited coverage across countries and over time.
-The fragmentation is such that scholars still debate whether political discontent is even rising worldwide [@jennings2017decline].
+The fragmentation is such that scholars still debate whether political discontent is even rising worldwide [@JenningsEtAl2017].
 
-Following Easton [-@easton1975re], we define political discontent as a lack of diffuse support for the political system.
+Following @Easton1975, we define political discontent as a lack of diffuse support for the political system.
 Diffuse support concerns perceptions of system legitimacy and serves as a 'reservoir of favorable attitudes or goodwill' toward a system.
 What distinguish diffuse support from specific support is its more enduring character and its consequences beyond any single government.
 As its name implies, specific support concerns support for the specific incumbent government, its leaders or its policies.
-It often fluctuates without a systematic pattern, and researchers have argued that it does not necessarily translate into rejection of the regime itself [@miller1974political; @citrin1974comment; @craig1981political] - not only because of its fluctuation but also because, in democracy, elections allow citizens to express dissatisfaction and replace leaders they are dissatisfied with [@muller1983discontent].
-The erosion of diffuse support, by contrast, reflects systematically lower support for the basic political arrangements and can thus increase public willingness to seek radical change to the political regime [@jennings2017decline].
+It often fluctuates without a systematic pattern, and researchers have argued that it does not necessarily translate into rejection of the regime itself [@Miller1974; @Citrin1974; @CraigMaggiotto1981] - not only because of its fluctuation but also because, in democracy, elections allow citizens to express dissatisfaction and replace leaders they are dissatisfied with [@MullerJukam1983].
+The erosion of diffuse support, by contrast, reflects systematically lower support for the basic political arrangements and can thus increase public willingness to seek radical change to the political regime [@JenningsEtAl2017].
 As this paper examines how political discontent affects regime stability, the concept of diffuse support is better suited to our theoretical focus.
 
-We rely on Public Political Discontent (PPD), a set of latent country-year estimates of political discontent generated by the Dynamic Comparative Public Opinion (DCPO) model [-@Ma_Choi_Tai_Hu_Solt_2026]. 
-The DCPO model is a Bayesian hierarchical item response theory model that estimates latent public opinion constructs of interest from multiple cross-national survey datasets [@Solt2020c].
-The latent variable model approach to public opinion estimation was introduced to the field as a means of addressing the fragmentation of public opinion data across time, countries, and disparate survey items, and its applications have now extended to public support for democracy, policy ideology, and preference for redistribution [@berwick2025modgirt; @Claassen2020; @Caughey2019].
+We rely on Public Political Discontent (PPD), a set of latent country-year estimates of political discontent generated by the Dynamic Comparative Public Opinion (DCPO) model [-@MaEtAl2026]. 
+The DCPO model is a Bayesian hierarchical item response theory model that estimates latent public opinion constructs of interest from multiple cross-national survey datasets [@Solt2020b].
+The latent variable model approach to public opinion estimation was introduced to the field as a means of addressing the fragmentation of public opinion data across time, countries, and disparate survey items, and its applications have now extended to public support for democracy, policy ideology, and preference for redistribution [@BerwickCaughey2025; @Claassen2019; @CaugheyEtAl2019].
 These models estimate the latent concept by gleaning information from multiple survey items while accounting for differences across surveys through parameters for question difficulty and dispersion, adjusting for country-specific item bias, incorporating responses from both dichotomous and ordinal questions, and smoothing estimates in years with sparse data while preserving cross-national comparability through dynamic priors.
 Drawing on the DCPO method, the PPD dataset assembles 388 survey datasets containing 111 distinct survey items tapping political discontent, covering 136 different countries over the 56 years from 1968 to 2023.
 
 We use the PPD for three reasons.
 First, the dataset conceptualizes political discontent as a lack of diffuse support, aligning directly with our theoretical focus.
-Second, it provides, to our knowledge, the most comprehensive country-year estimates of political discontent, which offers an important methodological benefit: our results do not depend on the choice of any particular cross-national survey dataset [@Claassen2020].
-Third, the PPD estimates show strong validation results, including internal and external convergent validity and construct validity [@Adcock2001].
+Second, it provides, to our knowledge, the most comprehensive country-year estimates of political discontent, which offers an important methodological benefit: our results do not depend on the choice of any particular cross-national survey dataset [@Claassen2019].
+Third, the PPD estimates show strong validation results, including internal and external convergent validity and construct validity [@AdcockCollier2001].
 
 The choice of dependent variable deserves equal attention.
-As implied by the term itself, any measure of regime stability depends on how a political regime is defined, and the literature offers several distinct traditions [@cianetti2025regime].
-The procedural approach, which is the most common approach identified in Cianetti et al's[-@cianetti2025regime] review of regime studies, defines political regimes as the set of formal or informal rules governing how political power is acquired and exercised [@bjornskov2020regime; @boix2013complete; @munck1996disaggregating; @schmitter1991democracy; @cianetti2025regime].
+As implied by the term itself, any measure of regime stability depends on how a political regime is defined, and the literature offers several distinct traditions [@CianettiEtAl2025].
+The procedural approach, which is the most common approach identified in @CianettiEtAl2025's review of regime studies, defines political regimes as the set of formal or informal rules governing how political power is acquired and exercised [@BjornskovRode2020; @BoixEtAl2013; @Munck1996; @SchmitterKarl1991; @CianettiEtAl2025].
 This approach generally produces distinctions between democracy or non-democracy or autocracy, although the specific institutional criteria used to distinguish regime types vary across measures such as Polity, V-Dem and Freedom House.
 
-Another influential tradition adopts actor-centered definition of political regimes, focusing instead on the composition of ruling coalition [@cianetti2025regime].
-Scholars in this tradition argue that similar formal institution can coexist with substantially different ruling coalitions, with important consequences for the behavior of political leaders and for whose interests are represented by politics [@geddes2014autocratic].
-From this definition, procedural measures may overlook politically consequential changes in ruling coalitions that occur without a corresponding change in formal institutional rules, or may misclassify institutional changes, either improving or worsening the quality of democracy, by the same autucrat as regime change. [@wright2016measuring].
+Another influential tradition adopts actor-centered definition of political regimes, focusing instead on the composition of ruling coalition [@CianettiEtAl2025].
+Scholars in this tradition argue that similar formal institution can coexist with substantially different ruling coalitions, with important consequences for the behavior of political leaders and for whose interests are represented by politics [@GeddesEtAl2014].
+From this definition, procedural measures may overlook politically consequential changes in ruling coalitions that occur without a corresponding change in formal institutional rules, or may misclassify institutional changes, either improving or worsening the quality of democracy, by the same autucrat as regime change. [@WrightBak2016].
 For example, the Polity score fail to identify regime collapse such as the 1958 coup in Iraq when the regimes before and after the coup receive similar Polity scores and misclassify institutional liberalization in Gabon from 1991 to 1992 as regime change.
 
-Beyond disagreement over what constitutes a regime, scholars also disagree over what constitutes regime change [@maerz2024episodes].
-Maerz et al.[-@maerz2024episodes] distinguish between two dominant approaches. 
+Beyond disagreement over what constitutes a regime, scholars also disagree over what constitutes regime change [@MaerzEtAl2024].
+@MaerzEtAl2024 distinguish between two dominant approaches. 
 The transitologist approach focuses on transitions between regime categories and typically treats democratic transition and democratic breakdown as discrete events. 
 The incrementalist approach, by contrast, conceptualizes democracy and autocracy as points along a continuum and examines gradual changes in the level of democracy.
 Further,they identify three major limitations of these approaches. 
@@ -255,10 +302,10 @@ Third, the two approaches have difficulty incorporating democratization and auto
 
 In this paper, we adopt a procedural conception of political regimes. 
 Because this is the dominant approach in the existing empirical literature, doing so allows our findings to engage directly with a broad literature on democratization, autocratization, and regime stability. 
-At the same time, to address the limitations of both the transitologist and incrementalist approaches, we rely on the Episodes of Regime Transformation (ERT) dataset [@maerz2024episodes]. 
+At the same time, to address the limitations of both the transitologist and incrementalist approaches, we rely on the Episodes of Regime Transformation (ERT) dataset [@MaerzEtAl2024]. 
 Rather than identifying regime change solely from discrete transitions or annual changes in democracy scores, the ERT dataset identifies sustained episodes of substantial change along the democracy–autocracy continuum.
 Using these data, we first examine whether higher levels of political discontent are associated with the onset of regime-transformation episodes. 
-However, rather than assuming that the effect of political discontent on regime stability is the same across regime types, we allow its effect to vary between democracies and autocracies[@Claassen2020; @Tai2024]. 
+However, rather than assuming that the effect of political discontent on regime stability is the same across regime types, we allow its effect to vary between democracies and autocracies [@Claassen2020a; @TaiEtAl2024]. 
 Specifically, we use the regime-type classification provided by the ERT dataset to construct two regime-specific measures of political discontent: political discontent in democracies and political discontent in autocracies. 
 Each measure varies with the underlying level of political discontent only when a country belongs to the corresponding regime type and is coded zero otherwise. 
 We include both measures, together with the regime-type indicator, in the same model, to estimate separately the association between political discontent and the onset of regime transformation in democracies and autocracies.
@@ -267,13 +314,13 @@ This approach can examine whether political discontent contributes to the initia
 
 To examine these relationships, we employ discrete-time logistic regression, which models how covariates affect the probability that an episode begins within discrete time intervals. 
 This approach is appropriate because our dependent variable, the onset of episode, is measured in country-years. We consequently do not employ continuous-time hazard models such as the Cox proportional hazards model.
-For each specification, we estimate both conventional logistic regression using a generalized linear model (GLM) and Firth's penalized-likelihood logistic regression [@puhr2017firth; @muchlinski2016comparing]. 
+For each specification, we estimate both conventional logistic regression using a generalized linear model (GLM) and Firth's penalized-likelihood logistic regression [@PuhrEtAl2017; @MuchlinskiEtAl2016]. 
 The latter provides a robustness check against small-sample bias and separation that may arise when regime-transformation onsets are relatively rare events.
 
 To account for measurement uncertainty in political discontent, we use the method of composition (MOC). 
-The MOC repeatedly draws 900 simulated values of political discontent from its estimated distribution, re-estimates each model using each draw, and combines the resulting estimates into a final distribution of coefficients [@Tai2024]. 
+The MOC repeatedly draws 900 simulated values of political discontent from its estimated distribution, re-estimates each model using each draw, and combines the resulting estimates into a final distribution of coefficients [@TaiEtAl2024]. 
 This procedure propagates uncertainty from the measurement of political discontent into the uncertainty surrounding our regression estimates. The models also include a standard set of covariates associated with regime transformation: logged GDP per capita, GDP growth, regional democracy, the percentage of the population that is Muslim, resource dependence, OECD membership, income inequality measured using SWIID 9.8, and logged population. We additionally account for temporal dependence by including the regime-age clock, its squared term, and a count of previous transitions. 
-We also include public support for democracy as a control [@Claassen2020; @choi2026public].
+We also include public support for democracy as a control [@Claassen2020a; @Choi2026].
 
 # Results {.unlisted .unnumbered}
 
@@ -303,8 +350,8 @@ This substantive association is particularly notable because it represents the l
 By contrast, political discontent is not significantly associated with episode onset in democracies, although its point estimate is also positive.
 
 Taken together, these results are consistent with the expectation that political discontent is associated with greater regime instability, but suggest that this relationship is concentrated in autocratic regimes. 
-One possible explanation for this regime-specific pattern is that democratic elections provide an institutional mechanism through which political discontent can be channeled without necessarily threatening the regime itself [@Ma_Choi_Tai_Hu_Solt_2026]. 
-In democracies, dissatisfied citizens can replace incumbent leaders through elections rather than translating dissatisfaction with political authorities into rejection of the political regime [@muller1983discontent; @rooduijn2016expressing]. 
+One possible explanation for this regime-specific pattern is that democratic elections provide an institutional mechanism through which political discontent can be channeled without necessarily threatening the regime itself [@MaEtAl2026]. 
+In democracies, dissatisfied citizens can replace incumbent leaders through elections rather than translating dissatisfaction with political authorities into rejection of the political regime [@MullerJukam1983; @RooduijnEtAl2016]. 
 Autocracies generally provide fewer institutionalized opportunities for such electoral replacement, making accumulated political discontent more likely to coincide with broader pressures for regime transformation.
 
 ```{r}
@@ -322,7 +369,7 @@ It should not, however, be interpreted as direct evidence that democratic suppor
 The dependent variable captures the onset of substantial and sustained transformation in either direction along the democracy–autocracy continuum. 
 Among democracies, therefore, a lower probability of episode onset could reflect a lower likelihood of democratic regression, democratic deepening, or both. We examine the direction and eventual outcomes of these transformation episodes separately below.
 Among the control variables, regional democracy and regime age are negatively associated with episode onset, whereas population size is positively associated with it.
-GDP growth also shows a negative, although only marginally significant, association with episode onset, consistent with previous evidence linking stronger economic performance to greater regime stability [@gassebner2013extreme].
+GDP growth also shows a negative, although only marginally significant, association with episode onset, consistent with previous evidence linking stronger economic performance to greater regime stability [@GassebnerEtAl2013].
 The remaining covariates are not statistically distinguishable from zero at conventional levels after accounting for measurement uncertainty.
 
 ```{r}
@@ -353,7 +400,7 @@ fb <- function(x) sprintf("%.3f", x)
 
 Figure 2 further examines whether the destabilizing association of political discontent in autocracies takes a particular direction—upward (democratization episodes) or downward (autocratization episodes) along the democracy–autocracy continuum. 
 It should be noted that democratization and autocratization here do not necessarily denote transitions across regime types.
-Instead, they represent sustained movement up or down the continuum, following Maerz et al.[-@maerz2024episodes]. 
+Instead, they represent sustained movement up or down the continuum, following @MaerzEtAl2024.
 The upper panel distinguishes between these two directions. 
 In autocracies, the estimated association of political discontent is positive for the onset of both democratization episodes (95% credible interval: `r fb(f2_dem$lo)` to `r fb(f2_dem$hi)`) and autocratization episodes (95% credible interval: `r fb(f2_aut$lo)` to `r fb(f2_aut$hi)`), but neither estimate is statistically distinguishable from zero after accounting for measurement uncertainty. 
 A similar absence of significant associations appears among democracies. 
@@ -390,7 +437,7 @@ gwf_dem <- cfc("GWF transition (split IVs) [firth]", "disc_gwf_dem_trim")
 knitr::include_graphics(here::here("output", "fig_codings.png"))
 ```
 
-To assess whether our conclusions depend on the ERT coding of regime transformation, we re-estimate the transition models using three widely used dichotomous regime classifications: the DD classification of Cheibub, Gandhi, and Vreeland, as updated by Bjørnskov and Rode [-@bjornskov2020regime], the Boix–Miller–Rosato (BMR) measure [@boix2013complete], and the Geddes–Wright–Frantz (GWF) classification [@geddes2014autocratic]. 
+To assess whether our conclusions depend on the ERT coding of regime transformation, we re-estimate the transition models using three widely used dichotomous regime classifications: the DD classification of Cheibub, Gandhi, and Vreeland, as updated by @BjornskovRode2020, the Boix–Miller–Rosato (BMR) measure [@BoixEtAl2013], and the Geddes–Wright–Frantz (GWF) classification [@GeddesEtAl2014]. 
 The results are presented in Figure 3. 
 Under both DD and BMR, political discontent in autocracies is positively associated with a transition to democracy (DD: 95% credible interval: `r fb(dd_aut$lo)` to `r fb(dd_aut$hi)`; BMR: 95% credible interval: `r fb(bmr_aut$lo)` to `r fb(bmr_aut$hi)`). 
 By contrast, political discontent is not associated with regime transitions originating in democracies under either coding. 
