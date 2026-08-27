@@ -121,32 +121,42 @@ ggsave(here("output", "fig_battery.pdf"), p_main, width = 7, height = 4.8)
 # (direction cells: regime-split slopes; outcome cells: single slope in the
 #  at-risk regime subsample, so the regime is named in the row label)
 # ============================================================================
-TD <- "Onset by episode direction"
-TO <- "Onset by eventual outcome"
+TA <- "Autocracies"
+TDm <- "Democracies"
 
 d_dir <- bind_rows(
-  pick("onset for democratization (regime split) [firth]", "disc_aut_trim_lag1", "Democratization episodes: in autocracies", TD, "disc"),
-  pick("onset for democratization (regime split) [firth]", "disc_dem_trim_lag1", "Democratization episodes: in democracies", TD, "disc"),
-  pick("onset for autocratization (regime split) [firth]", "disc_aut_trim_lag1", "Autocratization episodes: in autocracies", TD, "disc"),
-  pick("onset for autocratization (regime split) [firth]", "disc_dem_trim_lag1", "Autocratization episodes: in democracies", TD, "disc"),
-  pick("onset for demo trans [firth]",   "disc_trim_lag1", "Ending in democratic transition (autocracies)",  TO, "disc"),
-  pick("onset for demo notrans [firth]", "disc_trim_lag1", "Stalling short of transition (autocracies)",     TO, "disc"),
-  pick("onset for demo deepen [firth]",  "disc_trim_lag1", "Democratic deepening (democracies)",             TO, "disc"),
-  pick("onset for auto trans [firth]",   "disc_trim_lag1", "Ending in democratic breakdown (democracies)",   TO, "disc"),
-  pick("onset for auto notrans [firth]", "disc_trim_lag1", "Stalling short of breakdown (democracies)",      TO, "disc"),
-  pick("onset for auto deepen [firth]",  "disc_trim_lag1", "Autocratic deepening (autocracies)",             TO, "disc")
+  pick("onset for democratization (regime split) [firth]", "disc_aut_trim_lag1", "Onset of democratization (upward) episodes",   TA,  "disc"),
+  pick("onset for autocratization (regime split) [firth]", "disc_aut_trim_lag1", "Onset of autocratization (downward) episodes", TA,  "disc"),
+  pick("onset for demo trans [firth]",   "disc_trim_lag1", "Episodes ending in democratic transition", TA, "disc"),
+  pick("onset for auto deepen [firth]",  "disc_trim_lag1", "Episodes of autocratic deepening",         TA, "disc"),
+  pick("onset for demo notrans [firth]", "disc_trim_lag1", "Episodes stalling short of transition",    TA, "disc"),
+  pick("onset for democratization (regime split) [firth]", "disc_dem_trim_lag1", "Onset of democratization (upward) episodes",   TDm, "disc"),
+  pick("onset for autocratization (regime split) [firth]", "disc_dem_trim_lag1", "Onset of autocratization (downward) episodes", TDm, "disc"),
+  pick("onset for auto trans [firth]",   "disc_trim_lag1", "Episodes ending in democratic breakdown",  TDm, "disc"),
+  pick("onset for demo deepen [firth]",  "disc_trim_lag1", "Episodes of democratic deepening",         TDm, "disc"),
+  pick("onset for auto notrans [firth]", "disc_trim_lag1", "Episodes stalling short of breakdown",     TDm, "disc")
 )
 
-p_dir <- ggplot(to_long(d_dir, c(TD, TO)), aes(x = b, y = label, color = est, shape = est)) +
+d_dir_long <- bind_rows(
+  d_dir %>% transmute(label, track, est = "Naive", b = naive_b, se = naive_se),
+  d_dir %>% transmute(label, track, est = "MOC",   b = moc_b,   se = moc_se)
+) %>%
+  mutate(
+    lo = b - 1.96 * se, hi = b + 1.96 * se,
+    track = factor(track, c(TA, TDm)),
+    est = factor(est, c("Naive", "MOC")),
+    label = factor(label, rev(unique(d_dir$label)))
+  )
+
+p_dir <- ggplot(d_dir_long, aes(x = b, y = label, color = est, shape = est)) +
   geoms_batt +
   facet_grid(track ~ ., scales = "free_y", space = "free_y", switch = "y") +
   labs(x = "Log-odds coefficient of political discontent (95% CI)",
        y = NULL, color = NULL, shape = NULL) +
-  theme_batt +
-  theme(strip.text.y.left = element_blank())
+  theme_batt
 
-ggsave(here("output", "fig_direction_outcome.png"), p_dir, width = 8, height = 4.4, dpi = 300)
-ggsave(here("output", "fig_direction_outcome.pdf"), p_dir, width = 8, height = 4.4)
+ggsave(here("output", "fig_direction_outcome.png"), p_dir, width = 6.8, height = 4.2, dpi = 300)
+ggsave(here("output", "fig_direction_outcome.pdf"), p_dir, width = 6.8, height = 4.2)
 
 # ============================================================================
 # FIGURE 3 -- completed transitions under DD / BMR / GWF, DISCONTENT only
@@ -180,8 +190,8 @@ p_can <- ggplot(d_can_long, aes(x = b, y = label, color = est, shape = est)) +
        y = NULL, color = NULL, shape = NULL) +
   theme_batt
 
-ggsave(here("output", "fig_codings.png"), p_can, width = 7.5, height = 3.2, dpi = 300)
-ggsave(here("output", "fig_codings.pdf"), p_can, width = 7.5, height = 3.2)
+ggsave(here("output", "fig_codings.png"), p_can, width = 6.2, height = 3.0, dpi = 300)
+ggsave(here("output", "fig_codings.pdf"), p_can, width = 6.2, height = 3.0)
 
 # ============================================================================
 # APPENDIX FIGURE -- V-Dem democracy levels + completed DD/BMR transitions
