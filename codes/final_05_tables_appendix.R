@@ -1,9 +1,12 @@
 ##############################################################################
 # Political Discontent and Regime (In)stability
 # Authors: Choi, Ma, Tai, Hu, Solt
-# Input:  output/results_main_combined.csv
-# Output: output/tables_appendix_all_models.docx (+ csv)
-#         A1 dynamic panel (x1000) / A2 ERT hazard / A3 DD-GWF-BMR (log-odds)
+# Input:  output/results_main_combined.csv;
+#         output/results_ctrlglv_hazard[_naive].rds (A4 full main-model table)
+# Output: output/tables_appendix_all_models.docx (+ csv);
+#         output/tableA4_main_model_full.csv
+#         A1 dynamic panel (x1000) / A2 ERT hazard / A3 DD-GWF-BMR (log-odds) /
+#         A4 full coefficient table of the main onset model (Figure 1)
 ##############################################################################
 
 library(dplyr); library(flextable); library(officer); library(here)
@@ -49,6 +52,50 @@ a1 <- tab_block("8 dynamic panel", scale = 1000)
 a2 <- tab_block("6 ERT hazard")
 a3 <- tab_block("7 various DV")
 
+# ---- A4: FULL coefficient table of the main onset model (Figure 1) ---------
+# glm and Firth, naive and MOC side by side, every regressor.
+moc_h4 <- readRDS(here("output", "results_ctrlglv_hazard.rds"))
+nv_h4  <- readRDS(here("output", "results_ctrlglv_hazard_naive.rds"))
+A4_LABELS <- c(
+  "(Intercept)"         = "Intercept",
+  "disc_aut_trim_lag1"  = "Discontent in autocracies (t-1)",
+  "disc_dem_trim_lag1"  = "Discontent in democracies (t-1)",
+  "supp_aut_trim_lag1"  = "Support in autocracies (t-1)",
+  "supp_dem_trim_lag1"  = "Support in democracies (t-1)",
+  "reg_democracy_lag1"  = "Democracy (t-1)",
+  "lnGDP_imp_lag1"      = "log GDP per capita (t-1)",
+  "GDP_imp_grth_lag1"   = "GDP growth (t-1)",
+  "Libdem_regUN_lag1"   = "Regional democracy (t-1)",
+  "Pr_Muslim_lag1"      = "Muslim population share (t-1)",
+  "Res_cp_WDI_di_lag1"  = "Resource dependence (t-1)",
+  "oecd_lag1"           = "OECD member (t-1)",
+  "gini_lag1"           = "Income inequality (t-1)",
+  "lnpop_lag1"          = "log population (t-1)",
+  "reg_regime_age"      = "Regime age",
+  "I(reg_regime_age^2)" = "Regime age squared",
+  "pre_reg_change_lag1" = "Prior regime changes (t-1)"
+)
+a4_col <- function(mth, src) {
+  if (src == "moc") {
+    m <- moc_h4[[paste0("onset (split IVs) [", mth, "]")]]
+    b <- sapply(m, mean); se <- sapply(m, sd); nm <- names(m)
+  } else {
+    n <- nv_h4[[paste0("onset (split IVs) [", mth, "]")]]
+    b <- n$naive_est; se <- n$naive_se; nm <- n$term
+  }
+  p <- 2 * (1 - pnorm(abs(b / se)))
+  setNames(sprintf("%.3f%s (%.3f)", b, star(p), se), nm)
+}
+a4_cols <- list(
+  `GLM naive`   = a4_col("glm", "naive"),
+  `GLM MOC`     = a4_col("glm", "moc"),
+  `Firth naive` = a4_col("firth", "naive"),
+  `Firth MOC`   = a4_col("firth", "moc")
+)
+a4 <- tibble(Variable = unname(A4_LABELS))
+for (cn in names(a4_cols)) a4[[cn]] <- unname(a4_cols[[cn]][names(A4_LABELS)])
+write.csv(a4, here("output", "tableA4_main_model_full.csv"), row.names = FALSE)
+
 write.csv(bind_rows(
   mutate(a1, Block = "A1 dynamic panel"),
   mutate(a2, Block = "A2 ERT ladder"),
@@ -78,6 +125,11 @@ nA3 <- paste("DV per row block: each coding's any-regime-change, direction-speci
   "or democracy-boundary crossing (lead-coded, final year of outgoing regime); full control",
   "specification with the coding's own clock and transition history. GWF coverage ends 2010:",
   "exploratory.", common)
+nA4 <- paste("Cell entries: coefficient (standard error). DV = onset of an ERT regime-transformation",
+  "episode of any direction; N = 1,812 country-years, 90 onsets; whole RHS at t-1; opinion",
+  "slopes split by regime type (zero-filled regressors). GLM = logit with country-clustered",
+  "standard errors; Firth = penalized-likelihood logit (model-based standard errors).",
+  "Figure 1 displays the Firth columns.", common)
 
 doc <- read_docx() %>%
   body_add_par("Appendix Table A1. Dynamic panel: all estimated models", style = "heading 2") %>%
@@ -85,7 +137,10 @@ doc <- read_docx() %>%
   body_add_par("Appendix Table A2. V-Dem ERT hazard battery: all estimated models", style = "heading 2") %>%
   body_add_flextable(ft(a2, nA2)) %>% body_add_par("") %>%
   body_add_par("Appendix Table A3. DD / GWF / BMR regime codings: all estimated models", style = "heading 2") %>%
-  body_add_flextable(ft(a3, nA3))
+  body_add_flextable(ft(a3, nA3)) %>% body_add_par("") %>%
+  body_add_par("Appendix Table A4. Main onset model (Figure 1): full coefficient table", style = "heading 2") %>%
+  body_add_flextable(flextable(a4) %>% autofit() %>% fontsize(size = 7.5, part = "all") %>%
+                       add_footer_lines(nA4) %>% theme_booktabs())
 print(doc, target = here("output", "tables_appendix_all_models.docx"))
-cat("written: output/tables_appendix_all_models.docx + .csv;",
-    sprintf("rows A1=%d A2=%d A3=%d\n", nrow(a1), nrow(a2), nrow(a3)))
+cat("written: output/tables_appendix_all_models.docx + .csv + tableA4_main_model_full.csv;",
+    sprintf("rows A1=%d A2=%d A3=%d A4=%d\n", nrow(a1), nrow(a2), nrow(a3), nrow(a4)))
